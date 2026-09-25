@@ -1,0 +1,174 @@
+package com.vhfantes.fantesday.service;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.vhfantes.fantesday.dto.MealItemRequestDTO;
+import com.vhfantes.fantesday.dto.MealItemResponseDTO;
+import com.vhfantes.fantesday.dto.MealRequestDTO;
+import com.vhfantes.fantesday.dto.MealResponseDTO;
+import com.vhfantes.fantesday.entity.Food;
+import com.vhfantes.fantesday.entity.Meal;
+import com.vhfantes.fantesday.entity.MealItem;
+import com.vhfantes.fantesday.exception.BusinessException;
+import com.vhfantes.fantesday.exception.ResourceNotFoundException;
+import com.vhfantes.fantesday.repository.MealItemRepository;
+import com.vhfantes.fantesday.repository.MealRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class MealService {
+
+    private static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
+
+    private final MealRepository mealRepository;
+    private final MealItemRepository mealItemRepository;
+    private final UserService userService;
+    private final FoodService foodService;
+
+    // ---------- Refeicoes ----------
+
+    @Transactional(readOnly = true)
+    public List<MealResponseDTO> findByUser(Long userId) {
+        return mealRepository.findByUserId(userId).stream()
+                .map(MealResponseDTO::from)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<MealResponseDTO> findByUserAndDate(Long userId, LocalDate date) {
+        return mealRepository.findByUserIdAndDate(userId, date).stream()
+                .map(MealResponseDTO::from)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public MealResponseDTO findById(Long id) {
+        return MealResponseDTO.from(getMealOrThrow(id));
+    }
+
+    @Transactional
+    public MealResponseDTO create(Long userId, MealRequestDTO dto) {
+        Meal meal = new Meal();
+        meal.setUser(userService.getUserOrThrow(userId));
+        meal.setDate(dto.date() != null ? dto.date() : LocalDate.now());
+
+        return MealResponseDTO.from(mealRepository.save(meal));
+    }
+
+    @Transactional
+    public MealResponseDTO update(Long id, MealRequestDTO dto) {
+        Meal meal = getMealOrThrow(id);
+
+        if (dto.date() != null) {
+            meal.setDate(dto.date());
+        }
+
+        return MealResponseDTO.from(meal);
+    }
+
+    // Remove os itens da refeicao e depois a refeicao
+    @Transactional
+    public void delete(Long id) {
+        Meal meal = getMealOrThrow(id);
+        mealItemRepository.deleteAll(mealItemRepository.findByMealId(id));
+        mealRepository.delete(meal);
+    }
+
+    // ---------- Itens da refeicao ----------
+
+    @Transactional(readOnly = true)
+    public List<MealItemResponseDTO> findItems(Long mealId) {
+        getMealOrThrow(mealId);
+        return mealItemRepository.findByMealId(mealId).stream()
+                .map(MealItemResponseDTO::from)
+                .toList();
+    }
+
+    // Soma das calorias de todos os itens da refeicao
+    @Transactional(readOnly = true)
+    public int getTotalCalories(Long mealId) {
+        getMealOrThrow(mealId);
+        return mealItemRepository.findByMealId(mealId).stream()
+                .map(MealItem::getCalculatedCalories)
+                .filter(calories -> calories != null)
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
+
+    @Transactional
+    public MealItemResponseDTO addItem(Long mealId, MealItemRequestDTO dto) {
+        if (dto.foodId() == null) {
+            throw new BusinessException("Alimento e obrigatorio");
+        }
+        if (dto.quantity() == null || dto.quantity().signum() <= 0) {
+            throw new BusinessException("Quantidade deve ser maior que zero");
+        }
+
+        Food food = foodService.getFoodOrThrow(dto.foodId());
+
+        MealItem item = new MealItem();
+        item.setMeal(getMealOrThrow(mealId));
+        item.setFood(food);
+        item.setQuantity(dto.quantity());
+        item.setUnit(dto.unit() != null ? dto.unit() : food.getDefaultUnit());
+        item.setCalculatedCalories(calculateCalories(food, dto.quantity()));
+
+        return MealItemResponseDTO.from(mealItemRepository.save(item));
+    }
+
+    // Se o alimento ou a quantidade mudar, recalcula as calorias
+    @Transactional
+    public MealItemResponseDTO updateItem(Long itemId, MealItemRequestDTO dto) {
+        MealItem item = getItemOrThrow(itemId);
+
+        if (dto.foodId() != null) {
+            item.setFood(foodService.getFoodOrThrow(dto.foodId()));
+        }
+        if (dto.quantity() != null) {
+            if (dto.quantity().signum() <= 0) {
+                throw new BusinessException("Quantidade deve ser maior que zero");
+            }
+            item.setQuantity(dto.quantity());
+        }
+        if (dto.unit() != null) {
+            item.setUnit(dto.unit());
+        }
+        item.setCalculatedCalories(calculateCalories(item.getFood(), item.getQuantity()));
+
+        return MealItemResponseDTO.from(item);
+    }
+
+    @Transactional
+    public void removeItem(Long itemId) {
+        mealItemRepository.delete(getItemOrThrow(itemId));
+    }
+
+    // calorias = quantidade x (calorias por 100g / 100)
+    // Considera a quantidade em gramas (ou ml); ajuste se for usar outras unidades
+    private Integer calculateCalories(Food food, BigDecimal quantity) {
+        if (food.getCaloriesPer100g() == null) {
+            return null;
+        }
+        return quantity.multiply(food.getCaloriesPer100g())
+                .divide(ONE_HUNDRED, 0, RoundingMode.HALF_UP)
+                .intValue();
+    }
+
+    private Meal getMealOrThrow(Long id) {
+        return mealRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Refeicao nao encontrada: " + id));
+    }
+
+    private MealItem getItemOrThrow(Long id) {
+        return mealItemRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Item da refeicao nao encontrado: " + id));
+    }
+}
