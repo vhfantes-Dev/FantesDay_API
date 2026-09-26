@@ -1,12 +1,22 @@
 package com.vhfantes.fantesday.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClientException;
 
+import com.vhfantes.fantesday.client.OpenFoodFactsClient;
+import com.vhfantes.fantesday.client.dto.OffNutriments;
+import com.vhfantes.fantesday.client.dto.OffProduct;
+import com.vhfantes.fantesday.dto.ExternalFoodDTO;
 import com.vhfantes.fantesday.dto.FoodRequestDTO;
 import com.vhfantes.fantesday.dto.FoodResponseDTO;
+import com.vhfantes.fantesday.entity.CatalogSource;
 import com.vhfantes.fantesday.entity.Food;
 import com.vhfantes.fantesday.exception.BusinessException;
 import com.vhfantes.fantesday.exception.ResourceNotFoundException;
@@ -18,7 +28,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FoodService {
 
+    private static final Logger logger = LoggerFactory.getLogger(FoodService.class);
+
+    // Limite das colunas numeric(7,2); valores acima disso no Open Food Facts sao dados errados
+    private static final BigDecimal MAX_NUTRIENT_VALUE = BigDecimal.valueOf(100_000);
+
     private final FoodRepository foodRepository;
+    private final OpenFoodFactsClient openFoodFactsClient;
 
     @Transactional(readOnly = true)
     public List<FoodResponseDTO> findAll() {
@@ -49,7 +65,12 @@ public class FoodService {
         Food food = new Food();
         food.setName(dto.name().trim());
         food.setCaloriesPer100g(dto.caloriesPer100g());
+        food.setProteinPer100g(dto.proteinPer100g());
+        food.setCarbsPer100g(dto.carbsPer100g());
+        food.setFatPer100g(dto.fatPer100g());
+        food.setFiberPer100g(dto.fiberPer100g());
         food.setDefaultUnit(dto.defaultUnit());
+        food.setSource(CatalogSource.CUSTOM);
 
         return FoodResponseDTO.from(foodRepository.save(food));
     }
@@ -64,6 +85,18 @@ public class FoodService {
         if (dto.caloriesPer100g() != null) {
             food.setCaloriesPer100g(dto.caloriesPer100g());
         }
+        if (dto.proteinPer100g() != null) {
+            food.setProteinPer100g(dto.proteinPer100g());
+        }
+        if (dto.carbsPer100g() != null) {
+            food.setCarbsPer100g(dto.carbsPer100g());
+        }
+        if (dto.fatPer100g() != null) {
+            food.setFatPer100g(dto.fatPer100g());
+        }
+        if (dto.fiberPer100g() != null) {
+            food.setFiberPer100g(dto.fiberPer100g());
+        }
         if (dto.defaultUnit() != null) {
             food.setDefaultUnit(dto.defaultUnit());
         }
@@ -76,10 +109,94 @@ public class FoodService {
         foodRepository.delete(getFoodOrThrow(id));
     }
 
+    // ---------- Open Food Facts ----------
+
+    // Procura primeiro no banco; se nao achar, busca no Open Food Facts e salva (cache local)
+    @Transactional
+    public FoodResponseDTO findOrImportByBarcode(String barcode) {
+        if (barcode == null || barcode.isBlank()) {
+            throw new BusinessException("Codigo de barras e obrigatorio");
+        }
+        String code = barcode.trim();
+
+        return foodRepository.findBySourceAndExternalId(CatalogSource.OPEN_FOOD_FACTS, code)
+                .map(FoodResponseDTO::from)
+                .orElseGet(() -> FoodResponseDTO.from(foodRepository.save(importFromOpenFoodFacts(code))));
+    }
+
+    // Busca produtos no Open Food Facts sem salvar. Se o servico falhar, devolve lista vazia.
+    public List<ExternalFoodDTO> searchExternal(String term) {
+        if (term == null || term.isBlank()) {
+            return List.of();
+        }
+
+        try {
+            return openFoodFactsClient.search(term.trim()).stream()
+                    .filter(product -> product.code() != null && product.displayName() != null)
+                    .map(this::toExternalFood)
+                    .toList();
+        } catch (RestClientException e) {
+            logger.warn("Falha ao buscar '{}' no Open Food Facts: {}", term, e.getMessage());
+            return List.of();
+        }
+    }
+
     // Usado pelo MealService para montar os itens de uma refeicao
     @Transactional(readOnly = true)
     public Food getFoodOrThrow(Long id) {
         return foodRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Alimento nao encontrado: " + id));
+    }
+
+    private Food importFromOpenFoodFacts(String barcode) {
+        OffProduct product;
+        try {
+            product = openFoodFactsClient.findByBarcode(barcode)
+                    .orElseThrow(() -> new ResourceNotFoundException("Produto nao encontrado: " + barcode));
+        } catch (RestClientException e) {
+            logger.warn("Falha ao consultar o codigo {} no Open Food Facts: {}", barcode, e.getMessage());
+            throw new BusinessException("Servico de alimentos indisponivel");
+        }
+
+        OffNutriments nutriments = product.nutriments();
+
+        Food food = new Food();
+        food.setName(product.displayName() != null ? product.displayName() : "Produto " + barcode);
+        if (nutriments != null) {
+            food.setCaloriesPer100g(sanitize(nutriments.energyKcal100g()));
+            food.setProteinPer100g(sanitize(nutriments.proteins100g()));
+            food.setCarbsPer100g(sanitize(nutriments.carbohydrates100g()));
+            food.setFatPer100g(sanitize(nutriments.fat100g()));
+            food.setFiberPer100g(sanitize(nutriments.fiber100g()));
+        }
+        food.setDefaultUnit("g");
+        food.setSource(CatalogSource.OPEN_FOOD_FACTS);
+        food.setExternalId(barcode);
+        return food;
+    }
+
+    private ExternalFoodDTO toExternalFood(OffProduct product) {
+        OffNutriments nutriments = product.nutriments();
+        if (nutriments == null) {
+            return new ExternalFoodDTO(product.code(), product.displayName(), product.brands(),
+                    null, null, null, null, null);
+        }
+        return new ExternalFoodDTO(
+                product.code(),
+                product.displayName(),
+                product.brands(),
+                sanitize(nutriments.energyKcal100g()),
+                sanitize(nutriments.proteins100g()),
+                sanitize(nutriments.carbohydrates100g()),
+                sanitize(nutriments.fat100g()),
+                sanitize(nutriments.fiber100g()));
+    }
+
+    // Descarta valores negativos ou absurdos e arredonda para 2 casas
+    private BigDecimal sanitize(BigDecimal value) {
+        if (value == null || value.signum() < 0 || value.compareTo(MAX_NUTRIENT_VALUE) >= 0) {
+            return null;
+        }
+        return value.setScale(2, RoundingMode.HALF_UP);
     }
 }

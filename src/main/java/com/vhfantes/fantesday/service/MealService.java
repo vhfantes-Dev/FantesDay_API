@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.vhfantes.fantesday.dto.MealItemRequestDTO;
 import com.vhfantes.fantesday.dto.MealItemResponseDTO;
+import com.vhfantes.fantesday.dto.MealNutritionDTO;
 import com.vhfantes.fantesday.dto.MealRequestDTO;
 import com.vhfantes.fantesday.dto.MealResponseDTO;
 import com.vhfantes.fantesday.entity.Food;
@@ -103,6 +104,35 @@ public class MealService {
                 .sum();
     }
 
+    // Soma de calorias e macronutrientes de todos os itens da refeicao
+    @Transactional(readOnly = true)
+    public MealNutritionDTO getNutritionTotals(Long mealId) {
+        getMealOrThrow(mealId);
+        List<MealItem> items = mealItemRepository.findByMealId(mealId);
+
+        int calories = 0;
+        BigDecimal protein = BigDecimal.ZERO;
+        BigDecimal carbs = BigDecimal.ZERO;
+        BigDecimal fat = BigDecimal.ZERO;
+
+        for (MealItem item : items) {
+            if (item.getCalculatedCalories() != null) {
+                calories += item.getCalculatedCalories();
+            }
+            if (item.getCalculatedProtein() != null) {
+                protein = protein.add(item.getCalculatedProtein());
+            }
+            if (item.getCalculatedCarbs() != null) {
+                carbs = carbs.add(item.getCalculatedCarbs());
+            }
+            if (item.getCalculatedFat() != null) {
+                fat = fat.add(item.getCalculatedFat());
+            }
+        }
+
+        return new MealNutritionDTO(calories, protein, carbs, fat);
+    }
+
     @Transactional
     public MealItemResponseDTO addItem(Long mealId, MealItemRequestDTO dto) {
         if (dto.foodId() == null) {
@@ -119,12 +149,12 @@ public class MealService {
         item.setFood(food);
         item.setQuantity(dto.quantity());
         item.setUnit(dto.unit() != null ? dto.unit() : food.getDefaultUnit());
-        item.setCalculatedCalories(calculateCalories(food, dto.quantity()));
+        applyNutrition(item);
 
         return MealItemResponseDTO.from(mealItemRepository.save(item));
     }
 
-    // Se o alimento ou a quantidade mudar, recalcula as calorias
+    // Se o alimento ou a quantidade mudar, recalcula calorias e macros
     @Transactional
     public MealItemResponseDTO updateItem(Long itemId, MealItemRequestDTO dto) {
         MealItem item = getItemOrThrow(itemId);
@@ -141,7 +171,7 @@ public class MealService {
         if (dto.unit() != null) {
             item.setUnit(dto.unit());
         }
-        item.setCalculatedCalories(calculateCalories(item.getFood(), item.getQuantity()));
+        applyNutrition(item);
 
         return MealItemResponseDTO.from(item);
     }
@@ -151,15 +181,25 @@ public class MealService {
         mealItemRepository.delete(getItemOrThrow(itemId));
     }
 
-    // calorias = quantidade x (calorias por 100g / 100)
+    private void applyNutrition(MealItem item) {
+        Food food = item.getFood();
+        BigDecimal quantity = item.getQuantity();
+
+        BigDecimal calories = calculatePer100g(food.getCaloriesPer100g(), quantity, 0);
+        item.setCalculatedCalories(calories != null ? calories.intValue() : null);
+        item.setCalculatedProtein(calculatePer100g(food.getProteinPer100g(), quantity, 2));
+        item.setCalculatedCarbs(calculatePer100g(food.getCarbsPer100g(), quantity, 2));
+        item.setCalculatedFat(calculatePer100g(food.getFatPer100g(), quantity, 2));
+    }
+
+    // valor = quantidade x (valor por 100g / 100)
     // Considera a quantidade em gramas (ou ml); ajuste se for usar outras unidades
-    private Integer calculateCalories(Food food, BigDecimal quantity) {
-        if (food.getCaloriesPer100g() == null) {
+    static BigDecimal calculatePer100g(BigDecimal valuePer100g, BigDecimal quantity, int scale) {
+        if (valuePer100g == null || quantity == null) {
             return null;
         }
-        return quantity.multiply(food.getCaloriesPer100g())
-                .divide(ONE_HUNDRED, 0, RoundingMode.HALF_UP)
-                .intValue();
+        return quantity.multiply(valuePer100g)
+                .divide(ONE_HUNDRED, scale, RoundingMode.HALF_UP);
     }
 
     private Meal getMealOrThrow(Long id) {

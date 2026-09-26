@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.vhfantes.fantesday.dto.ExerciseRequestDTO;
 import com.vhfantes.fantesday.dto.ExerciseResponseDTO;
+import com.vhfantes.fantesday.entity.CatalogSource;
 import com.vhfantes.fantesday.entity.Exercise;
 import com.vhfantes.fantesday.exception.BusinessException;
 import com.vhfantes.fantesday.exception.ResourceNotFoundException;
@@ -27,6 +28,22 @@ public class ExerciseService {
                 .toList();
     }
 
+    // Pesquisa por parte do nome, sem diferenciar maiusculas/minusculas
+    @Transactional(readOnly = true)
+    public List<ExerciseResponseDTO> searchByName(String name) {
+        return exerciseRepository.findByNameContainingIgnoreCase(name).stream()
+                .map(ExerciseResponseDTO::from)
+                .toList();
+    }
+
+    // Grupo muscular em portugues (ex: "Peito", "Dorsais", "Quadríceps")
+    @Transactional(readOnly = true)
+    public List<ExerciseResponseDTO> findByMuscleGroup(String muscleGroup) {
+        return exerciseRepository.findByMuscleGroupIgnoreCase(muscleGroup).stream()
+                .map(ExerciseResponseDTO::from)
+                .toList();
+    }
+
     @Transactional(readOnly = true)
     public ExerciseResponseDTO findById(Long id) {
         return ExerciseResponseDTO.from(getExerciseOrThrow(id));
@@ -41,6 +58,13 @@ public class ExerciseService {
         Exercise exercise = new Exercise();
         exercise.setName(dto.name().trim());
         exercise.setMuscleGroup(dto.muscleGroup());
+        exercise.setSecondaryMuscles(dto.secondaryMuscles());
+        exercise.setEquipment(dto.equipment());
+        exercise.setLevel(dto.level());
+        exercise.setCategory(dto.category());
+        exercise.setInstructions(dto.instructions());
+        exercise.setImageUrl(dto.imageUrl());
+        exercise.setSource(CatalogSource.CUSTOM);
 
         return ExerciseResponseDTO.from(exerciseRepository.save(exercise));
     }
@@ -54,6 +78,24 @@ public class ExerciseService {
         }
         if (dto.muscleGroup() != null) {
             exercise.setMuscleGroup(dto.muscleGroup());
+        }
+        if (dto.secondaryMuscles() != null) {
+            exercise.setSecondaryMuscles(dto.secondaryMuscles());
+        }
+        if (dto.equipment() != null) {
+            exercise.setEquipment(dto.equipment());
+        }
+        if (dto.level() != null) {
+            exercise.setLevel(dto.level());
+        }
+        if (dto.category() != null) {
+            exercise.setCategory(dto.category());
+        }
+        if (dto.instructions() != null) {
+            exercise.setInstructions(dto.instructions());
+        }
+        if (dto.imageUrl() != null) {
+            exercise.setImageUrl(dto.imageUrl());
         }
 
         return ExerciseResponseDTO.from(exercise);
