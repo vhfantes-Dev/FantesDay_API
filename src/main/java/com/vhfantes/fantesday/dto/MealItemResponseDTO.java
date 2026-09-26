@@ -11,7 +11,10 @@ public record MealItemResponseDTO(
         String foodName,
         BigDecimal quantity,
         String unit,
-        Integer calculatedCalories) {
+        Integer calculatedCalories,
+        BigDecimal calculatedProtein,
+        BigDecimal calculatedCarbs,
+        BigDecimal calculatedFat) {
 
     public static MealItemResponseDTO from(MealItem item) {
         return new MealItemResponseDTO(
@@ -21,6 +24,9 @@ public record MealItemResponseDTO(
                 item.getFood().getName(),
                 item.getQuantity(),
                 item.getUnit(),
-                item.getCalculatedCalories());
+                item.getCalculatedCalories(),
+                item.getCalculatedProtein(),
+                item.getCalculatedCarbs(),
+                item.getCalculatedFat());
     }
 }
