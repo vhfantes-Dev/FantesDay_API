@@ -40,4 +40,13 @@ public class MealItem {
 
     private String unit;
     private Integer calculatedCalories;
+
+    @Column(precision = 8, scale = 2)
+    private BigDecimal calculatedProtein;
+
+    @Column(precision = 8, scale = 2)
+    private BigDecimal calculatedCarbs;
+
+    @Column(precision = 8, scale = 2)
+    private BigDecimal calculatedFat;
 }
