@@ -1,16 +1,16 @@
 package com.vhfantes.fantesday.strength;
 
-// Os 9 ranks de forca (mesmos nomes do Liftoff). Cada rank cobre 100 pontos da nota 0-1000;
+// Os 9 ranks de forca, na ordem do design do app. Cada rank cobre 100 pontos da nota 0-1000;
 // o Olympian comeca em 800 e vai ate 1000.
 public enum StrengthRank {
-    WOOD,
     BRONZE,
     SILVER,
     GOLD,
     PLATINUM,
     DIAMOND,
-    CHAMPION,
-    TITAN,
+    MASTER,
+    GRANDMASTER,
+    CHALLENGER,
     OLYMPIAN;
 
     public static final int POINTS_PER_RANK = 100;
