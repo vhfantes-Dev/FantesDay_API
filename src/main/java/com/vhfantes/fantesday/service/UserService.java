@@ -1,7 +1,6 @@
 package com.vhfantes.fantesday.service;
 
-import java.math.BigDecimal;
-import java.util.List;
+import java.time.LocalDate;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,30 +12,21 @@ import com.vhfantes.fantesday.entity.Progress;
 import com.vhfantes.fantesday.entity.User;
 import com.vhfantes.fantesday.exception.BusinessException;
 import com.vhfantes.fantesday.exception.ResourceNotFoundException;
-import com.vhfantes.fantesday.repository.NutritionGoalRepository;
 import com.vhfantes.fantesday.repository.ProgressRepository;
 import com.vhfantes.fantesday.repository.UserRepository;
+import com.vhfantes.fantesday.security.PasswordPolicy;
 
 import lombok.RequiredArgsConstructor;
 
+// A exclusao da conta (com todos os dados) fica no AccountDeletionService
 @Service
 @RequiredArgsConstructor // injecao pelo construtor (gerado pelo Lombok para os campos final)
 public class UserService {
 
-    private static final BigDecimal MIN_BODYWEIGHT = BigDecimal.valueOf(25);
-    private static final BigDecimal MAX_BODYWEIGHT = BigDecimal.valueOf(400);
-
     private final UserRepository userRepository;
     private final ProgressRepository progressRepository;
-    private final NutritionGoalRepository nutritionGoalRepository;
     private final PasswordEncoder passwordEncoder;
-
-    @Transactional(readOnly = true)
-    public List<UserResponseDTO> findAll() {
-        return userRepository.findAll().stream()
-                .map(UserResponseDTO::from)
-                .toList();
-    }
+    private final WeightService weightService;
 
     @Transactional(readOnly = true)
     public UserResponseDTO findById(Long id) {
@@ -47,7 +37,7 @@ public class UserService {
     public UserResponseDTO create(UserRequestDTO dto) {
         validateRequired(dto.name(), "Nome");
         validateRequired(dto.email(), "E-mail");
-        validateRequired(dto.password(), "Senha");
+        PasswordPolicy.validate(dto.password());
 
         String email = normalizeEmail(dto.email());
         if (userRepository.existsByEmail(email)) {
@@ -61,9 +51,6 @@ public class UserService {
         if (dto.faceIdEnabled() != null) {
             user.setFaceIdEnabled(dto.faceIdEnabled());
         }
-        if (dto.bodyweightKg() != null) {
-            user.setBodyweightKg(validateBodyweight(dto.bodyweightKg()));
-        }
         user.setSex(dto.sex());
         user = userRepository.save(user);
 
@@ -72,13 +59,23 @@ public class UserService {
         progress.setUser(user);
         progressRepository.save(progress);
 
+        // O peso informado no cadastro ja entra no historico de peso
+        if (dto.bodyweightKg() != null) {
+            weightService.record(user, LocalDate.now(), dto.bodyweightKg());
+        }
+
         return UserResponseDTO.from(user);
     }
 
-    // Atualiza apenas os campos enviados (os que vierem null sao ignorados)
+    // Atualiza apenas os campos enviados (os que vierem null sao ignorados).
+    // A senha nao muda por aqui: use POST /api/auth/change-password (exige a senha atual).
     @Transactional
     public UserResponseDTO update(Long id, UserRequestDTO dto) {
         User user = getUserOrThrow(id);
+
+        if (dto.password() != null) {
+            throw new BusinessException("Para trocar a senha use POST /api/auth/change-password");
+        }
 
         if (dto.name() != null && !dto.name().isBlank()) {
             user.setName(dto.name().trim());
@@ -92,16 +89,13 @@ public class UserService {
             user.setEmail(email);
         }
 
-        if (dto.password() != null && !dto.password().isBlank()) {
-            user.setPasswordHash(passwordEncoder.encode(dto.password()));
-        }
-
         if (dto.faceIdEnabled() != null) {
             user.setFaceIdEnabled(dto.faceIdEnabled());
         }
 
+        // Mudar o peso pelo perfil registra o peso de hoje no historico
         if (dto.bodyweightKg() != null) {
-            user.setBodyweightKg(validateBodyweight(dto.bodyweightKg()));
+            weightService.record(user, LocalDate.now(), dto.bodyweightKg());
         }
 
         if (dto.sex() != null) {
@@ -110,14 +104,6 @@ public class UserService {
 
         // Sem save(): dentro de @Transactional o Hibernate grava as alteracoes sozinho
         return UserResponseDTO.from(user);
-    }
-
-    @Transactional
-    public void delete(Long id) {
-        User user = getUserOrThrow(id);
-        progressRepository.deleteById(user.getId());
-        nutritionGoalRepository.deleteById(user.getId());
-        userRepository.delete(user);
     }
 
     // Metodo auxiliar para outros services (ex.: TaskService precisa do User para criar uma Task)
@@ -135,12 +121,5 @@ public class UserService {
         if (value == null || value.isBlank()) {
             throw new BusinessException(field + " e obrigatorio");
         }
-    }
-
-    private BigDecimal validateBodyweight(BigDecimal bodyweightKg) {
-        if (bodyweightKg.compareTo(MIN_BODYWEIGHT) < 0 || bodyweightKg.compareTo(MAX_BODYWEIGHT) > 0) {
-            throw new BusinessException("Peso corporal deve estar entre " + MIN_BODYWEIGHT + " e " + MAX_BODYWEIGHT + " kg");
-        }
-        return bodyweightKg;
     }
 }

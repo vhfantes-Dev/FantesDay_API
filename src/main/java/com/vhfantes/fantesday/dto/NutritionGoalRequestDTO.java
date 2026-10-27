@@ -7,5 +7,6 @@ public record NutritionGoalRequestDTO(
         Integer dailyCalories,
         BigDecimal proteinG,
         BigDecimal carbsG,
-        BigDecimal fatG) {
+        BigDecimal fatG,
+        Integer dailyWaterMl) {
 }

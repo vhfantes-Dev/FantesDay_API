@@ -1,7 +1,6 @@
 package com.vhfantes.fantesday.entity;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import jakarta.persistence.Column;
@@ -37,9 +36,14 @@ public class Task {
     private String title;
 
     private String type;
+
+    // Tarefa avulsa: dia em que deve ser feita (null = vale ate ser concluida).
+    // Tarefa recorrente: a partir de quando passa a valer (null = desde sempre).
     private LocalDate date;
+
     private LocalTime time;
+
+    // Dias da semana em que a tarefa se repete, ex: "SEG,QUA,SEX" (null = tarefa avulsa).
+    // As conclusoes ficam em TaskCompletion, uma por dia.
     private String weekDays;
-    private Boolean completed = false;
-    private LocalDateTime completedAt;
 }

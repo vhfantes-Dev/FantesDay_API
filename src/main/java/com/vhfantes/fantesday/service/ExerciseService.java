@@ -3,17 +3,23 @@ package com.vhfantes.fantesday.service;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vhfantes.fantesday.dto.ExerciseRequestDTO;
 import com.vhfantes.fantesday.dto.ExerciseResponseDTO;
+import com.vhfantes.fantesday.dto.PageResponseDTO;
 import com.vhfantes.fantesday.entity.CatalogSource;
 import com.vhfantes.fantesday.entity.Exercise;
 import com.vhfantes.fantesday.exception.BusinessException;
 import com.vhfantes.fantesday.exception.ForbiddenException;
 import com.vhfantes.fantesday.exception.ResourceNotFoundException;
 import com.vhfantes.fantesday.repository.ExerciseRepository;
+import com.vhfantes.fantesday.repository.RoutineExerciseRepository;
+import com.vhfantes.fantesday.repository.WorkoutExerciseRepository;
+import com.vhfantes.fantesday.security.CurrentUser;
 import com.vhfantes.fantesday.strength.StrengthStandards;
 
 import lombok.RequiredArgsConstructor;
@@ -23,29 +29,30 @@ import lombok.RequiredArgsConstructor;
 public class ExerciseService {
 
     private final ExerciseRepository exerciseRepository;
+    private final WorkoutExerciseRepository workoutExerciseRepository;
+    private final RoutineExerciseRepository routineExerciseRepository;
     private final StrengthStandards strengthStandards;
+    private final UserService userService;
+    private final CurrentUser currentUser;
 
+    // Lista paginada; filtros opcionais por parte do nome e por grupo muscular em portugues
+    // (ex: "Peito", "Dorsais", "Quadríceps")
     @Transactional(readOnly = true)
-    public List<ExerciseResponseDTO> findAll() {
-        return exerciseRepository.findAll().stream()
-                .map(ExerciseResponseDTO::from)
-                .toList();
-    }
+    public PageResponseDTO<ExerciseResponseDTO> search(String name, String muscleGroup, Pageable pageable) {
+        boolean hasName = name != null && !name.isBlank();
+        boolean hasMuscle = muscleGroup != null && !muscleGroup.isBlank();
 
-    // Pesquisa por parte do nome, sem diferenciar maiusculas/minusculas
-    @Transactional(readOnly = true)
-    public List<ExerciseResponseDTO> searchByName(String name) {
-        return exerciseRepository.findByNameContainingIgnoreCase(name).stream()
-                .map(ExerciseResponseDTO::from)
-                .toList();
-    }
-
-    // Grupo muscular em portugues (ex: "Peito", "Dorsais", "Quadríceps")
-    @Transactional(readOnly = true)
-    public List<ExerciseResponseDTO> findByMuscleGroup(String muscleGroup) {
-        return exerciseRepository.findByMuscleGroupIgnoreCase(muscleGroup).stream()
-                .map(ExerciseResponseDTO::from)
-                .toList();
+        Page<Exercise> page;
+        if (hasName && hasMuscle) {
+            page = exerciseRepository.findByNameContainingIgnoreCaseAndMuscleGroupIgnoreCase(name.trim(), muscleGroup.trim(), pageable);
+        } else if (hasName) {
+            page = exerciseRepository.findByNameContainingIgnoreCase(name.trim(), pageable);
+        } else if (hasMuscle) {
+            page = exerciseRepository.findByMuscleGroupIgnoreCase(muscleGroup.trim(), pageable);
+        } else {
+            page = exerciseRepository.findAll(pageable);
+        }
+        return PageResponseDTO.from(page, ExerciseResponseDTO::from);
     }
 
     // Exercicios da lista curada que tem rank de forca
@@ -79,6 +86,7 @@ public class ExerciseService {
         exercise.setInstructions(dto.instructions());
         exercise.setImageUrl(dto.imageUrl());
         exercise.setSource(CatalogSource.CUSTOM);
+        exercise.setCreatedBy(userService.getUserOrThrow(currentUser.id()));
 
         return ExerciseResponseDTO.from(exerciseRepository.save(exercise));
     }
@@ -117,14 +125,22 @@ public class ExerciseService {
 
     @Transactional
     public void delete(Long id) {
-        exerciseRepository.delete(getEditableExerciseOrThrow(id));
+        Exercise exercise = getEditableExerciseOrThrow(id);
+        if (workoutExerciseRepository.existsByExerciseId(id) || routineExerciseRepository.existsByExerciseId(id)) {
+            throw new BusinessException("Exercicio usado em treinos ou rotinas; remova-o deles antes de excluir");
+        }
+        exerciseRepository.delete(exercise);
     }
 
-    // Exercicios importados (free-exercise-db) sao compartilhados: so os cadastrados manualmente podem mudar
+    // Exercicios importados (free-exercise-db) sao compartilhados e nao mudam;
+    // os cadastrados manualmente so podem ser alterados por quem os criou
     private Exercise getEditableExerciseOrThrow(Long id) {
         Exercise exercise = getExerciseOrThrow(id);
         if (exercise.getSource() != null && exercise.getSource() != CatalogSource.CUSTOM) {
             throw new ForbiddenException("Exercicios do catalogo (" + exercise.getSource() + ") nao podem ser alterados");
+        }
+        if (exercise.getCreatedBy() == null || !exercise.getCreatedBy().getId().equals(currentUser.id())) {
+            throw new ForbiddenException("Apenas quem cadastrou o exercicio pode altera-lo");
         }
         return exercise;
     }

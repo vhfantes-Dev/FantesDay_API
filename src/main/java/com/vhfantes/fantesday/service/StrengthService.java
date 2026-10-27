@@ -51,6 +51,13 @@ public class StrengthService {
     private final ExerciseService exerciseService;
     private final StrengthStandards standards;
 
+    // Rank geral para o dashboard: null se faltar peso/sexo ou se ainda nao houver exercicio com rank
+    @Transactional(readOnly = true)
+    public RankDTO overallRank(Long userId) {
+        User user = userService.getUserOrThrow(userId);
+        return hasBodyInfo(user) ? getProfile(userId).overall() : null;
+    }
+
     @Transactional(readOnly = true)
     public StrengthProfileDTO getProfile(Long userId) {
         User user = userService.getUserOrThrow(userId);

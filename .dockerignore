@@ -1,0 +1,8 @@
+target/
+.git/
+.vscode/
+.idea/
+insomnia/
+.env
+*.log
+HELP.md

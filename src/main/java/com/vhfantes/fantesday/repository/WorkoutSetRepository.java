@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -61,6 +62,13 @@ public interface WorkoutSetRepository extends JpaRepository<WorkoutSet, Long> {
             group by w.user.id
             """)
     List<UserVolume> findVolumeBetween(@Param("start") LocalDate start, @Param("end") LocalDate end);
+
+    @Modifying
+    @Query("""
+            delete from WorkoutSet s where s.workoutExercise.id in
+                (select we.id from WorkoutExercise we where we.workout.user.id = :userId)
+            """)
+    void deleteByUserId(@Param("userId") Long userId);
 
     interface ExerciseBest {
         Long getExerciseId();

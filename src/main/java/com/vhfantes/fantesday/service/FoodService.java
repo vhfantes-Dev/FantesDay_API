@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
@@ -16,12 +18,15 @@ import com.vhfantes.fantesday.client.dto.OffProduct;
 import com.vhfantes.fantesday.dto.ExternalFoodDTO;
 import com.vhfantes.fantesday.dto.FoodRequestDTO;
 import com.vhfantes.fantesday.dto.FoodResponseDTO;
+import com.vhfantes.fantesday.dto.PageResponseDTO;
 import com.vhfantes.fantesday.entity.CatalogSource;
 import com.vhfantes.fantesday.entity.Food;
 import com.vhfantes.fantesday.exception.BusinessException;
 import com.vhfantes.fantesday.exception.ForbiddenException;
 import com.vhfantes.fantesday.exception.ResourceNotFoundException;
 import com.vhfantes.fantesday.repository.FoodRepository;
+import com.vhfantes.fantesday.repository.MealItemRepository;
+import com.vhfantes.fantesday.security.CurrentUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,21 +40,18 @@ public class FoodService {
     private static final BigDecimal MAX_NUTRIENT_VALUE = BigDecimal.valueOf(100_000);
 
     private final FoodRepository foodRepository;
+    private final MealItemRepository mealItemRepository;
     private final OpenFoodFactsClient openFoodFactsClient;
+    private final UserService userService;
+    private final CurrentUser currentUser;
 
+    // Lista paginada; com name, pesquisa por parte do nome (sem diferenciar maiusculas/minusculas)
     @Transactional(readOnly = true)
-    public List<FoodResponseDTO> findAll() {
-        return foodRepository.findAll().stream()
-                .map(FoodResponseDTO::from)
-                .toList();
-    }
-
-    // Pesquisa por parte do nome, sem diferenciar maiusculas/minusculas
-    @Transactional(readOnly = true)
-    public List<FoodResponseDTO> searchByName(String name) {
-        return foodRepository.findByNameContainingIgnoreCase(name).stream()
-                .map(FoodResponseDTO::from)
-                .toList();
+    public PageResponseDTO<FoodResponseDTO> search(String name, Pageable pageable) {
+        Page<Food> page = name != null && !name.isBlank()
+                ? foodRepository.findByNameContainingIgnoreCase(name.trim(), pageable)
+                : foodRepository.findAll(pageable);
+        return PageResponseDTO.from(page, FoodResponseDTO::from);
     }
 
     @Transactional(readOnly = true)
@@ -72,6 +74,7 @@ public class FoodService {
         food.setFiberPer100g(dto.fiberPer100g());
         food.setDefaultUnit(dto.defaultUnit());
         food.setSource(CatalogSource.CUSTOM);
+        food.setCreatedBy(userService.getUserOrThrow(currentUser.id()));
 
         return FoodResponseDTO.from(foodRepository.save(food));
     }
@@ -107,14 +110,22 @@ public class FoodService {
 
     @Transactional
     public void delete(Long id) {
-        foodRepository.delete(getEditableFoodOrThrow(id));
+        Food food = getEditableFoodOrThrow(id);
+        if (mealItemRepository.existsByFoodId(id)) {
+            throw new BusinessException("Alimento usado em refeicoes; remova-o das refeicoes antes de excluir");
+        }
+        foodRepository.delete(food);
     }
 
-    // Alimentos importados (TACO e Open Food Facts) sao compartilhados: so os cadastrados manualmente podem mudar
+    // Alimentos importados (TACO e Open Food Facts) sao compartilhados e nao mudam;
+    // os cadastrados manualmente so podem ser alterados por quem os criou
     private Food getEditableFoodOrThrow(Long id) {
         Food food = getFoodOrThrow(id);
         if (food.getSource() != null && food.getSource() != CatalogSource.CUSTOM) {
             throw new ForbiddenException("Alimentos do catalogo (" + food.getSource() + ") nao podem ser alterados");
+        }
+        if (food.getCreatedBy() == null || !food.getCreatedBy().getId().equals(currentUser.id())) {
+            throw new ForbiddenException("Apenas quem cadastrou o alimento pode altera-lo");
         }
         return food;
     }

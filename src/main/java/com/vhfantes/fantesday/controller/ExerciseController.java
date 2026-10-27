@@ -2,6 +2,7 @@ package com.vhfantes.fantesday.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vhfantes.fantesday.config.Paging;
 import com.vhfantes.fantesday.dto.ExerciseRequestDTO;
 import com.vhfantes.fantesday.dto.ExerciseResponseDTO;
+import com.vhfantes.fantesday.dto.PageResponseDTO;
 import com.vhfantes.fantesday.service.ExerciseService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,19 +29,16 @@ import lombok.RequiredArgsConstructor;
 public class ExerciseController {
 
     private final ExerciseService exerciseService;
+    private final Paging paging;
 
-    // ?name=press pesquisa por nome; ?muscleGroup=Peito filtra pelo grupo muscular
+    // Paginado (?page=0&size=20, ordenado por nome); ?name=press e ?muscleGroup=Peito filtram (podem ser combinados)
     @GetMapping
-    public List<ExerciseResponseDTO> findAll(
+    public PageResponseDTO<ExerciseResponseDTO> findAll(
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) String muscleGroup) {
-        if (name != null && !name.isBlank()) {
-            return exerciseService.searchByName(name.trim());
-        }
-        if (muscleGroup != null && !muscleGroup.isBlank()) {
-            return exerciseService.findByMuscleGroup(muscleGroup.trim());
-        }
-        return exerciseService.findAll();
+            @RequestParam(required = false) String muscleGroup,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        return exerciseService.search(name, muscleGroup, paging.of(page, size, Sort.by("name")));
     }
 
     // Exercicios que tem rank de forca

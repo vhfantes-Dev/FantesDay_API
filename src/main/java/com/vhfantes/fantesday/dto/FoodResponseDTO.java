@@ -15,8 +15,10 @@ public record FoodResponseDTO(
         BigDecimal fiberPer100g,
         String defaultUnit,
         CatalogSource source,
-        String externalId) {
+        String externalId,
+        Long createdById) {
 
+    // createdById: quem cadastrou (so em alimentos CUSTOM); so essa pessoa pode alterar/excluir
     public static FoodResponseDTO from(Food food) {
         return new FoodResponseDTO(
                 food.getId(),
@@ -28,6 +30,7 @@ public record FoodResponseDTO(
                 food.getFiberPer100g(),
                 food.getDefaultUnit(),
                 food.getSource(),
-                food.getExternalId());
+                food.getExternalId(),
+                food.getCreatedBy() != null ? food.getCreatedBy().getId() : null);
     }
 }

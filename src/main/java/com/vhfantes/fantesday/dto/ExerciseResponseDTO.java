@@ -3,6 +3,7 @@ package com.vhfantes.fantesday.dto;
 import com.vhfantes.fantesday.entity.CatalogSource;
 import com.vhfantes.fantesday.entity.Exercise;
 
+// createdById: quem cadastrou (so em exercicios CUSTOM); so essa pessoa pode alterar/excluir
 public record ExerciseResponseDTO(
         Long id,
         String name,
@@ -13,7 +14,8 @@ public record ExerciseResponseDTO(
         String category,
         String instructions,
         String imageUrl,
-        CatalogSource source) {
+        CatalogSource source,
+        Long createdById) {
 
     public static ExerciseResponseDTO from(Exercise exercise) {
         return new ExerciseResponseDTO(
@@ -26,6 +28,7 @@ public record ExerciseResponseDTO(
                 exercise.getCategory(),
                 exercise.getInstructions(),
                 exercise.getImageUrl(),
-                exercise.getSource());
+                exercise.getSource(),
+                exercise.getCreatedBy() != null ? exercise.getCreatedBy().getId() : null);
     }
 }

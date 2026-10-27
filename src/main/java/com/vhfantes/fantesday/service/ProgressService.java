@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class ProgressService {
 
     // Regra de nivel: a cada 100 XP o usuario sobe 1 nivel (ajuste como quiser)
-    private static final int XP_PER_LEVEL = 100;
+    public static final int XP_PER_LEVEL = 100;
 
     private final ProgressRepository progressRepository;
     private final UserService userService;

@@ -2,6 +2,7 @@ package com.vhfantes.fantesday.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vhfantes.fantesday.config.Paging;
 import com.vhfantes.fantesday.dto.ExternalFoodDTO;
+import com.vhfantes.fantesday.dto.PageResponseDTO;
 import com.vhfantes.fantesday.dto.FoodRequestDTO;
 import com.vhfantes.fantesday.dto.FoodResponseDTO;
 import com.vhfantes.fantesday.service.FoodService;
@@ -27,13 +30,15 @@ import lombok.RequiredArgsConstructor;
 public class FoodController {
 
     private final FoodService foodService;
+    private final Paging paging;
 
-    // ?name=arroz pesquisa por parte do nome no banco (TACO + importados + cadastrados)
+    // Paginado (?page=0&size=20, ordenado por nome); ?name=arroz pesquisa por parte do nome
     @GetMapping
-    public List<FoodResponseDTO> findAll(@RequestParam(required = false) String name) {
-        return name != null && !name.isBlank()
-                ? foodService.searchByName(name.trim())
-                : foodService.findAll();
+    public PageResponseDTO<FoodResponseDTO> findAll(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        return foodService.search(name, paging.of(page, size, Sort.by("name")));
     }
 
     @GetMapping("/{id}")

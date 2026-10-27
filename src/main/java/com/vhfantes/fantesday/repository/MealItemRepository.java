@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -13,6 +14,12 @@ import com.vhfantes.fantesday.entity.MealItem;
 public interface MealItemRepository extends JpaRepository<MealItem, Long> {
 
     List<MealItem> findByMealId(Long mealId);
+
+    boolean existsByFoodId(Long foodId);
+
+    @Modifying
+    @Query("delete from MealItem i where i.meal.id in (select m.id from Meal m where m.user.id = :userId)")
+    void deleteByUserId(@Param("userId") Long userId);
 
     // Soma de calorias e macros de todas as refeicoes do usuario no dia
     @Query("""

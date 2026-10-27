@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vhfantes.fantesday.dto.ActivityImportRequestDTO;
+import com.vhfantes.fantesday.dto.ActivityImportResultDTO;
 import com.vhfantes.fantesday.dto.ActivityRequestDTO;
 import com.vhfantes.fantesday.dto.ActivityResponseDTO;
 import com.vhfantes.fantesday.security.CurrentUser;
@@ -39,6 +41,13 @@ public class ActivityController {
     public ActivityResponseDTO create(@PathVariable Long userId, @RequestBody ActivityRequestDTO dto) {
         currentUser.checkAccess(userId);
         return activityService.create(userId, dto);
+    }
+
+    // Importa um lote de atividades de outro app (Apple Saude, Google Fit...); repetidas sao ignoradas
+    @PostMapping("/users/{userId}/activities/import")
+    public ActivityImportResultDTO importActivities(@PathVariable Long userId, @RequestBody ActivityImportRequestDTO dto) {
+        currentUser.checkAccess(userId);
+        return activityService.importActivities(userId, dto);
     }
 
     @GetMapping("/activities/{id}")

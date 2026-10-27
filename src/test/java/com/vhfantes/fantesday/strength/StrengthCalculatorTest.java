@@ -56,14 +56,16 @@ class StrengthCalculatorTest {
 
     @Test
     void mapsScoreToRankAndLp() {
-        assertThat(StrengthRank.fromScore(0)).isEqualTo(StrengthRank.WOOD);
-        assertThat(StrengthRank.fromScore(99)).isEqualTo(StrengthRank.WOOD);
-        assertThat(StrengthRank.fromScore(100)).isEqualTo(StrengthRank.BRONZE);
-        assertThat(StrengthRank.fromScore(345)).isEqualTo(StrengthRank.GOLD);
+        assertThat(StrengthRank.fromScore(0)).isEqualTo(StrengthRank.BRONZE);
+        assertThat(StrengthRank.fromScore(99)).isEqualTo(StrengthRank.BRONZE);
+        assertThat(StrengthRank.fromScore(100)).isEqualTo(StrengthRank.SILVER);
+        assertThat(StrengthRank.fromScore(345)).isEqualTo(StrengthRank.PLATINUM);
+        assertThat(StrengthRank.fromScore(650)).isEqualTo(StrengthRank.GRANDMASTER);
+        assertThat(StrengthRank.fromScore(799)).isEqualTo(StrengthRank.CHALLENGER);
         assertThat(StrengthRank.lp(345)).isEqualTo(45);
         assertThat(StrengthRank.fromScore(950)).isEqualTo(StrengthRank.OLYMPIAN);
         assertThat(StrengthRank.lp(950)).isEqualTo(150);
         assertThat(StrengthRank.OLYMPIAN.next()).isNull();
-        assertThat(StrengthRank.GOLD.next()).isEqualTo(StrengthRank.PLATINUM);
+        assertThat(StrengthRank.DIAMOND.next()).isEqualTo(StrengthRank.MASTER);
     }
 }
