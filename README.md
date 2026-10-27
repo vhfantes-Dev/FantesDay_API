@@ -9,7 +9,9 @@ O catálogo de alimentos e de exercícios já vem pronto — a API importa a **T
 - [Tecnologias](#tecnologias)
 - [Como rodar](#como-rodar)
 - [Configuração](#configuração)
+- [Autenticação](#autenticação)
 - [Catálogos de alimentos e exercícios](#catálogos-de-alimentos-e-exercícios)
+- [Rank de força, PRs e streak](#rank-de-força-prs-e-streak)
 - [Endpoints](#endpoints)
 - [Erros](#erros)
 - [Testes](#testes)
@@ -18,12 +20,18 @@ O catálogo de alimentos e de exercícios já vem pronto — a API importa a **T
 - [Créditos dos dados](#créditos-dos-dados)
 
 ## Funcionalidades
-- **Usuários** com senha criptografada (BCrypt) e e-mail único.
-- **Progresso**: XP total, nível (a cada 100 XP sobe um nível) e categoria. Treinos somam XP automaticamente.
-- **Tarefas** diárias ou recorrentes, com marcação de concluída.
+- **Cadastro e login com JWT**: todas as rotas (exceto cadastro e login) exigem token, e cada usuário só acessa os próprios dados.
+- **Usuários** com senha criptografada (BCrypt), e-mail único, peso corporal e sexo.
+- **Progresso**: XP total, nível (a cada 100 XP sobe um nível) e categoria. Treinos e tarefas concluídas somam XP automaticamente.
+- **Metas diárias** de calorias, proteína, carboidrato e gordura, com o consumo do dia comparado à meta.
+- **Rank de força no estilo [Liftoff](https://liftoffrank.com/)**: cada série estima o 1RM e gera uma nota de 1 a 1000 relativa ao peso corporal e sexo, com 9 ranks (Wood → Olympian) por exercício, por grupo muscular e geral.
+- **Recordes pessoais (PRs)** detectados ao registrar a série, e histórico do 1RM estimado por exercício.
+- **Streak de treinos**: dias de descanso contam, mas 3 dias seguidos sem treinar quebram a sequência.
+- **Rankings** entre usuários: geral (nota de força) e semanal (volume levantado).
+- **Tarefas** diárias ou recorrentes; concluir dá 10 XP e desmarcar remove.
 - **Atividades** físicas (tipo, duração, calorias gastas).
-- **Refeições** montadas com alimentos do catálogo; cada item calcula calorias, proteína, carboidrato e gordura pela quantidade, e a refeição tem o total nutricional.
-- **Treinos** com exercícios, séries, repetições e carga.
+- **Refeições** com nome (ex: "Café da manhã"), montadas com alimentos do catálogo; cada item calcula calorias, proteína, carboidrato e gordura pela quantidade, e a refeição tem o total nutricional.
+- **Treinos** com exercícios e séries individuais (repetições e carga de cada série).
 - **Catálogo de alimentos**: ~600 alimentos brasileiros da TACO + produtos industrializados do Open Food Facts (por código de barras ou nome) + alimentos cadastrados pelo usuário.
 - **Catálogo de exercícios**: ~870 exercícios com grupo muscular em português, equipamento, nível, instruções e imagem.
 
@@ -34,7 +42,7 @@ O catálogo de alimentos e de exercícios já vem pronto — a API importa a **T
 | Framework | Spring Boot 4.1 (Web MVC, Data JPA, RestClient, Actuator) |
 | Banco de dados | PostgreSQL (Supabase) |
 | ORM | Hibernate (`ddl-auto=update` — o schema é criado/atualizado automaticamente) |
-| Segurança | `spring-security-crypto` (apenas BCrypt para senhas) |
+| Segurança | Spring Security 7 + OAuth2 Resource Server (JWT HS256), BCrypt para senhas |
 | Outros | Lombok, Jackson 3, Maven Wrapper |
 
 ## Como rodar
@@ -65,16 +73,49 @@ O catálogo de alimentos e de exercícios já vem pronto — a API importa a **T
 | `SUPABASE_DB_URL` | URL JDBC do banco, ex: `jdbc:postgresql://host:5432/postgres?sslmode=require` |
 | `SUPABASE_DB_USER` | Usuário do banco |
 | `SUPABASE_DB_PASSWORD` | Senha do banco |
+| `JWT_SECRET` | Chave para assinar os tokens, com **no mínimo 32 caracteres**. Sem ela, a API gera uma chave aleatória a cada inicialização e os tokens deixam de valer quando ela reinicia. **Obrigatória em produção.** |
+| `CORS_ALLOWED_ORIGINS` | Origens do frontend liberadas no CORS, separadas por vírgula (padrão: `*`) |
 | `OFF_CONTACT` | E-mail ou site enviado no `User-Agent` do Open Food Facts (a API deles pede uma forma de contato) |
+
+Para gerar um `JWT_SECRET`:
+```bash
+openssl rand -base64 48
+```
 
 O `.env` é carregado automaticamente pelo `application.properties` e está no `.gitignore` — nunca faça commit dele.
 
 ### Propriedades (`application.properties`)
 | Propriedade | Padrão | Descrição |
 |---|---|---|
+| `app.jwt.secret` | `${JWT_SECRET}` | Chave de assinatura dos tokens |
+| `app.jwt.expiration` | `24h` | Validade do token |
+| `app.cors.allowed-origins` | `${CORS_ALLOWED_ORIGINS:*}` | Origens liberadas no CORS |
+| `app.xp.task-completed` | `10` | XP ganho ao concluir uma tarefa |
 | `app.seed.enabled` | `true` | Importa TACO e free-exercise-db na inicialização (se ainda não estiverem no banco) |
 | `app.openfoodfacts.base-url` | `https://world.openfoodfacts.org` | Endereço da API do Open Food Facts |
 | `app.openfoodfacts.user-agent` | `FantesDay/0.0.1 (${OFF_CONTACT})` | Identificação enviada ao Open Food Facts |
+
+## Autenticação
+1. O usuário cria a conta em `POST /api/auth/register` ou entra em `POST /api/auth/login`. Os dois devolvem:
+   ```json
+   {
+     "token": "eyJhbGciOiJIUzI1NiJ9...",
+     "tokenType": "Bearer",
+     "expiresAt": "2026-09-27T21:26:26Z",
+     "user": { "id": 6, "name": "Usuario Teste", "email": "teste@fantesday.test", "...": "..." }
+   }
+   ```
+2. As demais requisições enviam o token no header:
+   ```
+   Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
+   ```
+3. O token vale 24 horas (`app.jwt.expiration`). Depois disso a API responde `401` e o usuário precisa entrar de novo.
+
+**Regras de acesso:**
+- Nas rotas com `{userId}`, ele precisa ser o id do dono do token. Senão, a resposta é `403`.
+- Tarefas, refeições, treinos, séries e atividades acessados pelo próprio id também só respondem ao dono.
+- O catálogo (alimentos e exercícios) é compartilhado: qualquer usuário logado lê e cadastra, mas itens importados (TACO, Open Food Facts, free-exercise-db) não podem ser alterados nem excluídos.
+- Os rankings mostram nome e nota de todos os usuários.
 
 ## Catálogos de alimentos e exercícios
 A API usa uma abordagem **híbrida**: os dados ficam no banco local, e fontes externas só são consultadas quando preciso.
@@ -91,14 +132,59 @@ A importação é feita pelo [CatalogSeeder](src/main/java/com/vhfantes/fantesda
 
 Os grupos musculares são traduzidos para português (`Peito`, `Costas`, `Dorsais`, `Ombros`, `Bíceps`, `Tríceps`, `Quadríceps`, `Posteriores de coxa`, `Glúteos`, `Panturrilhas`, `Abdômen`, ...). Nomes e instruções dos exercícios continuam em inglês.
 
+## Rank de força, PRs e streak
+Inspirado no [Liftoff](https://liftoffrank.com/). A fórmula exata do Liftoff não é pública; esta é uma implementação própria com a mesma ideia.
+
+### Como a nota é calculada
+1. **1RM estimado** a cada série, pela fórmula de Epley: `carga × (1 + reps / 30)`. Séries com mais de 20 repetições não estimam 1RM.
+2. **Razão de força**: o melhor 1RM do exercício dividido pelo peso corporal do usuário.
+   - Exercícios com halteres usam o peso de **um** halter.
+   - Barra fixa, barra supinada e paralelas usam **peso corporal + carga extra**.
+3. **Nota de 1 a 1000**: a razão é comparada com os padrões de força do exercício ([strength-standards.json](src/main/resources/seed/strength-standards.json)), que têm 5 níveis por sexo:
+
+   | Nível | Iniciante | Novato | Intermediário | Avançado | Elite | 1,5× Elite |
+   |---|---|---|---|---|---|---|
+   | Nota | 100 | 250 | 400 | 600 | 800 | 1000 |
+
+   Entre os níveis a nota é interpolada linearmente.
+4. **Grupo muscular e geral**: as notas dos exercícios formam a nota de cada grupo muscular, e as dos grupos formam a nota geral. A média é ponderada pela própria nota, então as notas mais altas pesam mais.
+
+### Ranks
+Cada rank cobre 100 pontos, e o **LP** (lift points) é quanto o usuário já avançou dentro do rank:
+
+| Rank | Wood | Bronze | Silver | Gold | Platinum | Diamond | Champion | Titan | Olympian |
+|---|---|---|---|---|---|---|---|---|---|
+| Nota | 0–99 | 100–199 | 200–299 | 300–399 | 400–499 | 500–599 | 600–699 | 700–799 | 800–1000 |
+
+Só os **46 exercícios** da lista curada têm rank (supino, agachamento, levantamento terra, desenvolvimento, remadas, barra fixa, roscas, tríceps, etc.). Veja com `GET /api/exercises/ranked`. Para calcular o rank, o usuário precisa ter `bodyweightKg` e `sex` (`MALE`/`FEMALE`) preenchidos.
+
+### Recordes (PRs)
+Ao registrar uma série, ela é marcada como `personalRecord: true` se o 1RM estimado for maior que o de todas as outras séries do usuário naquele exercício. A resposta já traz o rank atualizado do exercício.
+
+### Streak
+- Cada dia com treino mantém o streak, e os dias de descanso entre treinos também contam.
+- **3 dias seguidos sem treinar** quebram a sequência (mesma regra do Liftoff).
+- `expiresOn` é o último dia para treinar sem perder o streak.
+
+### Rankings
+- **Geral** (`/api/leaderboard`): usuários ordenados pela nota de força geral.
+- **Semanal** (`/api/leaderboard/weekly`): volume levantado (soma de reps × carga) na semana atual, de segunda a domingo.
+
+O XP e o nível continuam existindo e medem a constância; o rank de força mede quão forte o usuário é.
+
 ## Endpoints
-Todas as rotas começam com `/api`. Atualizações usam `PATCH` e alteram apenas os campos enviados no corpo.
+Todas as rotas começam com `/api` e exigem `Authorization: Bearer <token>`, exceto cadastro e login. Atualizações usam `PATCH` e alteram apenas os campos enviados no corpo.
+
+### Autenticação
+| Método | Rota | Descrição |
+|---|---|---|
+| `POST` | `/api/auth/register` | Cria a conta e devolve o token (**público**) |
+| `POST` | `/api/auth/login` | Troca e-mail e senha por um token (**público**) |
+| `GET` | `/api/auth/me` | Usuário dono do token |
 
 ### Usuários e progresso
 | Método | Rota | Descrição |
 |---|---|---|
-| `GET` | `/api/users` | Lista usuários |
-| `POST` | `/api/users` | Cria usuário (e seu progresso zerado) |
 | `GET` | `/api/users/{id}` | Busca usuário |
 | `PATCH` | `/api/users/{id}` | Atualiza usuário |
 | `DELETE` | `/api/users/{id}` | Exclui usuário |
@@ -112,11 +198,13 @@ Todas as rotas começam com `/api`. Atualizações usam `PATCH` e alteram apenas
 | `GET` | `/api/users/{userId}/tasks?date=yyyy-MM-dd` | Lista tarefas (filtro por dia opcional) |
 | `POST` | `/api/users/{userId}/tasks` | Cria tarefa |
 | `GET` / `PATCH` / `DELETE` | `/api/tasks/{id}` | Busca, atualiza ou exclui |
-| `PATCH` | `/api/tasks/{id}/complete` | Marca como concluída |
-| `PATCH` | `/api/tasks/{id}/uncomplete` | Desmarca |
+| `PATCH` | `/api/tasks/{id}/complete` | Marca como concluída e soma 10 XP |
+| `PATCH` | `/api/tasks/{id}/uncomplete` | Desmarca e remove os 10 XP |
 | `GET` | `/api/users/{userId}/activities` | Lista atividades |
 | `POST` | `/api/users/{userId}/activities` | Cria atividade |
 | `GET` / `PATCH` / `DELETE` | `/api/activities/{id}` | Busca, atualiza ou exclui |
+
+O XP das tarefas só muda quando o estado muda: concluir duas vezes seguidas não soma em dobro. Excluir uma tarefa concluída remove o XP que ela deu.
 
 ### Alimentos
 | Método | Rota | Descrição |
@@ -131,7 +219,7 @@ Todas as rotas começam com `/api`. Atualizações usam `PATCH` e alteram apenas
 | Método | Rota | Descrição |
 |---|---|---|
 | `GET` | `/api/users/{userId}/meals?date=yyyy-MM-dd` | Lista refeições (filtro por dia opcional) |
-| `POST` | `/api/users/{userId}/meals` | Cria refeição (data padrão: hoje) |
+| `POST` | `/api/users/{userId}/meals` | Cria refeição (`{"name": "Café da manhã", "date": "2026-09-26"}`); sem nome vira "Refeição N", e sem data vira hoje |
 | `GET` / `PATCH` / `DELETE` | `/api/meals/{id}` | Busca, atualiza ou exclui (com os itens) |
 | `GET` | `/api/meals/{id}/items` | Itens da refeição |
 | `POST` | `/api/meals/{id}/items` | Adiciona alimento (`{"foodId": 3, "quantity": 150, "unit": "g"}`) |
@@ -139,6 +227,25 @@ Todas as rotas começam com `/api`. Atualizações usam `PATCH` e alteram apenas
 | `PATCH` / `DELETE` | `/api/meal-items/{id}` | Atualiza ou remove um item |
 
 Os valores nutricionais são calculados como `quantidade × valor por 100g ÷ 100`, considerando a quantidade em gramas (ou ml).
+
+### Metas
+| Método | Rota | Descrição |
+|---|---|---|
+| `GET` | `/api/users/{userId}/goals` | Metas diárias (campos `null` enquanto não forem definidos) |
+| `PATCH` | `/api/users/{userId}/goals` | Cria ou altera metas (`{"dailyCalories": 2200, "proteinG": 150, "carbsG": 250, "fatG": 70}`) |
+| `GET` | `/api/users/{userId}/nutrition/daily?date=yyyy-MM-dd` | Consumo do dia vs. meta (data padrão: hoje) |
+
+Exemplo de `/nutrition/daily`:
+```json
+{
+  "date": "2026-09-26",
+  "consumed": { "calories": 442, "protein": 8.93, "carbs": 94.84, "fat": 1.96 },
+  "goal": { "dailyCalories": 2200, "proteinG": 150.00, "carbsG": 250.00, "fatG": 70.00, "...": "..." },
+  "remaining": { "calories": 1758, "protein": 141.07, "carbs": 155.16, "fat": 68.04 },
+  "caloriesPercent": 20
+}
+```
+`remaining` fica negativo quando o usuário passa da meta.
 
 ### Exercícios e treinos
 | Método | Rota | Descrição |
@@ -150,14 +257,30 @@ Os valores nutricionais são calculados como `quantidade × valor por 100g ÷ 10
 | `POST` | `/api/users/{userId}/workouts` | Cria treino (o `xpEarned` é somado ao progresso) |
 | `GET` / `PATCH` / `DELETE` | `/api/workouts/{id}` | Busca, atualiza ou exclui (ajustando o XP) |
 | `GET` | `/api/workouts/{id}/exercises` | Exercícios do treino |
-| `POST` | `/api/workouts/{id}/exercises` | Adiciona exercício (`{"exerciseId": 1, "sets": 4, "reps": 10, "weightKg": 40}`) |
-| `PATCH` / `DELETE` | `/api/workout-exercises/{id}` | Atualiza ou remove um exercício do treino |
+| `POST` | `/api/workouts/{id}/exercises` | Adiciona exercício (`{"exerciseId": 44}`) |
+| `PATCH` / `DELETE` | `/api/workout-exercises/{id}` | Troca o exercício ou remove (com as séries) |
+| `GET` | `/api/workout-exercises/{id}/sets` | Séries do exercício |
+| `POST` | `/api/workout-exercises/{id}/sets` | Registra série (`{"reps": 8, "weightKg": 70}`); devolve 1RM estimado, PR e rank |
+| `PATCH` / `DELETE` | `/api/workout-sets/{id}` | Atualiza ou remove uma série |
+
+### Rank, streak e rankings
+| Método | Rota | Descrição |
+|---|---|---|
+| `GET` | `/api/exercises/ranked` | Exercícios que têm rank de força |
+| `GET` | `/api/users/{userId}/strength` | Rank geral, por grupo muscular e por exercício |
+| `GET` | `/api/users/{userId}/exercises/{exerciseId}/history` | Melhor 1RM estimado e volume por dia |
+| `GET` | `/api/users/{userId}/streak` | Streak atual, maior streak e prazo para treinar |
+| `GET` | `/api/leaderboard?limit=50` | Ranking geral pela nota de força |
+| `GET` | `/api/leaderboard/weekly?limit=50` | Ranking da semana pelo volume levantado |
 
 ### Exemplo
+Criar a conta (a resposta traz o `token`):
 ```bash
-curl -X POST http://localhost:8080/api/users \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Usuario Teste","email":"teste@fantesday.test","password":"senha123"}'
+curl -X POST http://localhost:8080/api/auth/register -H "Content-Type: application/json" -d '{"name":"Usuario Teste","email":"teste@fantesday.test","password":"senha123","bodyweightKg":80,"sex":"MALE"}'
+```
+Usar o token:
+```bash
+curl http://localhost:8080/api/auth/me -H "Authorization: Bearer SEU_TOKEN"
 ```
 
 ## Erros
@@ -173,21 +296,30 @@ Os erros seguem o formato **ProblemDetail** (RFC 9457):
 | Status | Quando |
 |---|---|
 | `400` | Regra de negócio violada (ex: e-mail já cadastrado), JSON inválido ou parâmetro com tipo errado |
+| `401` | Token ausente, inválido ou expirado, ou e-mail/senha errados no login |
+| `403` | Tentativa de acessar dados de outro usuário, ou de alterar item importado do catálogo |
 | `404` | Registro não encontrado |
 
 ## Testes
 
 ### Unitários
 ```bash
-./mvnw test -Dtest=MuscleGroupTranslatorTest,OpenFoodFactsClientTest,MealServiceCalculationTest
+./mvnw test -Dtest=MuscleGroupTranslatorTest,OpenFoodFactsClientTest,MealServiceCalculationTest,StrengthCalculatorTest,StrengthStandardsTest,StreakServiceTest,TokenServiceTest
 ```
-Não precisam de banco: cobrem a tradução de músculos, o client do Open Food Facts (com `MockRestServiceServer`) e o cálculo nutricional.
+Não precisam de banco. Cobrem:
+- a tradução de músculos;
+- o client do Open Food Facts (com `MockRestServiceServer`);
+- o cálculo nutricional;
+- o cálculo do rank (1RM, nota, LP) e a consistência dos padrões de força;
+- as regras do streak;
+- a geração e validação do JWT (assinatura, expiração, tamanho da chave).
 O `FantesdayApplicationTests` sobe o contexto completo e precisa de um banco configurado no `.env`.
 
 ### Manuais (Insomnia)
 A pasta [`insomnia/`](insomnia/) tem uma coleção pronta com todas as requisições:
 1. No Insomnia: **Import → From File** → `insomnia/FantesDay.insomnia.json`.
-2. Ajuste as variáveis do ambiente (`user_id`, `meal_id`, ...) com os ids retornados.
+2. Rode **Autenticação → Cadastrar** (ou **Login**) e cole o `token` e o id do usuário nas variáveis `token` e `user_id` do ambiente.
+3. Ajuste as outras variáveis (`meal_id`, `workout_id`, ...) com os ids retornados.
 
 Os corpos JSON de cada requisição também estão em `insomnia/bodies/`. Veja o [README da pasta](insomnia/README.md).
 
@@ -195,32 +327,39 @@ Os corpos JSON de cada requisição também estão em `insomnia/bodies/`. Veja o
 ```
 src/main/java/com/vhfantes/fantesday
 ├── client/        # Client HTTP do Open Food Facts e DTOs da resposta
-├── config/        # BCrypt, RestClient e log de conexão com o banco
+├── config/        # Segurança (JWT, CORS), BCrypt, RestClient e log de conexão com o banco
 ├── controller/    # Endpoints REST
 ├── dto/           # Records de request/response (XxxRequestDTO / XxxResponseDTO)
 ├── entity/        # Entidades JPA
 ├── exception/     # Exceções de negócio e handler global de erros
 ├── repository/    # Repositórios Spring Data JPA
+├── security/      # Geração do token e usuário da requisição atual
 ├── seed/          # Importação da TACO e do free-exercise-db
-└── service/       # Regras de negócio
+├── service/       # Regras de negócio
+└── strength/      # Cálculo do rank de força (1RM, nota, ranks) e padrões de força
 src/main/resources
 ├── application.properties
-└── seed/          # taco.json e exercises.json
+└── seed/          # taco.json, exercises.json e strength-standards.json
 ```
 
 ### Modelo de dados
-- `User` 1—1 `Progress`
+- `User` 1—1 `Progress` e 1—1 `NutritionGoal`
 - `User` 1—N `Task`, `Activity`, `Meal`, `Workout`
 - `Meal` 1—N `MealItem` N—1 `Food`
 - `Workout` 1—N `WorkoutExercise` N—1 `Exercise`
+- `WorkoutExercise` 1—N `WorkoutSet` (cada série, com o 1RM estimado e a marca de recorde)
 - `Food` e `Exercise` são catálogos globais (não pertencem a um usuário)
 
 ## Limitações conhecidas
-- **Sem autenticação**: qualquer cliente acessa qualquer rota. O `userId` vai na URL.
+- **Sem renovação ou revogação de token**: não há refresh token nem logout no servidor. O logout é apagar o token no frontend, e um token vazado vale até expirar (24 h).
+- **Itens cadastrados no catálogo não têm dono**: um alimento ou exercício criado por um usuário pode ser editado ou excluído por qualquer outro usuário logado.
 - **Excluir um usuário com dados** (tarefas, refeições, treinos ou atividades) falha, porque esses registros não são apagados junto. Apague-os antes.
 - **Busca no Open Food Facts**: a busca por nome deles tem limite de requisições (~10/min) e às vezes responde 503. Nesses casos `/api/foods/external` devolve lista vazia.
 - **Schema gerenciado pelo Hibernate** (`ddl-auto=update`): não há migrações versionadas (Flyway/Liquibase).
 - **Unidades**: o cálculo nutricional considera a quantidade em gramas/ml.
+- **Padrões de força aproximados**: os valores de `strength-standards.json` são estimativas baseadas em tabelas públicas de força, não os do Liftoff. Ajuste à vontade; o `StrengthStandardsTest` valida o arquivo.
+- **Rank calculado na hora**: usa o peso corporal atual. Se o usuário mudar de peso, os ranks mudam junto. Não há temporadas (o Liftoff reinicia a cada 4 meses).
+- **Ranking semanal por volume**: em exercícios com peso corporal, só a carga extra entra no volume.
 
 ## Créditos dos dados
 - **TACO** — Tabela Brasileira de Composição de Alimentos, 4ª edição, NEPA/UNICAMP. Dados processados a partir do repositório [brolesi/taco](https://github.com/brolesi/taco) (MIT).
