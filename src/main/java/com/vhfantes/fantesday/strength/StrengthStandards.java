@@ -24,10 +24,13 @@ public class StrengthStandards {
     public static final String FILE = "seed/strength-standards.json";
 
     private final Map<String, StrengthStandard> byExerciseId;
+    private final List<String> orderedIds;
 
     public StrengthStandards(JsonMapper jsonMapper) {
-        this.byExerciseId = load(jsonMapper).stream()
+        List<StrengthStandard> standards = load(jsonMapper);
+        this.byExerciseId = standards.stream()
                 .collect(Collectors.toUnmodifiableMap(StrengthStandard::exerciseId, Function.identity()));
+        this.orderedIds = standards.stream().map(StrengthStandard::exerciseId).toList();
     }
 
     public static List<StrengthStandard> load(JsonMapper jsonMapper) {
@@ -49,5 +52,10 @@ public class StrengthStandards {
 
     public Set<String> exerciseIds() {
         return byExerciseId.keySet();
+    }
+
+    // Na ordem do arquivo (dentro de cada musculo, os exercicios principais vem primeiro); usado pelo gerador de rotinas
+    public List<String> orderedExerciseIds() {
+        return orderedIds;
     }
 }

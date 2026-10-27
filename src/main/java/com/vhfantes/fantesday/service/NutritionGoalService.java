@@ -24,6 +24,7 @@ public class NutritionGoalService {
 
     private static final int MAX_DAILY_CALORIES = 20_000;
     private static final BigDecimal MAX_MACRO_GRAMS = BigDecimal.valueOf(2_000);
+    private static final int MAX_DAILY_WATER_ML = 10_000;
 
     private final NutritionGoalRepository nutritionGoalRepository;
     private final MealItemRepository mealItemRepository;
@@ -61,6 +62,12 @@ public class NutritionGoalService {
         }
         if (dto.fatG() != null) {
             goal.setFatG(validateMacro(dto.fatG(), "gordura"));
+        }
+        if (dto.dailyWaterMl() != null) {
+            if (dto.dailyWaterMl() <= 0 || dto.dailyWaterMl() > MAX_DAILY_WATER_ML) {
+                throw new BusinessException("Meta de agua deve estar entre 1 e " + MAX_DAILY_WATER_ML + " ml");
+            }
+            goal.setDailyWaterMl(dto.dailyWaterMl());
         }
 
         // saveAndFlush para o @UpdateTimestamp ja vir preenchido na resposta

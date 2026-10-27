@@ -36,14 +36,17 @@ public class NutritionGoal {
 
     private Integer dailyCalories;
 
-    @Column(precision = 6, scale = 2)
+    @Column(name = "protein_g", precision = 6, scale = 2)
     private BigDecimal proteinG;
 
-    @Column(precision = 6, scale = 2)
+    @Column(name = "carbs_g", precision = 6, scale = 2)
     private BigDecimal carbsG;
 
-    @Column(precision = 6, scale = 2)
+    @Column(name = "fat_g", precision = 6, scale = 2)
     private BigDecimal fatG;
+
+    // Meta diaria de agua
+    private Integer dailyWaterMl;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;

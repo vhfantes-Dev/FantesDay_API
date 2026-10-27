@@ -40,7 +40,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import tools.jackson.databind.json.JsonMapper;
 
-// Autenticacao por JWT (HS256): /api/auth/login e /api/auth/register sao publicos;
+// Autenticacao por JWT (HS256): login, cadastro, refresh, logout e recuperacao de senha sao publicos;
 // o resto exige o header "Authorization: Bearer <token>".
 @Configuration
 public class SecurityConfig {
@@ -57,7 +57,8 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register", "/api/auth/refresh",
+                                "/api/auth/logout", "/api/auth/forgot-password", "/api/auth/reset-password").permitAll()
                         .requestMatchers("/actuator/health", "/error").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2

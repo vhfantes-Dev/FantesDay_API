@@ -31,15 +31,23 @@ public class TaskController {
     private final TaskService taskService;
     private final CurrentUser currentUser;
 
-    // ?date=yyyy-MM-dd filtra pelo dia (opcional)
+    // Sem ?date: todas as tarefas. Com ?date=yyyy-MM-dd: as tarefas daquele dia (inclui as recorrentes),
+    // com "completed" indicando se foram feitas naquele dia.
     @GetMapping("/users/{userId}/tasks")
     public List<TaskResponseDTO> findByUser(
             @PathVariable Long userId,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         currentUser.checkAccess(userId);
         return date != null
-                ? taskService.findByUserAndDate(userId, date)
+                ? taskService.findForDate(userId, date)
                 : taskService.findByUser(userId);
+    }
+
+    // Atalho para as tarefas de hoje
+    @GetMapping("/users/{userId}/tasks/today")
+    public List<TaskResponseDTO> findToday(@PathVariable Long userId) {
+        currentUser.checkAccess(userId);
+        return taskService.findForDate(userId, LocalDate.now());
     }
 
     @PostMapping("/users/{userId}/tasks")
@@ -59,14 +67,19 @@ public class TaskController {
         return taskService.update(id, dto);
     }
 
+    // ?date=yyyy-MM-dd conclui em outro dia (padrao: hoje; nao aceita datas futuras)
     @PatchMapping("/tasks/{id}/complete")
-    public TaskResponseDTO complete(@PathVariable Long id) {
-        return taskService.setCompleted(id, true);
+    public TaskResponseDTO complete(
+            @PathVariable Long id,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return taskService.setCompleted(id, true, date);
     }
 
     @PatchMapping("/tasks/{id}/uncomplete")
-    public TaskResponseDTO uncomplete(@PathVariable Long id) {
-        return taskService.setCompleted(id, false);
+    public TaskResponseDTO uncomplete(
+            @PathVariable Long id,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return taskService.setCompleted(id, false, date);
     }
 
     @DeleteMapping("/tasks/{id}")

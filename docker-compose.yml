@@ -1,0 +1,36 @@
+# Ambiente local completo (API + Postgres), sem precisar do Supabase:
+#   docker compose up --build
+# Na primeira subida o Flyway cria as tabelas e a API importa TACO e exercicios (leva alguns minutos).
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: fantesday
+      POSTGRES_USER: fantesday
+      POSTGRES_PASSWORD: fantesday
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fantesday -d fantesday"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SUPABASE_DB_URL: jdbc:postgresql://db:5432/fantesday
+      SUPABASE_DB_USER: fantesday
+      SUPABASE_DB_PASSWORD: fantesday
+      # Troque por um valor seu (minimo 32 caracteres) fora do ambiente local
+      JWT_SECRET: dev-only-secret-troque-em-producao-0123456789
+    ports:
+      - "8080:8080"
+
+volumes:
+  db-data:

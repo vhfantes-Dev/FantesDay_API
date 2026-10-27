@@ -12,6 +12,7 @@ public record NutritionGoalResponseDTO(
         BigDecimal proteinG,
         BigDecimal carbsG,
         BigDecimal fatG,
+        Integer dailyWaterMl,
         LocalDateTime updatedAt) {
 
     public static NutritionGoalResponseDTO from(NutritionGoal goal) {
@@ -21,10 +22,11 @@ public record NutritionGoalResponseDTO(
                 goal.getProteinG(),
                 goal.getCarbsG(),
                 goal.getFatG(),
+                goal.getDailyWaterMl(),
                 goal.getUpdatedAt());
     }
 
     public static NutritionGoalResponseDTO empty(Long userId) {
-        return new NutritionGoalResponseDTO(userId, null, null, null, null, null);
+        return new NutritionGoalResponseDTO(userId, null, null, null, null, null, null);
     }
 }

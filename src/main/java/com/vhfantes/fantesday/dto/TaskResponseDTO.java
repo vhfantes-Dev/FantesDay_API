@@ -5,7 +5,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import com.vhfantes.fantesday.entity.Task;
+import com.vhfantes.fantesday.entity.TaskCompletion;
+import com.vhfantes.fantesday.task.TaskSchedule;
 
+// completed/completedAt se referem a referenceDate:
+// - tarefa recorrente: concluida naquele dia;
+// - tarefa avulsa: concluida (em qualquer dia).
 public record TaskResponseDTO(
         Long id,
         Long userId,
@@ -14,10 +19,12 @@ public record TaskResponseDTO(
         LocalDate date,
         LocalTime time,
         String weekDays,
-        Boolean completed,
+        boolean recurring,
+        LocalDate referenceDate,
+        boolean completed,
         LocalDateTime completedAt) {
 
-    public static TaskResponseDTO from(Task task) {
+    public static TaskResponseDTO from(Task task, LocalDate referenceDate, TaskCompletion completion) {
         return new TaskResponseDTO(
                 task.getId(),
                 task.getUser().getId(),
@@ -26,7 +33,9 @@ public record TaskResponseDTO(
                 task.getDate(),
                 task.getTime(),
                 task.getWeekDays(),
-                task.getCompleted(),
-                task.getCompletedAt());
+                TaskSchedule.isRecurring(task),
+                referenceDate,
+                completion != null,
+                completion != null ? completion.getCompletedAt() : null);
     }
 }

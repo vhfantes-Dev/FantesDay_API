@@ -48,6 +48,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
+    // Quando a foto de perfil mudou (null = sem foto). A imagem fica em UserPhoto.
+    private LocalDateTime photoUpdatedAt;
+
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;

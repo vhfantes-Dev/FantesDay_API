@@ -11,8 +11,10 @@ public record ActivityResponseDTO(
         Integer durationMinutes,
         String origin,
         String importSource,
+        String externalId,
         Integer caloriesBurned,
-        LocalDate date) {
+        LocalDate date,
+        Integer xpEarned) {
 
     public static ActivityResponseDTO from(Activity activity) {
         return new ActivityResponseDTO(
@@ -22,7 +24,9 @@ public record ActivityResponseDTO(
                 activity.getDurationMinutes(),
                 activity.getOrigin(),
                 activity.getImportSource(),
+                activity.getExternalId(),
                 activity.getCaloriesBurned(),
-                activity.getDate());
+                activity.getDate(),
+                activity.getXpEarned());
     }
 }
