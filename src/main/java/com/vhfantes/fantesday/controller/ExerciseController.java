@@ -41,6 +41,12 @@ public class ExerciseController {
         return exerciseService.findAll();
     }
 
+    // Exercicios que tem rank de forca
+    @GetMapping("/ranked")
+    public List<ExerciseResponseDTO> findRanked() {
+        return exerciseService.findRanked();
+    }
+
     @GetMapping("/{id}")
     public ExerciseResponseDTO findById(@PathVariable Long id) {
         return exerciseService.findById(id);

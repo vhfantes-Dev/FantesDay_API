@@ -19,6 +19,7 @@ import com.vhfantes.fantesday.dto.FoodResponseDTO;
 import com.vhfantes.fantesday.entity.CatalogSource;
 import com.vhfantes.fantesday.entity.Food;
 import com.vhfantes.fantesday.exception.BusinessException;
+import com.vhfantes.fantesday.exception.ForbiddenException;
 import com.vhfantes.fantesday.exception.ResourceNotFoundException;
 import com.vhfantes.fantesday.repository.FoodRepository;
 
@@ -77,7 +78,7 @@ public class FoodService {
 
     @Transactional
     public FoodResponseDTO update(Long id, FoodRequestDTO dto) {
-        Food food = getFoodOrThrow(id);
+        Food food = getEditableFoodOrThrow(id);
 
         if (dto.name() != null && !dto.name().isBlank()) {
             food.setName(dto.name().trim());
@@ -106,7 +107,16 @@ public class FoodService {
 
     @Transactional
     public void delete(Long id) {
-        foodRepository.delete(getFoodOrThrow(id));
+        foodRepository.delete(getEditableFoodOrThrow(id));
+    }
+
+    // Alimentos importados (TACO e Open Food Facts) sao compartilhados: so os cadastrados manualmente podem mudar
+    private Food getEditableFoodOrThrow(Long id) {
+        Food food = getFoodOrThrow(id);
+        if (food.getSource() != null && food.getSource() != CatalogSource.CUSTOM) {
+            throw new ForbiddenException("Alimentos do catalogo (" + food.getSource() + ") nao podem ser alterados");
+        }
+        return food;
     }
 
     // ---------- Open Food Facts ----------

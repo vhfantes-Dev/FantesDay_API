@@ -11,6 +11,7 @@ import com.vhfantes.fantesday.entity.Activity;
 import com.vhfantes.fantesday.exception.BusinessException;
 import com.vhfantes.fantesday.exception.ResourceNotFoundException;
 import com.vhfantes.fantesday.repository.ActivityRepository;
+import com.vhfantes.fantesday.security.CurrentUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +21,7 @@ public class ActivityService {
 
     private final ActivityRepository activityRepository;
     private final UserService userService;
+    private final CurrentUser currentUser;
 
     @Transactional(readOnly = true)
     public List<ActivityResponseDTO> findByUser(Long userId) {
@@ -83,8 +85,11 @@ public class ActivityService {
         activityRepository.delete(getActivityOrThrow(id));
     }
 
+    // So o dono da atividade pode acessa-la
     private Activity getActivityOrThrow(Long id) {
-        return activityRepository.findById(id)
+        Activity activity = activityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Atividade nao encontrada: " + id));
+        currentUser.checkAccess(activity.getUser().getId());
+        return activity;
     }
 }

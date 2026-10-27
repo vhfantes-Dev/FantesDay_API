@@ -12,6 +12,7 @@ import com.vhfantes.fantesday.dto.CategoryRequestDTO;
 import com.vhfantes.fantesday.dto.ProgressResponseDTO;
 import com.vhfantes.fantesday.dto.XpRequestDTO;
 import com.vhfantes.fantesday.exception.BusinessException;
+import com.vhfantes.fantesday.security.CurrentUser;
 import com.vhfantes.fantesday.service.ProgressService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,14 +23,17 @@ import lombok.RequiredArgsConstructor;
 public class ProgressController {
 
     private final ProgressService progressService;
+    private final CurrentUser currentUser;
 
     @GetMapping
     public ProgressResponseDTO findByUser(@PathVariable Long userId) {
+        currentUser.checkAccess(userId);
         return progressService.findByUserId(userId);
     }
 
     @PostMapping("/xp")
     public ProgressResponseDTO addXp(@PathVariable Long userId, @RequestBody XpRequestDTO dto) {
+        currentUser.checkAccess(userId);
         if (dto.xp() == null) {
             throw new BusinessException("XP e obrigatorio");
         }
@@ -38,6 +42,7 @@ public class ProgressController {
 
     @PatchMapping("/category")
     public ProgressResponseDTO updateCategory(@PathVariable Long userId, @RequestBody CategoryRequestDTO dto) {
+        currentUser.checkAccess(userId);
         return progressService.updateCategory(userId, dto.category());
     }
 }

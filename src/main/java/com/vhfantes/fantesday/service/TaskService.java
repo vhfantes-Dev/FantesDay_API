@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import com.vhfantes.fantesday.entity.Task;
 import com.vhfantes.fantesday.exception.BusinessException;
 import com.vhfantes.fantesday.exception.ResourceNotFoundException;
 import com.vhfantes.fantesday.repository.TaskRepository;
+import com.vhfantes.fantesday.security.CurrentUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +24,12 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final UserService userService;
+    private final ProgressService progressService;
+    private final CurrentUser currentUser;
+
+    // XP ganho ao concluir uma tarefa (app.xp.task-completed)
+    @Value("${app.xp.task-completed}")
+    private int taskCompletedXp;
 
     @Transactional(readOnly = true)
     public List<TaskResponseDTO> findByUser(Long userId) {
@@ -83,22 +91,37 @@ public class TaskService {
         return TaskResponseDTO.from(task);
     }
 
-    // Marca/desmarca a tarefa como concluida
+    // Marca/desmarca a tarefa como concluida. Concluir da XP e desmarcar remove;
+    // repetir a mesma acao nao muda o XP.
     @Transactional
     public TaskResponseDTO setCompleted(Long id, boolean completed) {
         Task task = getTaskOrThrow(id);
-        task.setCompleted(completed);
-        task.setCompletedAt(completed ? LocalDateTime.now() : null);
+        boolean wasCompleted = Boolean.TRUE.equals(task.getCompleted());
+
+        if (completed != wasCompleted) {
+            task.setCompleted(completed);
+            task.setCompletedAt(completed ? LocalDateTime.now() : null);
+            progressService.addXp(task.getUser().getId(), completed ? taskCompletedXp : -taskCompletedXp);
+        }
+
         return TaskResponseDTO.from(task);
     }
 
+    // Excluir uma tarefa concluida desconta o XP que ela deu
     @Transactional
     public void delete(Long id) {
-        taskRepository.delete(getTaskOrThrow(id));
+        Task task = getTaskOrThrow(id);
+        if (Boolean.TRUE.equals(task.getCompleted())) {
+            progressService.addXp(task.getUser().getId(), -taskCompletedXp);
+        }
+        taskRepository.delete(task);
     }
 
+    // So o dono da tarefa pode acessa-la
     private Task getTaskOrThrow(Long id) {
-        return taskRepository.findById(id)
+        Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Tarefa nao encontrada: " + id));
+        currentUser.checkAccess(task.getUser().getId());
+        return task;
     }
 }

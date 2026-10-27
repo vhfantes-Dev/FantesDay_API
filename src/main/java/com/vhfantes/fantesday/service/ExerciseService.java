@@ -1,5 +1,6 @@
 package com.vhfantes.fantesday.service;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -10,8 +11,10 @@ import com.vhfantes.fantesday.dto.ExerciseResponseDTO;
 import com.vhfantes.fantesday.entity.CatalogSource;
 import com.vhfantes.fantesday.entity.Exercise;
 import com.vhfantes.fantesday.exception.BusinessException;
+import com.vhfantes.fantesday.exception.ForbiddenException;
 import com.vhfantes.fantesday.exception.ResourceNotFoundException;
 import com.vhfantes.fantesday.repository.ExerciseRepository;
+import com.vhfantes.fantesday.strength.StrengthStandards;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class ExerciseService {
 
     private final ExerciseRepository exerciseRepository;
+    private final StrengthStandards strengthStandards;
 
     @Transactional(readOnly = true)
     public List<ExerciseResponseDTO> findAll() {
@@ -40,6 +44,16 @@ public class ExerciseService {
     @Transactional(readOnly = true)
     public List<ExerciseResponseDTO> findByMuscleGroup(String muscleGroup) {
         return exerciseRepository.findByMuscleGroupIgnoreCase(muscleGroup).stream()
+                .map(ExerciseResponseDTO::from)
+                .toList();
+    }
+
+    // Exercicios da lista curada que tem rank de forca
+    @Transactional(readOnly = true)
+    public List<ExerciseResponseDTO> findRanked() {
+        return exerciseRepository.findByExternalIdIn(strengthStandards.exerciseIds()).stream()
+                .sorted(Comparator.comparing(Exercise::getMuscleGroup, Comparator.nullsLast(Comparator.naturalOrder()))
+                        .thenComparing(Exercise::getName))
                 .map(ExerciseResponseDTO::from)
                 .toList();
     }
@@ -71,7 +85,7 @@ public class ExerciseService {
 
     @Transactional
     public ExerciseResponseDTO update(Long id, ExerciseRequestDTO dto) {
-        Exercise exercise = getExerciseOrThrow(id);
+        Exercise exercise = getEditableExerciseOrThrow(id);
 
         if (dto.name() != null && !dto.name().isBlank()) {
             exercise.setName(dto.name().trim());
@@ -103,7 +117,16 @@ public class ExerciseService {
 
     @Transactional
     public void delete(Long id) {
-        exerciseRepository.delete(getExerciseOrThrow(id));
+        exerciseRepository.delete(getEditableExerciseOrThrow(id));
+    }
+
+    // Exercicios importados (free-exercise-db) sao compartilhados: so os cadastrados manualmente podem mudar
+    private Exercise getEditableExerciseOrThrow(Long id) {
+        Exercise exercise = getExerciseOrThrow(id);
+        if (exercise.getSource() != null && exercise.getSource() != CatalogSource.CUSTOM) {
+            throw new ForbiddenException("Exercicios do catalogo (" + exercise.getSource() + ") nao podem ser alterados");
+        }
+        return exercise;
     }
 
     // Usado pelo WorkoutService para montar os exercicios de um treino

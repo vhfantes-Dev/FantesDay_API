@@ -17,6 +17,9 @@ import com.vhfantes.fantesday.dto.WorkoutExerciseRequestDTO;
 import com.vhfantes.fantesday.dto.WorkoutExerciseResponseDTO;
 import com.vhfantes.fantesday.dto.WorkoutRequestDTO;
 import com.vhfantes.fantesday.dto.WorkoutResponseDTO;
+import com.vhfantes.fantesday.dto.WorkoutSetRequestDTO;
+import com.vhfantes.fantesday.dto.WorkoutSetResponseDTO;
+import com.vhfantes.fantesday.security.CurrentUser;
 import com.vhfantes.fantesday.service.WorkoutService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,17 +30,20 @@ import lombok.RequiredArgsConstructor;
 public class WorkoutController {
 
     private final WorkoutService workoutService;
+    private final CurrentUser currentUser;
 
     // ---------- Treinos ----------
 
     @GetMapping("/users/{userId}/workouts")
     public List<WorkoutResponseDTO> findByUser(@PathVariable Long userId) {
+        currentUser.checkAccess(userId);
         return workoutService.findByUser(userId);
     }
 
     @PostMapping("/users/{userId}/workouts")
     @ResponseStatus(HttpStatus.CREATED)
     public WorkoutResponseDTO create(@PathVariable Long userId, @RequestBody WorkoutRequestDTO dto) {
+        currentUser.checkAccess(userId);
         return workoutService.create(userId, dto);
     }
 
@@ -81,5 +87,30 @@ public class WorkoutController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeExercise(@PathVariable Long itemId) {
         workoutService.removeExercise(itemId);
+    }
+
+    // ---------- Series ----------
+
+    @GetMapping("/workout-exercises/{itemId}/sets")
+    public List<WorkoutSetResponseDTO> findSets(@PathVariable Long itemId) {
+        return workoutService.findSets(itemId);
+    }
+
+    // Devolve a serie com o 1RM estimado, se foi recorde pessoal e o rank atual no exercicio
+    @PostMapping("/workout-exercises/{itemId}/sets")
+    @ResponseStatus(HttpStatus.CREATED)
+    public WorkoutSetResponseDTO addSet(@PathVariable Long itemId, @RequestBody WorkoutSetRequestDTO dto) {
+        return workoutService.addSet(itemId, dto);
+    }
+
+    @PatchMapping("/workout-sets/{setId}")
+    public WorkoutSetResponseDTO updateSet(@PathVariable Long setId, @RequestBody WorkoutSetRequestDTO dto) {
+        return workoutService.updateSet(setId, dto);
+    }
+
+    @DeleteMapping("/workout-sets/{setId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeSet(@PathVariable Long setId) {
+        workoutService.removeSet(setId);
     }
 }

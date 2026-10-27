@@ -1,5 +1,6 @@
 package com.vhfantes.fantesday.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +13,7 @@ import com.vhfantes.fantesday.entity.Progress;
 import com.vhfantes.fantesday.entity.User;
 import com.vhfantes.fantesday.exception.BusinessException;
 import com.vhfantes.fantesday.exception.ResourceNotFoundException;
+import com.vhfantes.fantesday.repository.NutritionGoalRepository;
 import com.vhfantes.fantesday.repository.ProgressRepository;
 import com.vhfantes.fantesday.repository.UserRepository;
 
@@ -21,8 +23,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor // injecao pelo construtor (gerado pelo Lombok para os campos final)
 public class UserService {
 
+    private static final BigDecimal MIN_BODYWEIGHT = BigDecimal.valueOf(25);
+    private static final BigDecimal MAX_BODYWEIGHT = BigDecimal.valueOf(400);
+
     private final UserRepository userRepository;
     private final ProgressRepository progressRepository;
+    private final NutritionGoalRepository nutritionGoalRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
@@ -55,6 +61,10 @@ public class UserService {
         if (dto.faceIdEnabled() != null) {
             user.setFaceIdEnabled(dto.faceIdEnabled());
         }
+        if (dto.bodyweightKg() != null) {
+            user.setBodyweightKg(validateBodyweight(dto.bodyweightKg()));
+        }
+        user.setSex(dto.sex());
         user = userRepository.save(user);
 
         // Todo usuario nasce com um progresso zerado (relacao 1:1)
@@ -90,6 +100,14 @@ public class UserService {
             user.setFaceIdEnabled(dto.faceIdEnabled());
         }
 
+        if (dto.bodyweightKg() != null) {
+            user.setBodyweightKg(validateBodyweight(dto.bodyweightKg()));
+        }
+
+        if (dto.sex() != null) {
+            user.setSex(dto.sex());
+        }
+
         // Sem save(): dentro de @Transactional o Hibernate grava as alteracoes sozinho
         return UserResponseDTO.from(user);
     }
@@ -98,6 +116,7 @@ public class UserService {
     public void delete(Long id) {
         User user = getUserOrThrow(id);
         progressRepository.deleteById(user.getId());
+        nutritionGoalRepository.deleteById(user.getId());
         userRepository.delete(user);
     }
 
@@ -116,5 +135,12 @@ public class UserService {
         if (value == null || value.isBlank()) {
             throw new BusinessException(field + " e obrigatorio");
         }
+    }
+
+    private BigDecimal validateBodyweight(BigDecimal bodyweightKg) {
+        if (bodyweightKg.compareTo(MIN_BODYWEIGHT) < 0 || bodyweightKg.compareTo(MAX_BODYWEIGHT) > 0) {
+            throw new BusinessException("Peso corporal deve estar entre " + MIN_BODYWEIGHT + " e " + MAX_BODYWEIGHT + " kg");
+        }
+        return bodyweightKg;
     }
 }

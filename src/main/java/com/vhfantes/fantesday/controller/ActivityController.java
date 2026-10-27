@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vhfantes.fantesday.dto.ActivityRequestDTO;
 import com.vhfantes.fantesday.dto.ActivityResponseDTO;
+import com.vhfantes.fantesday.security.CurrentUser;
 import com.vhfantes.fantesday.service.ActivityService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,15 +26,18 @@ import lombok.RequiredArgsConstructor;
 public class ActivityController {
 
     private final ActivityService activityService;
+    private final CurrentUser currentUser;
 
     @GetMapping("/users/{userId}/activities")
     public List<ActivityResponseDTO> findByUser(@PathVariable Long userId) {
+        currentUser.checkAccess(userId);
         return activityService.findByUser(userId);
     }
 
     @PostMapping("/users/{userId}/activities")
     @ResponseStatus(HttpStatus.CREATED)
     public ActivityResponseDTO create(@PathVariable Long userId, @RequestBody ActivityRequestDTO dto) {
+        currentUser.checkAccess(userId);
         return activityService.create(userId, dto);
     }
 

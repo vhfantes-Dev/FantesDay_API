@@ -1,8 +1,5 @@
 package com.vhfantes.fantesday.entity;
 
-import java.math.BigDecimal;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+// Exercicio dentro de um treino; as series ficam em WorkoutSet
 @Getter
 @Setter
 @AllArgsConstructor
@@ -34,10 +32,4 @@ public class WorkoutExercise {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "exercise_id", nullable = false)
     private Exercise exercise;
-
-    private Integer sets;
-    private Integer reps;
-
-    @Column(precision = 6, scale = 2)
-    private BigDecimal weightKg;
 }

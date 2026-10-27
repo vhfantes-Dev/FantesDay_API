@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vhfantes.fantesday.dto.TaskRequestDTO;
 import com.vhfantes.fantesday.dto.TaskResponseDTO;
+import com.vhfantes.fantesday.security.CurrentUser;
 import com.vhfantes.fantesday.service.TaskService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,12 +29,14 @@ import lombok.RequiredArgsConstructor;
 public class TaskController {
 
     private final TaskService taskService;
+    private final CurrentUser currentUser;
 
     // ?date=yyyy-MM-dd filtra pelo dia (opcional)
     @GetMapping("/users/{userId}/tasks")
     public List<TaskResponseDTO> findByUser(
             @PathVariable Long userId,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        currentUser.checkAccess(userId);
         return date != null
                 ? taskService.findByUserAndDate(userId, date)
                 : taskService.findByUser(userId);
@@ -42,6 +45,7 @@ public class TaskController {
     @PostMapping("/users/{userId}/tasks")
     @ResponseStatus(HttpStatus.CREATED)
     public TaskResponseDTO create(@PathVariable Long userId, @RequestBody TaskRequestDTO dto) {
+        currentUser.checkAccess(userId);
         return taskService.create(userId, dto);
     }
 

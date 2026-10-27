@@ -20,6 +20,7 @@ import com.vhfantes.fantesday.exception.BusinessException;
 import com.vhfantes.fantesday.exception.ResourceNotFoundException;
 import com.vhfantes.fantesday.repository.MealItemRepository;
 import com.vhfantes.fantesday.repository.MealRepository;
+import com.vhfantes.fantesday.security.CurrentUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +34,7 @@ public class MealService {
     private final MealItemRepository mealItemRepository;
     private final UserService userService;
     private final FoodService foodService;
+    private final CurrentUser currentUser;
 
     // ---------- Refeicoes ----------
 
@@ -60,6 +62,9 @@ public class MealService {
         Meal meal = new Meal();
         meal.setUser(userService.getUserOrThrow(userId));
         meal.setDate(dto.date() != null ? dto.date() : LocalDate.now());
+        meal.setName(dto.name() != null && !dto.name().isBlank()
+                ? dto.name().trim()
+                : "Refeição " + (mealRepository.countByUserIdAndDate(userId, meal.getDate()) + 1));
 
         return MealResponseDTO.from(mealRepository.save(meal));
     }
@@ -68,6 +73,9 @@ public class MealService {
     public MealResponseDTO update(Long id, MealRequestDTO dto) {
         Meal meal = getMealOrThrow(id);
 
+        if (dto.name() != null && !dto.name().isBlank()) {
+            meal.setName(dto.name().trim());
+        }
         if (dto.date() != null) {
             meal.setDate(dto.date());
         }
@@ -202,13 +210,18 @@ public class MealService {
                 .divide(ONE_HUNDRED, scale, RoundingMode.HALF_UP);
     }
 
+    // So o dono da refeicao pode acessa-la (ou acessar seus itens)
     private Meal getMealOrThrow(Long id) {
-        return mealRepository.findById(id)
+        Meal meal = mealRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Refeicao nao encontrada: " + id));
+        currentUser.checkAccess(meal.getUser().getId());
+        return meal;
     }
 
     private MealItem getItemOrThrow(Long id) {
-        return mealItemRepository.findById(id)
+        MealItem item = mealItemRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item da refeicao nao encontrado: " + id));
+        currentUser.checkAccess(item.getMeal().getUser().getId());
+        return item;
     }
 }

@@ -21,6 +21,7 @@ import com.vhfantes.fantesday.dto.MealItemResponseDTO;
 import com.vhfantes.fantesday.dto.MealNutritionDTO;
 import com.vhfantes.fantesday.dto.MealRequestDTO;
 import com.vhfantes.fantesday.dto.MealResponseDTO;
+import com.vhfantes.fantesday.security.CurrentUser;
 import com.vhfantes.fantesday.service.MealService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class MealController {
 
     private final MealService mealService;
+    private final CurrentUser currentUser;
 
     // ---------- Refeicoes ----------
 
@@ -39,6 +41,7 @@ public class MealController {
     public List<MealResponseDTO> findByUser(
             @PathVariable Long userId,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        currentUser.checkAccess(userId);
         return date != null
                 ? mealService.findByUserAndDate(userId, date)
                 : mealService.findByUser(userId);
@@ -47,6 +50,7 @@ public class MealController {
     @PostMapping("/users/{userId}/meals")
     @ResponseStatus(HttpStatus.CREATED)
     public MealResponseDTO create(@PathVariable Long userId, @RequestBody MealRequestDTO dto) {
+        currentUser.checkAccess(userId);
         return mealService.create(userId, dto);
     }
 

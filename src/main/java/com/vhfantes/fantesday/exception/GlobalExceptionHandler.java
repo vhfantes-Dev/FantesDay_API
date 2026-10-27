@@ -18,6 +18,16 @@ public class GlobalExceptionHandler {
         return problem(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    public ProblemDetail handleUnauthorized(UnauthorizedException e) {
+        return problem(HttpStatus.UNAUTHORIZED, e.getMessage());
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ProblemDetail handleForbidden(ForbiddenException e) {
+        return problem(HttpStatus.FORBIDDEN, e.getMessage());
+    }
+
     @ExceptionHandler(BusinessException.class)
     public ProblemDetail handleBusiness(BusinessException e) {
         return problem(HttpStatus.BAD_REQUEST, e.getMessage());

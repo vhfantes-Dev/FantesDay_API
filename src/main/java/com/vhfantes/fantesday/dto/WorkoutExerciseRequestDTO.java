@@ -1,10 +1,6 @@
 package com.vhfantes.fantesday.dto;
 
-import java.math.BigDecimal;
-
+// As series sao registradas depois, em /api/workout-exercises/{id}/sets
 public record WorkoutExerciseRequestDTO(
-        Long exerciseId,
-        Integer sets,
-        Integer reps,
-        BigDecimal weightKg) {
+        Long exerciseId) {
 }
