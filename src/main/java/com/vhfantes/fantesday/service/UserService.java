@@ -1,5 +1,6 @@
 package com.vhfantes.fantesday.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +23,11 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor // injecao pelo construtor (gerado pelo Lombok para os campos final)
 public class UserService {
+
+    private static final BigDecimal MIN_HEIGHT_CM = BigDecimal.valueOf(100);
+    private static final BigDecimal MAX_HEIGHT_CM = BigDecimal.valueOf(250);
+    private static final int MIN_AGE = 13;
+    private static final int MAX_AGE = 120;
 
     private final UserRepository userRepository;
     private final ProgressRepository progressRepository;
@@ -52,6 +58,13 @@ public class UserService {
             user.setFaceIdEnabled(dto.faceIdEnabled());
         }
         user.setSex(dto.sex());
+        if (dto.heightCm() != null) {
+            user.setHeightCm(validateHeight(dto.heightCm()));
+        }
+        if (dto.birthDate() != null) {
+            user.setBirthDate(validateBirthDate(dto.birthDate()));
+        }
+        user.setActivityLevel(dto.activityLevel());
         user = userRepository.save(user);
 
         // Todo usuario nasce com um progresso zerado (relacao 1:1)
@@ -102,6 +115,18 @@ public class UserService {
             user.setSex(dto.sex());
         }
 
+        if (dto.heightCm() != null) {
+            user.setHeightCm(validateHeight(dto.heightCm()));
+        }
+
+        if (dto.birthDate() != null) {
+            user.setBirthDate(validateBirthDate(dto.birthDate()));
+        }
+
+        if (dto.activityLevel() != null) {
+            user.setActivityLevel(dto.activityLevel());
+        }
+
         // Sem save(): dentro de @Transactional o Hibernate grava as alteracoes sozinho
         return UserResponseDTO.from(user);
     }
@@ -115,6 +140,22 @@ public class UserService {
 
     private String normalizeEmail(String email) {
         return email.trim().toLowerCase();
+    }
+
+    private BigDecimal validateHeight(BigDecimal heightCm) {
+        if (heightCm.compareTo(MIN_HEIGHT_CM) < 0 || heightCm.compareTo(MAX_HEIGHT_CM) > 0) {
+            throw new BusinessException("Altura deve estar entre " + MIN_HEIGHT_CM + " e " + MAX_HEIGHT_CM + " cm");
+        }
+        return heightCm;
+    }
+
+    // Idade entre 13 e 120 anos (a formula da TMB e para adolescentes e adultos)
+    private LocalDate validateBirthDate(LocalDate birthDate) {
+        LocalDate today = LocalDate.now();
+        if (birthDate.isAfter(today.minusYears(MIN_AGE)) || birthDate.isBefore(today.minusYears(MAX_AGE))) {
+            throw new BusinessException("Idade deve estar entre " + MIN_AGE + " e " + MAX_AGE + " anos");
+        }
+        return birthDate;
     }
 
     private void validateRequired(String value, String field) {

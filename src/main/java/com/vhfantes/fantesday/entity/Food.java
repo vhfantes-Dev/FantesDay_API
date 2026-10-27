@@ -48,7 +48,16 @@ public class Food {
     @Column(name = "fiber_per_100g", precision = 7, scale = 2)
     private BigDecimal fiberPer100g;
 
+    // "g" ou "ml" (liquidos)
     private String defaultUnit;
+
+    // Liquidos podem ser registrados em ml; os valores nutricionais continuam por 100 g
+    @Column(nullable = false)
+    private Boolean liquid = false;
+
+    // Densidade em g/ml para converter ml em gramas (null = 1,0, como a agua)
+    @Column(name = "density_g_per_ml", precision = 5, scale = 3)
+    private BigDecimal densityGPerMl;
 
     @Enumerated(EnumType.STRING)
     private CatalogSource source;

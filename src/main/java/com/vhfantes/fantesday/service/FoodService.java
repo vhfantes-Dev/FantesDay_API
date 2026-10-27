@@ -24,6 +24,7 @@ import com.vhfantes.fantesday.entity.Food;
 import com.vhfantes.fantesday.exception.BusinessException;
 import com.vhfantes.fantesday.exception.ForbiddenException;
 import com.vhfantes.fantesday.exception.ResourceNotFoundException;
+import com.vhfantes.fantesday.food.FoodUnits;
 import com.vhfantes.fantesday.repository.FoodRepository;
 import com.vhfantes.fantesday.repository.MealItemRepository;
 import com.vhfantes.fantesday.security.CurrentUser;
@@ -72,7 +73,12 @@ public class FoodService {
         food.setCarbsPer100g(dto.carbsPer100g());
         food.setFatPer100g(dto.fatPer100g());
         food.setFiberPer100g(dto.fiberPer100g());
-        food.setDefaultUnit(dto.defaultUnit());
+        boolean liquid = Boolean.TRUE.equals(dto.liquid());
+        food.setLiquid(liquid);
+        food.setDensityGPerMl(validateDensity(dto.densityGPerMl()));
+        food.setDefaultUnit(dto.defaultUnit() != null
+                ? FoodUnits.normalize(dto.defaultUnit(), null)
+                : (liquid ? FoodUnits.MILLILITERS : FoodUnits.GRAMS));
         food.setSource(CatalogSource.CUSTOM);
         food.setCreatedBy(userService.getUserOrThrow(currentUser.id()));
 
@@ -101,8 +107,14 @@ public class FoodService {
         if (dto.fiberPer100g() != null) {
             food.setFiberPer100g(dto.fiberPer100g());
         }
+        if (dto.liquid() != null) {
+            food.setLiquid(dto.liquid());
+        }
+        if (dto.densityGPerMl() != null) {
+            food.setDensityGPerMl(validateDensity(dto.densityGPerMl()));
+        }
         if (dto.defaultUnit() != null) {
-            food.setDefaultUnit(dto.defaultUnit());
+            food.setDefaultUnit(FoodUnits.normalize(dto.defaultUnit(), null));
         }
 
         return FoodResponseDTO.from(food);
@@ -190,7 +202,8 @@ public class FoodService {
             food.setFatPer100g(sanitize(nutriments.fat100g()));
             food.setFiberPer100g(sanitize(nutriments.fiber100g()));
         }
-        food.setDefaultUnit("g");
+        food.setLiquid(product.isLiquid());
+        food.setDefaultUnit(product.isLiquid() ? FoodUnits.MILLILITERS : FoodUnits.GRAMS);
         food.setSource(CatalogSource.OPEN_FOOD_FACTS);
         food.setExternalId(barcode);
         return food;
@@ -219,5 +232,16 @@ public class FoodService {
             return null;
         }
         return value.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    // Densidade entre 0,5 e 2 g/ml cobre os alimentos liquidos reais (oleos ~0,9; mel ~1,4)
+    private BigDecimal validateDensity(BigDecimal density) {
+        if (density == null) {
+            return null;
+        }
+        if (density.compareTo(new BigDecimal("0.5")) < 0 || density.compareTo(new BigDecimal("2")) > 0) {
+            throw new BusinessException("Densidade deve estar entre 0,5 e 2 g/ml");
+        }
+        return density;
     }
 }

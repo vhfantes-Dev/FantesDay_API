@@ -44,9 +44,9 @@ public class ExerciseService {
 
         Page<Exercise> page;
         if (hasName && hasMuscle) {
-            page = exerciseRepository.findByNameContainingIgnoreCaseAndMuscleGroupIgnoreCase(name.trim(), muscleGroup.trim(), pageable);
+            page = exerciseRepository.searchByNameAndMuscleGroup(name.trim(), muscleGroup.trim(), pageable);
         } else if (hasName) {
-            page = exerciseRepository.findByNameContainingIgnoreCase(name.trim(), pageable);
+            page = exerciseRepository.searchByName(name.trim(), pageable);
         } else if (hasMuscle) {
             page = exerciseRepository.findByMuscleGroupIgnoreCase(muscleGroup.trim(), pageable);
         } else {

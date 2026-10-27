@@ -48,7 +48,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RoutineService {
 
-    private static final String STRENGTH_CATEGORY = "strength";
+    private static final String STRENGTH_CATEGORY = "Força";
 
     private final WorkoutRoutineRepository routineRepository;
     private final RoutineExerciseRepository routineExerciseRepository;
@@ -228,7 +228,7 @@ public class RoutineService {
     }
 
     // Candidatos por musculo: primeiro os exercicios com rank de forca (lista curada, na ordem do arquivo),
-    // depois os demais exercicios de musculacao do catalogo; todos filtrados pelos equipamentos disponiveis
+    // depois os demais exercicios de musculacao do catalogo (free-exercise-db e wger); todos filtrados pelos equipamentos
     private Map<String, List<Exercise>> candidatesByMuscle(Set<EquipmentType> equipment) {
         Map<String, Exercise> rankedById = exerciseRepository.findByExternalIdIn(strengthStandards.exerciseIds()).stream()
                 .collect(Collectors.toMap(Exercise::getExternalId, Function.identity()));
@@ -241,7 +241,8 @@ public class RoutineService {
             }
         }
         Set<Long> rankedIds = new HashSet<>(ordered.stream().map(Exercise::getId).toList());
-        exerciseRepository.findBySourceAndCategoryOrderByNameAsc(CatalogSource.FREE_EXERCISE_DB, STRENGTH_CATEGORY).stream()
+        exerciseRepository.findBySourceInAndCategoryOrderByNameAsc(
+                        List.of(CatalogSource.FREE_EXERCISE_DB, CatalogSource.WGER), STRENGTH_CATEGORY).stream()
                 .filter(exercise -> !rankedIds.contains(exercise.getId()))
                 .forEach(ordered::add);
 

@@ -17,6 +17,7 @@ import com.vhfantes.fantesday.entity.Food;
 import com.vhfantes.fantesday.entity.Meal;
 import com.vhfantes.fantesday.entity.MealItem;
 import com.vhfantes.fantesday.exception.BusinessException;
+import com.vhfantes.fantesday.food.FoodUnits;
 import com.vhfantes.fantesday.exception.ResourceNotFoundException;
 import com.vhfantes.fantesday.repository.MealItemRepository;
 import com.vhfantes.fantesday.repository.MealRepository;
@@ -156,7 +157,7 @@ public class MealService {
         item.setMeal(getMealOrThrow(mealId));
         item.setFood(food);
         item.setQuantity(dto.quantity());
-        item.setUnit(dto.unit() != null ? dto.unit() : food.getDefaultUnit());
+        item.setUnit(FoodUnits.normalize(dto.unit(), food));
         applyNutrition(item);
 
         return MealItemResponseDTO.from(mealItemRepository.save(item));
@@ -177,7 +178,7 @@ public class MealService {
             item.setQuantity(dto.quantity());
         }
         if (dto.unit() != null) {
-            item.setUnit(dto.unit());
+            item.setUnit(FoodUnits.normalize(dto.unit(), item.getFood()));
         }
         applyNutrition(item);
 
@@ -189,9 +190,10 @@ public class MealService {
         mealItemRepository.delete(getItemOrThrow(itemId));
     }
 
+    // Em ml, a quantidade vira gramas pela densidade do alimento antes do calculo
     private void applyNutrition(MealItem item) {
         Food food = item.getFood();
-        BigDecimal quantity = item.getQuantity();
+        BigDecimal quantity = FoodUnits.toGrams(item.getQuantity(), FoodUnits.normalizeLenient(item.getUnit(), food), food);
 
         BigDecimal calories = calculatePer100g(food.getCaloriesPer100g(), quantity, 0);
         item.setCalculatedCalories(calories != null ? calories.intValue() : null);
@@ -200,8 +202,7 @@ public class MealService {
         item.setCalculatedFat(calculatePer100g(food.getFatPer100g(), quantity, 2));
     }
 
-    // valor = quantidade x (valor por 100g / 100)
-    // Considera a quantidade em gramas (ou ml); ajuste se for usar outras unidades
+    // valor = quantidade em gramas x (valor por 100g / 100)
     static BigDecimal calculatePer100g(BigDecimal valuePer100g, BigDecimal quantity, int scale) {
         if (valuePer100g == null || quantity == null) {
             return null;

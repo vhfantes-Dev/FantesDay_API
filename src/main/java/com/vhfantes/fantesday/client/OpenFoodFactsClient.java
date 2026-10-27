@@ -18,7 +18,7 @@ import com.vhfantes.fantesday.client.dto.OffSearchResponse;
 @Component
 public class OpenFoodFactsClient {
 
-    private static final String FIELDS = "code,product_name,product_name_pt,brands,nutriments";
+    private static final String FIELDS = "code,product_name,product_name_pt,brands,quantity,product_quantity_unit,nutriments";
     private static final int SEARCH_PAGE_SIZE = 20;
 
     private final RestClient restClient;

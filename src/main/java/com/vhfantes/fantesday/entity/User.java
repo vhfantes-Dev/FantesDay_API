@@ -1,6 +1,7 @@
 package com.vhfantes.fantesday.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -47,6 +48,15 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Sex sex;
+
+    // Altura, nascimento e nivel de atividade: usados na TMB, no gasto diario e no IMC
+    @Column(precision = 5, scale = 1)
+    private BigDecimal heightCm;
+
+    private LocalDate birthDate;
+
+    @Enumerated(EnumType.STRING)
+    private ActivityLevel activityLevel;
 
     // Quando a foto de perfil mudou (null = sem foto). A imagem fica em UserPhoto.
     private LocalDateTime photoUpdatedAt;
