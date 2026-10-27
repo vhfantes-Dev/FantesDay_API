@@ -2,7 +2,11 @@ package com.vhfantes.fantesday.seed;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,14 +18,15 @@ import org.springframework.stereotype.Component;
 import com.vhfantes.fantesday.entity.CatalogSource;
 import com.vhfantes.fantesday.entity.Exercise;
 import com.vhfantes.fantesday.entity.Food;
+import com.vhfantes.fantesday.food.FoodUnits;
 import com.vhfantes.fantesday.repository.ExerciseRepository;
 import com.vhfantes.fantesday.repository.FoodRepository;
 
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.json.JsonMapper;
 
-// Importa os catalogos de alimentos (TACO) e exercicios (free-exercise-db) na primeira execucao.
-// Se a fonte ja tiver registros no banco, a importacao e pulada.
+// Importa o catalogo de alimentos (TACO) na primeira execucao e mantem o de exercicios
+// (free-exercise-db traduzido + wger em portugues) sincronizado com resources/seed/exercises-pt.json.
 @Component
 @ConditionalOnProperty(name = "app.seed.enabled", havingValue = "true")
 public class CatalogSeeder implements CommandLineRunner {
@@ -29,8 +34,7 @@ public class CatalogSeeder implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(CatalogSeeder.class);
 
     private static final String TACO_FILE = "seed/taco.json";
-    private static final String EXERCISES_FILE = "seed/exercises.json";
-    private static final String EXERCISE_IMAGE_BASE_URL = "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/";
+    private static final String EXERCISES_FILE = "seed/exercises-pt.json";
 
     private final FoodRepository foodRepository;
     private final ExerciseRepository exerciseRepository;
@@ -67,19 +71,65 @@ public class CatalogSeeder implements CommandLineRunner {
         logger.info("Importados {} alimentos da TACO", foods.size());
     }
 
+    // Insere os exercicios que faltam e atualiza os que mudaram no arquivo (nome, descricao, musculos...).
+    // Assim um banco que ja tinha o catalogo antigo (em ingles) recebe as traducoes sem perder treinos e historico.
     private void seedExercises() throws IOException {
-        if (exerciseRepository.countBySource(CatalogSource.FREE_EXERCISE_DB) > 0) {
-            logger.info("Exercicios do free-exercise-db ja importados, pulando");
-            return;
+        List<ExerciseSeed> seeds = read(EXERCISES_FILE, new TypeReference<List<ExerciseSeed>>() {
+        });
+
+        Map<String, Exercise> existing = new HashMap<>();
+        for (Exercise exercise : exerciseRepository.findBySourceIn(List.of(CatalogSource.FREE_EXERCISE_DB, CatalogSource.WGER))) {
+            existing.put(exercise.getExternalId(), exercise);
         }
 
-        List<Exercise> exercises = read(EXERCISES_FILE, new TypeReference<List<FreeExerciseSeed>>() {
-        }).stream()
-                .map(this::toExercise)
-                .toList();
+        List<Exercise> changed = new ArrayList<>();
+        int created = 0;
+        for (ExerciseSeed seed : seeds) {
+            Exercise exercise = existing.get(seed.externalId());
+            if (exercise == null) {
+                exercise = new Exercise();
+                created++;
+            } else if (matches(exercise, seed)) {
+                continue;
+            }
+            apply(exercise, seed);
+            changed.add(exercise);
+        }
 
-        exerciseRepository.saveAll(exercises);
-        logger.info("Importados {} exercicios do free-exercise-db", exercises.size());
+        if (changed.isEmpty()) {
+            logger.info("Catalogo de exercicios ja atualizado ({} exercicios)", seeds.size());
+            return;
+        }
+        exerciseRepository.saveAll(changed);
+        logger.info("Catalogo de exercicios: {} novos e {} atualizados", created, changed.size() - created);
+    }
+
+    private void apply(Exercise exercise, ExerciseSeed seed) {
+        exercise.setSource(seed.source());
+        exercise.setExternalId(seed.externalId());
+        exercise.setName(seed.name());
+        exercise.setNameEn(seed.nameEn());
+        exercise.setInstructions(seed.description());
+        exercise.setInstructionsLanguage(seed.descriptionLanguage());
+        exercise.setMuscleGroup(seed.muscleGroup());
+        exercise.setSecondaryMuscles(seed.secondaryMuscles());
+        exercise.setEquipment(seed.equipment());
+        exercise.setLevel(seed.level());
+        exercise.setCategory(seed.category());
+        exercise.setImageUrl(seed.imageUrl());
+    }
+
+    private boolean matches(Exercise exercise, ExerciseSeed seed) {
+        return Objects.equals(exercise.getName(), seed.name())
+                && Objects.equals(exercise.getNameEn(), seed.nameEn())
+                && Objects.equals(exercise.getInstructions(), seed.description())
+                && Objects.equals(exercise.getInstructionsLanguage(), seed.descriptionLanguage())
+                && Objects.equals(exercise.getMuscleGroup(), seed.muscleGroup())
+                && Objects.equals(exercise.getSecondaryMuscles(), seed.secondaryMuscles())
+                && Objects.equals(exercise.getEquipment(), seed.equipment())
+                && Objects.equals(exercise.getLevel(), seed.level())
+                && Objects.equals(exercise.getCategory(), seed.category())
+                && Objects.equals(exercise.getImageUrl(), seed.imageUrl());
     }
 
     private <T> T read(String path, TypeReference<T> type) throws IOException {
@@ -96,28 +146,12 @@ public class CatalogSeeder implements CommandLineRunner {
         food.setCarbsPer100g(seed.carbohydrate());
         food.setFatPer100g(seed.lipid());
         food.setFiberPer100g(seed.fiber());
-        food.setDefaultUnit("g");
+        boolean liquid = Boolean.TRUE.equals(seed.liquid());
+        food.setLiquid(liquid);
+        food.setDensityGPerMl(seed.densityGPerMl());
+        food.setDefaultUnit(liquid ? FoodUnits.MILLILITERS : FoodUnits.GRAMS);
         food.setSource(CatalogSource.TACO);
         food.setExternalId(String.valueOf(seed.id()));
         return food;
-    }
-
-    private Exercise toExercise(FreeExerciseSeed seed) {
-        Exercise exercise = new Exercise();
-        exercise.setName(seed.name());
-        exercise.setMuscleGroup(seed.primaryMuscles() == null || seed.primaryMuscles().isEmpty()
-                ? null
-                : MuscleGroupTranslator.translate(seed.primaryMuscles().get(0)));
-        exercise.setSecondaryMuscles(MuscleGroupTranslator.translateAll(seed.secondaryMuscles()));
-        exercise.setEquipment(seed.equipment());
-        exercise.setLevel(seed.level());
-        exercise.setCategory(seed.category());
-        exercise.setInstructions(seed.instructions() == null ? null : String.join("\n", seed.instructions()));
-        exercise.setImageUrl(seed.images() == null || seed.images().isEmpty()
-                ? null
-                : EXERCISE_IMAGE_BASE_URL + seed.images().get(0));
-        exercise.setSource(CatalogSource.FREE_EXERCISE_DB);
-        exercise.setExternalId(seed.id());
-        return exercise;
     }
 }

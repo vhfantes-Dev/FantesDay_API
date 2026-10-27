@@ -1,9 +1,11 @@
 package com.vhfantes.fantesday.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import com.vhfantes.fantesday.entity.ActivityLevel;
 import com.vhfantes.fantesday.entity.Sex;
 import com.vhfantes.fantesday.entity.User;
 
@@ -16,6 +18,9 @@ public record UserResponseDTO(
         Boolean faceIdEnabled,
         BigDecimal bodyweightKg,
         Sex sex,
+        BigDecimal heightCm,
+        LocalDate birthDate,
+        ActivityLevel activityLevel,
         String photoUrl,
         LocalDateTime createdAt) {
 
@@ -27,6 +32,9 @@ public record UserResponseDTO(
                 user.getFaceIdEnabled(),
                 user.getBodyweightKg(),
                 user.getSex(),
+                user.getHeightCm(),
+                user.getBirthDate(),
+                user.getActivityLevel(),
                 photoUrl(user),
                 user.getCreatedAt());
     }

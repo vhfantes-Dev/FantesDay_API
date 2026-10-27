@@ -27,8 +27,12 @@ public class Exercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Nome em portugues
     @Column(nullable = false)
     private String name;
+
+    // Nome original em ingles (tambem usado na busca)
+    private String nameEn;
 
     private String muscleGroup;
 
@@ -41,6 +45,10 @@ public class Exercise {
 
     @Column(columnDefinition = "TEXT")
     private String instructions;
+
+    // "pt" ou "en": alguns exercicios do free-exercise-db ainda tem instrucoes em ingles
+    @Column(length = 2)
+    private String instructionsLanguage;
 
     private String imageUrl;
 

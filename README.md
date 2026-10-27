@@ -29,12 +29,13 @@ O catálogo de alimentos e de exercícios já vem pronto — a API importa a **T
   - recuperação de senha por código;
   - foto de perfil;
   - exclusão da conta com todos os dados.
-- **Tela inicial em uma chamada** (`/dashboard`): XP e nível, streak, tarefas do dia, calorias e macros, água, atividades e rank de força.
+- **Tela inicial em uma chamada** (`/dashboard`): perfil, XP e nível, streak, tarefas do dia, calorias e macros, saldo de calorias (meta + exercício − consumido), água, atividades, treinos da semana, TMB/IMC, peso e rank de força.
+- **Metabolismo e metas**: altura, data de nascimento e nível de atividade no perfil; cálculo de TMB (Mifflin-St Jeor), gasto diário, IMC e sugestão de meta de calorias e proteína para perder, manter ou ganhar peso.
 - **Tarefas avulsas e recorrentes** (ex: "beber água" de segunda a sexta), com conclusão por dia e 10 XP por conclusão.
 - **Atividades físicas** com XP pela duração, e importação em lote de apps como Apple Saúde e Google Fit, sem duplicar.
 - **Alimentação**:
   - refeições com nome;
-  - calorias e macros calculados por item;
+  - calorias e macros calculados por item, em gramas ou **ml** para líquidos (convertidos pela densidade do alimento);
   - metas diárias de calorias, macros e água, com o consumo do dia comparado à meta.
 - **Água** registrada por copo/garrafa e **peso corporal** com histórico. O peso mais recente atualiza o perfil e o rank.
 - **Treinos** com séries individuais, 1RM estimado e recordes pessoais (PRs).
@@ -43,7 +44,7 @@ O catálogo de alimentos e de exercícios já vem pronto — a API importa a **T
 - **Streak de treinos** e **rankings** entre usuários: geral pela força e semanal pelo volume.
 - **Catálogo**:
   - ~600 alimentos da TACO, produtos do Open Food Facts e alimentos cadastrados pelos usuários;
-  - ~870 exercícios com grupo muscular em português;
+  - ~1.200 exercícios **em português** (free-exercise-db traduzido + wger), com busca pelo nome em português ou em inglês;
   - listas paginadas.
 
 ## Tecnologias
@@ -80,6 +81,11 @@ O `docker-compose.yml` sobe um Postgres 17 e a API na porta 8080. Para publicar,
 
 > Na **primeira execução** em um banco vazio, o Flyway cria as tabelas e a API importa os catálogos. A importação leva alguns minutos (cerca de 4 min num Supabase remoto), porque os ~1.470 registros são gravados um a um. Nas execuções seguintes ela é pulada.
 
+### No Render (com o Supabase como banco)
+1. **New → Web Service**, runtime **Docker**, health check em `/actuator/health`.
+2. Variáveis: `SUPABASE_DB_URL` (use o **Session pooler**, porta 5432, com `?sslmode=require` — a conexão direta do Supabase é IPv6 e o Render não alcança), `SUPABASE_DB_USER`, `SUPABASE_DB_PASSWORD`, `JWT_SECRET` e, se o frontend for web, `CORS_ALLOWED_ORIGINS`. A porta vem da variável `PORT`, que o Render define.
+3. **Keep-alive:** o plano gratuito desliga o serviço após ~15 min sem requisições. A API chama a própria URL pública (`RENDER_EXTERNAL_URL`, definida pelo Render) em `/actuator/health` a cada 45 s (`app.keep-alive.interval`), o que conta como tráfego e mantém o serviço acordado. Localmente o job fica desligado.
+
 ## Configuração
 
 ### Variáveis de ambiente (`.env`)
@@ -90,6 +96,8 @@ O `docker-compose.yml` sobe um Postgres 17 e a API na porta 8080. Para publicar,
 | `SUPABASE_DB_PASSWORD` | Senha do banco |
 | `JWT_SECRET` | Chave para assinar os tokens, com **no mínimo 32 caracteres**. Sem ela, a API gera uma chave aleatória a cada inicialização e todos são deslogados quando ela reinicia. **Obrigatória em produção.** |
 | `CORS_ALLOWED_ORIGINS` | Origens do frontend liberadas no CORS, separadas por vírgula (padrão: `*`) |
+| `DB_POOL_SIZE` | Conexões com o banco por instância da API (padrão: `5`; o pooler gratuito do Supabase aceita 15 no total) |
+| `KEEP_ALIVE_URL` | URL pública da API para o keep-alive (no Render não precisa: usa `RENDER_EXTERNAL_URL`, que o Render já define) |
 | `OFF_CONTACT` | E-mail ou site enviado no `User-Agent` do Open Food Facts (a API deles pede uma forma de contato) |
 
 Para gerar um `JWT_SECRET`:
@@ -121,7 +129,9 @@ O schema é versionado com **Flyway** em [`src/main/resources/db/migration`](src
 | Versão | O que faz |
 |---|---|
 | `V1__baseline.sql` | Schema base (o que o Hibernate criava antes do Flyway) |
-| `V2__recurring_tasks_auth_routines_tracking.sql` | Mudanças desta versão: conclusões de tarefas, XP e importação de atividades, dono dos itens do catálogo, meta de água, refresh tokens, códigos de recuperação, rotinas, água, peso e foto |
+| `V2__recurring_tasks_auth_routines_tracking.sql` | Conclusões de tarefas, XP e importação de atividades, dono dos itens do catálogo, meta de água, refresh tokens, códigos de recuperação, rotinas, água, peso e foto |
+| `V3__body_metrics_liquids_exercises_pt.sql` | Altura, nascimento e nível de atividade; líquidos (ml e densidade) com os da TACO marcados; nome em inglês e idioma das instruções dos exercícios; fonte `WGER` |
+| `V4__fill_missing_taco_values.sql` | Valores que a TACO não traz para leite integral, leite desnatado e sal |
 
 - **Banco novo:** o Flyway roda V1 e V2.
 - **Banco que já existia antes do Flyway:** com `baseline-on-migrate`, a V1 é marcada como aplicada e só as seguintes rodam.
@@ -164,7 +174,7 @@ A API usa uma abordagem **híbrida**: os dados ficam no banco local, e fontes ex
 | Fonte | Conteúdo | Como entra no banco |
 |---|---|---|
 | **TACO** (NEPA/Unicamp, 4ª ed.) | 597 alimentos brasileiros com calorias e macros por 100g | Importada na inicialização a partir de `seed/taco.json` |
-| **free-exercise-db** | 876 exercícios com músculos, equipamento, instruções e imagem | Importado na inicialização a partir de `seed/exercises.json` |
+| **free-exercise-db** (traduzido) + **wger** | 1.213 exercícios em português: 876 do free-exercise-db (nome traduzido; descrição em português quando existe no wger) e 337 do wger | Sincronizado na inicialização a partir de `seed/exercises-pt.json` |
 | **Open Food Facts** | Produtos industrializados (código de barras) | Salvo no banco na primeira consulta por código de barras (cache) |
 | Cadastro manual | Alimentos e exercícios criados pelo usuário | `POST /api/foods` e `POST /api/exercises` (com `createdById`) |
 
@@ -173,6 +183,12 @@ As listas `GET /api/foods` e `GET /api/exercises` são **paginadas** (`?page=0&s
 { "content": [ ... ], "page": 0, "size": 20, "totalElements": 597, "totalPages": 30, "last": false }
 ```
 Um alimento ou exercício em uso (em refeições, treinos ou rotinas) não pode ser excluído.
+
+**Líquidos em ml:** alimentos com `liquid: true` (sucos, leites, óleos, bebidas, mel...) têm `defaultUnit: "ml"` e `densityGPerMl`. Ao adicionar um item com `"unit": "ml"`, a quantidade vira gramas pela densidade antes do cálculo (ex.: 15 ml de azeite × 0,91 = 13,65 g). As unidades aceitas são `g` e `ml`; qualquer alimento aceita `ml` (densidade 1 quando não informada). Produtos do Open Food Facts vendidos em ml/L são marcados como líquidos automaticamente.
+
+**Exercícios:** `name` vem em português e `nameEn` traz o nome original; a busca (`?name=`) procura nos dois. `instructionsLanguage` indica se as instruções estão em português (`pt`, 416 exercícios) ou ainda em inglês (`en`). Equipamentos e categorias estão em português (`Barra`, `Halteres`, `Polia`, `Máquina`, `Peso corporal`...; `Força`, `Alongamento`, `Cardio`...). Bancos que já tinham o catálogo antigo são atualizados na inicialização sem perder treinos e histórico.
+
+> A **TBCA** (USP, versão 7.3 de 2025) é mais nova que a TACO, mas os termos de uso proíbem reproduzir a base e exigem autorização dos coordenadores para uso comercial; por isso ela não foi incluída.
 
 ## Tarefas recorrentes e XP
 - **Tarefa avulsa** (sem `weekDays`): com `date`, vale naquele dia. Sem data, aparece todo dia até ser concluída.
@@ -239,7 +255,9 @@ Todas as rotas começam com `/api` e exigem `Authorization: Bearer <token>`, exc
 ### Usuário, perfil e tela inicial
 | Método | Rota | Descrição |
 |---|---|---|
-| `GET` | `/api/users/{id}/dashboard?date=` | XP, streak, tarefas, alimentação, água, atividades e rank do dia |
+| `GET` | `/api/users/{id}/dashboard?date=` | Tudo da tela inicial em uma chamada (veja [Funcionalidades](#funcionalidades)) |
+| `GET` | `/api/users/{id}/body-metrics` | TMB, gasto diário (TDEE), IMC, idade e metas sugeridas; `missingFields` diz o que falta no perfil |
+| `POST` | `/api/users/{id}/goals/apply-suggestion` | Grava a meta sugerida (`{"goal": "LOSE" \| "MAINTAIN" \| "GAIN"}`) |
 | `GET` / `PATCH` | `/api/users/{id}` | Busca ou atualiza o perfil (o peso entra no histórico) |
 | `DELETE` | `/api/users/{id}` | Exclui a conta e **todos** os dados |
 | `PUT` | `/api/users/{id}/photo` | Envia a foto (multipart, campo `file`, JPG/PNG/WebP até 2 MB) |
@@ -271,7 +289,7 @@ Todas as rotas começam com `/api` e exigem `Authorization: Bearer <token>`, exc
 | `POST` | `/api/foods/barcode/{codigo}` | Devolve o produto do banco ou importa do Open Food Facts |
 | `GET` / `POST` | `/api/users/{userId}/meals?date=` | Lista ou cria refeição (sem nome vira "Refeição N") |
 | `GET` / `PATCH` / `DELETE` | `/api/meals/{id}` | Busca, atualiza ou exclui (com os itens) |
-| `GET` / `POST` | `/api/meals/{id}/items` | Itens da refeição / adiciona (`{"foodId": 3, "quantity": 150}`) |
+| `GET` / `POST` | `/api/meals/{id}/items` | Itens da refeição / adiciona (`{"foodId": 3, "quantity": 150, "unit": "g"}` ou `"unit": "ml"`) |
 | `GET` | `/api/meals/{id}/nutrition` | Total da refeição |
 | `PATCH` / `DELETE` | `/api/meal-items/{id}` | Atualiza ou remove um item |
 | `GET` / `PATCH` | `/api/users/{userId}/goals` | Metas (`dailyCalories`, `proteinG`, `carbsG`, `fatG`, `dailyWaterMl`) |
@@ -286,7 +304,7 @@ Todas as rotas começam com `/api` e exigem `Authorization: Bearer <token>`, exc
 ### Exercícios, rotinas e treinos
 | Método | Rota | Descrição |
 |---|---|---|
-| `GET` | `/api/exercises?name=&muscleGroup=&page=&size=` | Lista ou filtra exercícios (paginado) |
+| `GET` | `/api/exercises?name=&muscleGroup=&page=&size=` | Lista ou filtra exercícios (paginado; nome em português ou inglês) |
 | `GET` | `/api/exercises/ranked` | Exercícios que têm rank de força |
 | `POST` | `/api/exercises` | Cadastra exercício próprio |
 | `GET` / `PATCH` / `DELETE` | `/api/exercises/{id}` | Busca, atualiza ou exclui (só quem cadastrou) |
@@ -366,11 +384,13 @@ src/main/java/com/vhfantes/fantesday
 ├── seed/          # Importação da TACO e do free-exercise-db
 ├── service/       # Regras de negócio
 ├── strength/      # Rank de força (1RM, nota, ranks) e padrões de força
-└── task/          # Agenda das tarefas recorrentes (dias da semana)
+├── task/          # Agenda das tarefas recorrentes (dias da semana)
+├── body/          # TMB, gasto diário e IMC
+└── food/          # Unidades (g/ml) e conversão por densidade
 src/main/resources
 ├── application.properties
 ├── db/migration/  # Migrações do Flyway
-└── seed/          # taco.json, exercises.json e strength-standards.json
+└── seed/          # taco.json, exercises-pt.json e strength-standards.json
 ```
 
 ### Modelo de dados
@@ -386,13 +406,16 @@ src/main/resources
 - **Recuperação de senha sem e-mail**: o código aparece no log da API. Antes de publicar, integre um serviço de e-mail.
 - **Importação de saúde**: a API recebe as atividades, mas a leitura do Apple Saúde/Google Fit é feita pelo app no celular.
 - **Busca no Open Food Facts**: a busca por nome deles tem limite de requisições (~10/min) e às vezes responde 503. Nesses casos `/api/foods/external` devolve lista vazia.
-- **Unidades**: o cálculo nutricional considera a quantidade em gramas/ml.
+- **Unidades**: só gramas e ml; medidas caseiras (colher, xícara, unidade) ainda não são aceitas.
 - **Padrões de força aproximados**: estimativas baseadas em tabelas públicas de força, não os do Liftoff. Ajuste à vontade; o `StrengthStandardsTest` valida o arquivo.
 - **Rank calculado na hora** com o peso atual; não há temporadas (o Liftoff reinicia a cada 4 meses).
 - **Ranking semanal por volume**: em exercícios com peso corporal, só a carga extra entra no volume.
-- **Nomes e instruções dos exercícios** continuam em inglês.
+- **Instruções em inglês**: 797 exercícios do free-exercise-db têm nome em português, mas as instruções ainda em inglês (`instructionsLanguage: "en"`).
+- **Keep-alive no Render**: o job só funciona enquanto a API está de pé; se o serviço chegar a dormir (ex.: deploy falhou), ele não se acorda sozinho. O plano gratuito tem 750 h/mês, suficiente para um serviço ligado o mês todo.
 
 ## Créditos dos dados
 - **TACO** — Tabela Brasileira de Composição de Alimentos, 4ª edição, NEPA/UNICAMP. Dados processados a partir do repositório [brolesi/taco](https://github.com/brolesi/taco) (MIT).
 - **free-exercise-db** — [yuhonas/free-exercise-db](https://github.com/yuhonas/free-exercise-db) (Unlicense / domínio público). As imagens são carregadas direto do repositório no GitHub.
+- **wger** — [wger.de](https://wger.de), exercícios e descrições em português sob a licença [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) (alguns CC BY-SA 3.0 e CC0). Imagens carregadas do servidor do wger.
+- **USDA FoodData Central** — [fdc.nal.usda.gov](https://fdc.nal.usda.gov) (domínio público): valores de leite integral e desnatado que faltam na TACO.
 - **Open Food Facts** — [openfoodfacts.org](https://world.openfoodfacts.org), dados sob a licença [ODbL](https://opendatacommons.org/licenses/odbl/1-0/).

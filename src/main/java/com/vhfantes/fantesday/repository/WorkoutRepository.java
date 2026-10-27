@@ -14,6 +14,10 @@ public interface WorkoutRepository extends JpaRepository<Workout, Long> {
 
     List<Workout> findByUserId(Long userId);
 
+    List<Workout> findByUserIdAndDate(Long userId, LocalDate date);
+
+    long countByUserIdAndDateBetween(Long userId, LocalDate start, LocalDate end);
+
     @Modifying
     @Query("delete from Workout w where w.user.id = :userId")
     void deleteByUserId(@Param("userId") Long userId);

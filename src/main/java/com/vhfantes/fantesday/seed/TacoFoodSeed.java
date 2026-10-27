@@ -14,5 +14,7 @@ public record TacoFoodSeed(
         BigDecimal protein,
         BigDecimal carbohydrate,
         BigDecimal lipid,
-        BigDecimal fiber) {
+        BigDecimal fiber,
+        Boolean liquid,
+        BigDecimal densityGPerMl) {
 }

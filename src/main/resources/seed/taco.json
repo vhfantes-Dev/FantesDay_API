@@ -7,7 +7,9 @@
   "protein": 2.59,
   "carbohydrate": 25.81,
   "lipid": 1.0,
-  "fiber": 2.75
+  "fiber": 2.75,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 2,
@@ -17,7 +19,9 @@
   "protein": 7.32,
   "carbohydrate": 77.45,
   "lipid": 1.86,
-  "fiber": 4.82
+  "fiber": 4.82,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 3,
@@ -27,7 +31,9 @@
   "protein": 2.52,
   "carbohydrate": 28.06,
   "lipid": 0.23,
-  "fiber": 1.56
+  "fiber": 1.56,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 4,
@@ -37,7 +43,9 @@
   "protein": 7.16,
   "carbohydrate": 78.76,
   "lipid": 0.34,
-  "fiber": 1.64
+  "fiber": 1.64,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 5,
@@ -47,7 +55,9 @@
   "protein": 2.57,
   "carbohydrate": 28.19,
   "lipid": 0.36,
-  "fiber": 1.07
+  "fiber": 1.07,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 6,
@@ -57,7 +67,9 @@
   "protein": 7.24,
   "carbohydrate": 78.88,
   "lipid": 0.28,
-  "fiber": 1.72
+  "fiber": 1.72,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 7,
@@ -67,7 +79,9 @@
   "protein": 13.92,
   "carbohydrate": 66.64,
   "lipid": 8.5,
-  "fiber": 9.13
+  "fiber": 9.13,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 8,
@@ -77,7 +91,9 @@
   "protein": 8.07,
   "carbohydrate": 75.23,
   "lipid": 11.97,
-  "fiber": 2.1
+  "fiber": 2.1,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 9,
@@ -87,7 +103,9 @@
   "protein": 6.4,
   "carbohydrate": 70.55,
   "lipid": 19.58,
-  "fiber": 2.96
+  "fiber": 2.96,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 10,
@@ -97,7 +115,9 @@
   "protein": 5.72,
   "carbohydrate": 71.01,
   "lipid": 19.57,
-  "fiber": 1.53
+  "fiber": 1.53,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 11,
@@ -107,7 +127,9 @@
   "protein": 5.56,
   "carbohydrate": 67.54,
   "lipid": 24.67,
-  "fiber": 1.8
+  "fiber": 1.8,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 12,
@@ -117,7 +139,9 @@
   "protein": 4.52,
   "carbohydrate": 67.35,
   "lipid": 26.4,
-  "fiber": 0.82
+  "fiber": 0.82,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 13,
@@ -127,7 +151,9 @@
   "protein": 10.06,
   "carbohydrate": 68.73,
   "lipid": 14.44,
-  "fiber": 2.51
+  "fiber": 2.51,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 14,
@@ -137,7 +163,9 @@
   "protein": 6.16,
   "carbohydrate": 84.71,
   "lipid": 6.13,
-  "fiber": 1.7
+  "fiber": 1.7,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 15,
@@ -147,7 +175,9 @@
   "protein": 4.42,
   "carbohydrate": 47.86,
   "lipid": 12.75,
-  "fiber": 0.69
+  "fiber": 0.69,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 16,
@@ -157,7 +187,9 @@
   "protein": 6.22,
   "carbohydrate": 54.72,
   "lipid": 18.47,
-  "fiber": 1.43
+  "fiber": 1.43,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 17,
@@ -167,7 +199,9 @@
   "protein": 5.67,
   "carbohydrate": 52.28,
   "lipid": 11.3,
-  "fiber": 1.05
+  "fiber": 1.05,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 18,
@@ -177,7 +211,9 @@
   "protein": 4.8,
   "carbohydrate": 45.11,
   "lipid": 12.41,
-  "fiber": 0.71
+  "fiber": 0.71,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 19,
@@ -187,7 +223,9 @@
   "protein": 7.2,
   "carbohydrate": 78.06,
   "lipid": 0.97,
-  "fiber": 5.5
+  "fiber": 5.5,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 20,
@@ -197,7 +235,9 @@
   "protein": 2.36,
   "carbohydrate": 23.63,
   "lipid": 1.24,
-  "fiber": 1.22
+  "fiber": 1.22,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 21,
@@ -207,7 +247,9 @@
   "protein": 7.29,
   "carbohydrate": 80.83,
   "lipid": 1.6,
-  "fiber": 5.29
+  "fiber": 5.29,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 22,
@@ -217,7 +259,9 @@
   "protein": 6.88,
   "carbohydrate": 80.45,
   "lipid": 1.18,
-  "fiber": 1.84
+  "fiber": 1.84,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 23,
@@ -227,7 +271,9 @@
   "protein": 6.43,
   "carbohydrate": 87.27,
   "lipid": 1.09,
-  "fiber": 3.21
+  "fiber": 3.21,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 24,
@@ -237,7 +283,9 @@
   "protein": 8.9,
   "carbohydrate": 81.62,
   "lipid": 2.12,
-  "fiber": 4.98
+  "fiber": 4.98,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 25,
@@ -247,7 +295,9 @@
   "protein": 7.16,
   "carbohydrate": 83.82,
   "lipid": 0.96,
-  "fiber": 4.12
+  "fiber": 4.12,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 26,
@@ -257,7 +307,9 @@
   "protein": 4.74,
   "carbohydrate": 88.84,
   "lipid": 0.67,
-  "fiber": 2.11
+  "fiber": 2.11,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 27,
@@ -267,7 +319,9 @@
   "protein": 7.03,
   "carbohydrate": 83.87,
   "lipid": 1.23,
-  "fiber": 1.07
+  "fiber": 1.07,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 28,
@@ -277,7 +331,9 @@
   "protein": 4.82,
   "carbohydrate": 86.15,
   "lipid": 1.64,
-  "fiber": 3.72
+  "fiber": 3.72,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 29,
@@ -287,7 +343,9 @@
   "protein": 2.36,
   "carbohydrate": 13.94,
   "lipid": 1.64,
-  "fiber": 0.46
+  "fiber": 0.46,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 30,
@@ -297,7 +355,9 @@
   "protein": 2.22,
   "carbohydrate": 79.82,
   "lipid": 13.37,
-  "fiber": 2.52
+  "fiber": 2.52,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 31,
@@ -307,7 +367,9 @@
   "protein": 1.27,
   "carbohydrate": 85.5,
   "lipid": 0.3,
-  "fiber": 0.58
+  "fiber": 0.58,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 32,
@@ -317,7 +379,9 @@
   "protein": 12.52,
   "carbohydrate": 73.3,
   "lipid": 1.75,
-  "fiber": 15.48
+  "fiber": 15.48,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 33,
@@ -327,7 +391,9 @@
   "protein": 7.19,
   "carbohydrate": 79.08,
   "lipid": 1.47,
-  "fiber": 5.49
+  "fiber": 5.49,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 34,
@@ -337,7 +403,9 @@
   "protein": 11.38,
   "carbohydrate": 75.79,
   "lipid": 1.46,
-  "fiber": 4.82
+  "fiber": 4.82,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 35,
@@ -347,7 +415,9 @@
   "protein": 9.79,
   "carbohydrate": 75.09,
   "lipid": 1.37,
-  "fiber": 2.35
+  "fiber": 2.35,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 36,
@@ -357,7 +427,9 @@
   "protein": 11.88,
   "carbohydrate": 77.77,
   "lipid": 5.79,
-  "fiber": 1.94
+  "fiber": 1.94,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 37,
@@ -367,7 +439,9 @@
   "protein": 5.81,
   "carbohydrate": 32.52,
   "lipid": 1.16,
-  "fiber": 1.64
+  "fiber": 1.64,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 38,
@@ -377,7 +451,9 @@
   "protein": 7.01,
   "carbohydrate": 45.06,
   "lipid": 1.34,
-  "fiber": 1.61
+  "fiber": 1.61,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 39,
@@ -387,7 +463,9 @@
   "protein": 8.79,
   "carbohydrate": 62.43,
   "lipid": 17.24,
-  "fiber": 5.61
+  "fiber": 5.61,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 40,
@@ -397,7 +475,9 @@
   "protein": 10.0,
   "carbohydrate": 77.94,
   "lipid": 1.3,
-  "fiber": 2.93
+  "fiber": 2.93,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 41,
@@ -407,7 +487,9 @@
   "protein": 10.32,
   "carbohydrate": 76.62,
   "lipid": 1.97,
-  "fiber": 2.3
+  "fiber": 2.3,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 42,
@@ -417,7 +499,9 @@
   "protein": 0.6,
   "carbohydrate": 87.15,
   "lipid": 0,
-  "fiber": 0.74
+  "fiber": 0.74,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 43,
@@ -427,7 +511,9 @@
   "protein": 7.21,
   "carbohydrate": 78.87,
   "lipid": 1.9,
-  "fiber": 4.71
+  "fiber": 4.71,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 44,
@@ -437,7 +523,9 @@
   "protein": 6.59,
   "carbohydrate": 28.56,
   "lipid": 0.61,
-  "fiber": 3.92
+  "fiber": 3.92,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 45,
@@ -447,7 +535,9 @@
   "protein": 3.23,
   "carbohydrate": 17.14,
   "lipid": 2.35,
-  "fiber": 4.64
+  "fiber": 4.64,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 46,
@@ -457,7 +547,9 @@
   "protein": 0.58,
   "carbohydrate": 89.34,
   "lipid": 0.37,
-  "fiber": 0.88
+  "fiber": 0.88,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 47,
@@ -467,7 +559,9 @@
   "protein": 2.55,
   "carbohydrate": 30.68,
   "lipid": 4.85,
-  "fiber": 2.37
+  "fiber": 2.37,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 48,
@@ -477,7 +571,9 @@
   "protein": 12.35,
   "carbohydrate": 59.57,
   "lipid": 5.69,
-  "fiber": 5.98
+  "fiber": 5.98,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 49,
@@ -487,7 +583,9 @@
   "protein": 11.34,
   "carbohydrate": 56.51,
   "lipid": 3.58,
-  "fiber": 5.71
+  "fiber": 5.71,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 50,
@@ -497,7 +595,9 @@
   "protein": 11.95,
   "carbohydrate": 44.12,
   "lipid": 2.73,
-  "fiber": 2.48
+  "fiber": 2.48,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 51,
@@ -507,7 +607,9 @@
   "protein": 8.3,
   "carbohydrate": 56.4,
   "lipid": 3.11,
-  "fiber": 4.3
+  "fiber": 4.3,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 52,
@@ -517,7 +619,9 @@
   "protein": 9.43,
   "carbohydrate": 49.94,
   "lipid": 3.65,
-  "fiber": 6.88
+  "fiber": 6.88,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 53,
@@ -527,7 +631,9 @@
   "protein": 7.95,
   "carbohydrate": 58.65,
   "lipid": 3.1,
-  "fiber": 2.31
+  "fiber": 2.31,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 54,
@@ -537,7 +643,9 @@
   "protein": 8.4,
   "carbohydrate": 61.45,
   "lipid": 2.84,
-  "fiber": 2.43
+  "fiber": 2.43,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 55,
@@ -547,7 +655,9 @@
   "protein": 10.74,
   "carbohydrate": 42.02,
   "lipid": 8.79,
-  "fiber": 1.04
+  "fiber": 1.04,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 56,
@@ -557,7 +667,9 @@
   "protein": 10.1,
   "carbohydrate": 43.77,
   "lipid": 20.14,
-  "fiber": 0.99
+  "fiber": 0.99,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 57,
@@ -567,7 +679,9 @@
   "protein": 9.85,
   "carbohydrate": 45.95,
   "lipid": 9.63,
-  "fiber": 1.11
+  "fiber": 1.11,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 58,
@@ -577,7 +691,9 @@
   "protein": 8.71,
   "carbohydrate": 48.13,
   "lipid": 22.67,
-  "fiber": 0.94
+  "fiber": 0.94,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 59,
@@ -587,7 +703,9 @@
   "protein": 6.9,
   "carbohydrate": 57.38,
   "lipid": 5.48,
-  "fiber": 1.41
+  "fiber": 1.41,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 60,
@@ -597,7 +715,9 @@
   "protein": 6.02,
   "carbohydrate": 49.34,
   "lipid": 40.86,
-  "fiber": 1.31
+  "fiber": 1.31,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 61,
@@ -607,7 +727,9 @@
   "protein": 9.93,
   "carbohydrate": 70.31,
   "lipid": 15.94,
-  "fiber": 14.34
+  "fiber": 14.34,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 62,
@@ -617,7 +739,9 @@
   "protein": 2.29,
   "carbohydrate": 23.31,
   "lipid": 0.3,
-  "fiber": 2.4
+  "fiber": 2.4,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 63,
@@ -627,7 +751,9 @@
   "protein": 10.52,
   "carbohydrate": 74.56,
   "lipid": 3.3,
-  "fiber": 3.4
+  "fiber": 3.4,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 64,
@@ -637,7 +763,9 @@
   "protein": 1.44,
   "carbohydrate": 10.76,
   "lipid": 0.73,
-  "fiber": 2.46
+  "fiber": 2.46,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 65,
@@ -647,7 +775,9 @@
   "protein": 1.75,
   "carbohydrate": 8.36,
   "lipid": 0.54,
-  "fiber": 2.17
+  "fiber": 2.17,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 66,
@@ -657,7 +787,9 @@
   "protein": 0.61,
   "carbohydrate": 3.3,
   "lipid": 0,
-  "fiber": 1.17
+  "fiber": 1.17,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 67,
@@ -667,7 +799,9 @@
   "protein": 0.96,
   "carbohydrate": 2.67,
   "lipid": 0.06,
-  "fiber": 1.7
+  "fiber": 1.7,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 68,
@@ -677,7 +811,9 @@
   "protein": 0.39,
   "carbohydrate": 5.98,
   "lipid": 0.8,
-  "fiber": 1.55
+  "fiber": 1.55,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 69,
@@ -687,7 +823,9 @@
   "protein": 0.67,
   "carbohydrate": 6.12,
   "lipid": 0.12,
-  "fiber": 2.3
+  "fiber": 2.3,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 70,
@@ -697,7 +835,9 @@
   "protein": 1.12,
   "carbohydrate": 2.98,
   "lipid": 0.2,
-  "fiber": 1.59
+  "fiber": 1.59,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 71,
@@ -707,7 +847,9 @@
   "protein": 1.14,
   "carbohydrate": 4.29,
   "lipid": 0.14,
-  "fiber": 1.35
+  "fiber": 1.35,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 72,
@@ -717,7 +859,9 @@
   "protein": 1.07,
   "carbohydrate": 4.19,
   "lipid": 0.82,
-  "fiber": 1.38
+  "fiber": 1.38,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 73,
@@ -727,7 +871,9 @@
   "protein": 0.64,
   "carbohydrate": 7.87,
   "lipid": 0.14,
-  "fiber": 2.6
+  "fiber": 2.6,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 74,
@@ -737,7 +883,9 @@
   "protein": 1.44,
   "carbohydrate": 4.63,
   "lipid": 0.11,
-  "fiber": 1.12
+  "fiber": 1.12,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 75,
@@ -747,7 +895,9 @@
   "protein": 2.69,
   "carbohydrate": 2.25,
   "lipid": 0.24,
-  "fiber": 2.14
+  "fiber": 2.14,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 76,
@@ -757,7 +907,9 @@
   "protein": 0.76,
   "carbohydrate": 4.27,
   "lipid": 0.07,
-  "fiber": 0.96
+  "fiber": 0.96,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 77,
@@ -767,7 +919,9 @@
   "protein": 0.61,
   "carbohydrate": 1.75,
   "lipid": 0.13,
-  "fiber": 1.02
+  "fiber": 1.02,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 78,
@@ -777,7 +931,9 @@
   "protein": 1.35,
   "carbohydrate": 1.7,
   "lipid": 0.16,
-  "fiber": 1.83
+  "fiber": 1.83,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 79,
@@ -787,7 +943,9 @@
   "protein": 1.69,
   "carbohydrate": 2.43,
   "lipid": 0.12,
-  "fiber": 2.33
+  "fiber": 2.33,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 80,
@@ -797,7 +955,9 @@
   "protein": 0.91,
   "carbohydrate": 2.49,
   "lipid": 0.19,
-  "fiber": 2.01
+  "fiber": 2.01,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 81,
@@ -807,7 +967,9 @@
   "protein": 2.66,
   "carbohydrate": 5.24,
   "lipid": 0.48,
-  "fiber": 4.14
+  "fiber": 4.14,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 82,
@@ -817,7 +979,9 @@
   "protein": 7.01,
   "carbohydrate": 23.91,
   "lipid": 0.22,
-  "fiber": 4.32
+  "fiber": 4.32,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 83,
@@ -827,7 +991,9 @@
   "protein": 1.41,
   "carbohydrate": 6.88,
   "lipid": 0.14,
-  "fiber": 2.51
+  "fiber": 2.51,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 84,
@@ -837,7 +1003,9 @@
   "protein": 1.77,
   "carbohydrate": 3.34,
   "lipid": 0.22,
-  "fiber": 2.59
+  "fiber": 2.59,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 85,
@@ -847,7 +1015,9 @@
   "protein": 1.7,
   "carbohydrate": 5.7,
   "lipid": 4.85,
-  "fiber": 3.43
+  "fiber": 3.43,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 86,
@@ -857,7 +1027,9 @@
   "protein": 0.85,
   "carbohydrate": 18.95,
   "lipid": 0.17,
-  "fiber": 1.76
+  "fiber": 1.76,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 87,
@@ -867,7 +1039,9 @@
   "protein": 1.05,
   "carbohydrate": 23.98,
   "lipid": 0.17,
-  "fiber": 2.06
+  "fiber": 2.06,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 88,
@@ -877,7 +1051,9 @@
   "protein": 0.64,
   "carbohydrate": 18.42,
   "lipid": 0.09,
-  "fiber": 2.21
+  "fiber": 2.21,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 89,
@@ -887,7 +1063,9 @@
   "protein": 1.26,
   "carbohydrate": 28.2,
   "lipid": 0.13,
-  "fiber": 2.57
+  "fiber": 2.57,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 90,
@@ -897,7 +1075,9 @@
   "protein": 5.58,
   "carbohydrate": 51.22,
   "lipid": 36.62,
-  "fiber": 2.46
+  "fiber": 2.46,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 91,
@@ -907,7 +1087,9 @@
   "protein": 1.16,
   "carbohydrate": 11.94,
   "lipid": 0,
-  "fiber": 1.34
+  "fiber": 1.34,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 92,
@@ -917,7 +1099,9 @@
   "protein": 1.77,
   "carbohydrate": 14.69,
   "lipid": 0,
-  "fiber": 1.16
+  "fiber": 1.16,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 93,
@@ -927,7 +1111,9 @@
   "protein": 4.97,
   "carbohydrate": 35.64,
   "lipid": 13.11,
-  "fiber": 8.06
+  "fiber": 8.06,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 94,
@@ -937,7 +1123,9 @@
   "protein": 1.29,
   "carbohydrate": 14.09,
   "lipid": 0.9,
-  "fiber": 1.38
+  "fiber": 1.38,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 95,
@@ -947,7 +1135,9 @@
   "protein": 0.68,
   "carbohydrate": 4.47,
   "lipid": 0.15,
-  "fiber": 2.52
+  "fiber": 2.52,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 96,
@@ -957,7 +1147,9 @@
   "protein": 1.22,
   "carbohydrate": 4.43,
   "lipid": 0.1,
-  "fiber": 2.87
+  "fiber": 2.87,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 97,
@@ -967,7 +1159,9 @@
   "protein": 1.29,
   "carbohydrate": 7.23,
   "lipid": 0.09,
-  "fiber": 1.88
+  "fiber": 1.88,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 98,
@@ -977,7 +1171,9 @@
   "protein": 1.95,
   "carbohydrate": 11.11,
   "lipid": 0.09,
-  "fiber": 3.37
+  "fiber": 3.37,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 99,
@@ -987,7 +1183,9 @@
   "protein": 1.29,
   "carbohydrate": 80.54,
   "lipid": 12.25,
-  "fiber": 1.16
+  "fiber": 1.16,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 100,
@@ -997,7 +1195,9 @@
   "protein": 2.13,
   "carbohydrate": 4.37,
   "lipid": 0.46,
-  "fiber": 3.42
+  "fiber": 3.42,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 101,
@@ -1007,7 +1207,9 @@
   "protein": 3.64,
   "carbohydrate": 4.03,
   "lipid": 0.27,
-  "fiber": 2.88
+  "fiber": 2.88,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 102,
@@ -1017,7 +1219,9 @@
   "protein": 1.53,
   "carbohydrate": 18.85,
   "lipid": 0.11,
-  "fiber": 2.63
+  "fiber": 2.63,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 103,
@@ -1027,7 +1231,9 @@
   "protein": 2.28,
   "carbohydrate": 22.95,
   "lipid": 0.14,
-  "fiber": 7.27
+  "fiber": 7.27,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 104,
@@ -1037,7 +1243,9 @@
   "protein": 3.2,
   "carbohydrate": 5.97,
   "lipid": 0.58,
-  "fiber": 4.47
+  "fiber": 4.47,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 105,
@@ -1047,7 +1255,9 @@
   "protein": 1.87,
   "carbohydrate": 4.75,
   "lipid": 0.28,
-  "fiber": 2.05
+  "fiber": 2.05,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 106,
@@ -1057,7 +1267,9 @@
   "protein": 1.95,
   "carbohydrate": 4.81,
   "lipid": 4.81,
-  "fiber": 3.65
+  "fiber": 3.65,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 107,
@@ -1067,7 +1279,9 @@
   "protein": 1.71,
   "carbohydrate": 8.85,
   "lipid": 0.08,
-  "fiber": 2.19
+  "fiber": 2.19,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 108,
@@ -1077,7 +1291,9 @@
   "protein": 1.87,
   "carbohydrate": 3.37,
   "lipid": 0.35,
-  "fiber": 3.55
+  "fiber": 3.55,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 109,
@@ -1087,7 +1303,9 @@
   "protein": 0.85,
   "carbohydrate": 6.69,
   "lipid": 0.22,
-  "fiber": 2.63
+  "fiber": 2.63,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 110,
@@ -1097,7 +1315,9 @@
   "protein": 1.32,
   "carbohydrate": 7.66,
   "lipid": 0.17,
-  "fiber": 3.18
+  "fiber": 3.18,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 111,
@@ -1107,7 +1327,9 @@
   "protein": 1.14,
   "carbohydrate": 2.85,
   "lipid": 0.14,
-  "fiber": 2.2
+  "fiber": 2.2,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 112,
@@ -1117,7 +1339,9 @@
   "protein": 0.41,
   "carbohydrate": 4.79,
   "lipid": 0,
-  "fiber": 1.04
+  "fiber": 1.04,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 113,
@@ -1127,7 +1351,9 @@
   "protein": 0.7,
   "carbohydrate": 4.14,
   "lipid": 0.06,
-  "fiber": 1.28
+  "fiber": 1.28,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 114,
@@ -1137,7 +1363,9 @@
   "protein": 20.88,
   "carbohydrate": 47.95,
   "lipid": 10.39,
-  "fiber": 37.29
+  "fiber": 37.29,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 115,
@@ -1147,7 +1375,9 @@
   "protein": 2.87,
   "carbohydrate": 4.33,
   "lipid": 0.55,
-  "fiber": 3.12
+  "fiber": 3.12,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 116,
@@ -1157,7 +1387,9 @@
   "protein": 1.67,
   "carbohydrate": 8.71,
   "lipid": 6.59,
-  "fiber": 5.74
+  "fiber": 5.74,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 117,
@@ -1167,7 +1399,9 @@
   "protein": 1.91,
   "carbohydrate": 4.52,
   "lipid": 0.21,
-  "fiber": 2.35
+  "fiber": 2.35,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 118,
@@ -1177,7 +1411,9 @@
   "protein": 1.24,
   "carbohydrate": 3.88,
   "lipid": 0.27,
-  "fiber": 2.13
+  "fiber": 2.13,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 119,
@@ -1187,7 +1423,9 @@
   "protein": 2.0,
   "carbohydrate": 2.57,
   "lipid": 0.24,
-  "fiber": 2.1
+  "fiber": 2.1,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 120,
@@ -1197,7 +1435,9 @@
   "protein": 2.72,
   "carbohydrate": 4.24,
   "lipid": 5.43,
-  "fiber": 2.52
+  "fiber": 2.52,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 121,
@@ -1207,7 +1447,9 @@
   "protein": 1.55,
   "carbohydrate": 87.9,
   "lipid": 0.28,
-  "fiber": 6.39
+  "fiber": 6.39,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 122,
@@ -1217,7 +1459,9 @@
   "protein": 1.23,
   "carbohydrate": 89.19,
   "lipid": 0.29,
-  "fiber": 6.54
+  "fiber": 6.54,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 123,
@@ -1227,7 +1471,9 @@
   "protein": 1.62,
   "carbohydrate": 87.29,
   "lipid": 0.47,
-  "fiber": 4.24
+  "fiber": 4.24,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 124,
@@ -1237,7 +1483,9 @@
   "protein": 0.52,
   "carbohydrate": 81.15,
   "lipid": 0.28,
-  "fiber": 0.65
+  "fiber": 0.65,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 125,
@@ -1247,7 +1495,9 @@
   "protein": 4.17,
   "carbohydrate": 7.76,
   "lipid": 0.1,
-  "fiber": 1.97
+  "fiber": 1.97,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 126,
@@ -1257,7 +1507,9 @@
   "protein": 2.05,
   "carbohydrate": 23.23,
   "lipid": 0.21,
-  "fiber": 1.65
+  "fiber": 1.65,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 127,
@@ -1267,7 +1519,9 @@
   "protein": 1.4,
   "carbohydrate": 6.19,
   "lipid": 0.22,
-  "fiber": 4.83
+  "fiber": 4.83,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 128,
@@ -1277,7 +1531,9 @@
   "protein": 4.41,
   "carbohydrate": 23.06,
   "lipid": 3.91,
-  "fiber": 23.92
+  "fiber": 23.92,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 129,
@@ -1287,7 +1543,9 @@
   "protein": 0.57,
   "carbohydrate": 30.09,
   "lipid": 0.3,
-  "fiber": 1.56
+  "fiber": 1.56,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 130,
@@ -1297,7 +1555,9 @@
   "protein": 1.13,
   "carbohydrate": 36.17,
   "lipid": 0.3,
-  "fiber": 1.88
+  "fiber": 1.88,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 131,
@@ -1307,7 +1567,9 @@
   "protein": 2.06,
   "carbohydrate": 80.3,
   "lipid": 9.12,
-  "fiber": 7.82
+  "fiber": 7.82,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 132,
@@ -1317,7 +1579,9 @@
   "protein": 1.38,
   "carbohydrate": 50.25,
   "lipid": 11.2,
-  "fiber": 1.87
+  "fiber": 1.87,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 133,
@@ -1327,7 +1591,9 @@
   "protein": 1.99,
   "carbohydrate": 3.64,
   "lipid": 0.39,
-  "fiber": 3.31
+  "fiber": 3.31,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 134,
@@ -1337,7 +1603,9 @@
   "protein": 1.39,
   "carbohydrate": 2.73,
   "lipid": 0.07,
-  "fiber": 2.19
+  "fiber": 2.19,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 135,
@@ -1347,7 +1615,9 @@
   "protein": 2.11,
   "carbohydrate": 3.24,
   "lipid": 0.17,
-  "fiber": 1.89
+  "fiber": 1.89,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 136,
@@ -1357,7 +1627,9 @@
   "protein": 5.86,
   "carbohydrate": 36.78,
   "lipid": 1.94,
-  "fiber": 1.78
+  "fiber": 1.78,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 137,
@@ -1367,7 +1639,9 @@
   "protein": 1.2,
   "carbohydrate": 4.15,
   "lipid": 0.05,
-  "fiber": 2.64
+  "fiber": 2.64,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 138,
@@ -1377,7 +1651,9 @@
   "protein": 1.79,
   "carbohydrate": 4.33,
   "lipid": 0.4,
-  "fiber": 3.15
+  "fiber": 3.15,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 139,
@@ -1387,7 +1663,9 @@
   "protein": 2.46,
   "carbohydrate": 5.51,
   "lipid": 0.45,
-  "fiber": 2.55
+  "fiber": 2.55,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 140,
@@ -1397,7 +1675,9 @@
   "protein": 5.12,
   "carbohydrate": 34.24,
   "lipid": 24.57,
-  "fiber": 0.56
+  "fiber": 0.56,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 141,
@@ -1407,7 +1687,9 @@
   "protein": 3.65,
   "carbohydrate": 38.51,
   "lipid": 13.99,
-  "fiber": 0.98
+  "fiber": 0.98,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 142,
@@ -1417,7 +1699,9 @@
   "protein": 0.87,
   "carbohydrate": 2.04,
   "lipid": 0,
-  "fiber": 1.12
+  "fiber": 1.12,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 143,
@@ -1427,7 +1711,9 @@
   "protein": 1.22,
   "carbohydrate": 5.96,
   "lipid": 0.44,
-  "fiber": 1.92
+  "fiber": 1.92,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 144,
@@ -1437,7 +1723,9 @@
   "protein": 1.05,
   "carbohydrate": 4.89,
   "lipid": 0.15,
-  "fiber": 2.56
+  "fiber": 2.56,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 145,
@@ -1447,7 +1735,9 @@
   "protein": 1.04,
   "carbohydrate": 5.47,
   "lipid": 0.15,
-  "fiber": 1.59
+  "fiber": 1.59,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 146,
@@ -1457,7 +1747,9 @@
   "protein": 0.43,
   "carbohydrate": 86.77,
   "lipid": 0,
-  "fiber": 0.24
+  "fiber": 0.24,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 147,
@@ -1467,7 +1759,9 @@
   "protein": 1.92,
   "carbohydrate": 6.37,
   "lipid": 0.3,
-  "fiber": 4.55
+  "fiber": 4.55,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 148,
@@ -1477,7 +1771,9 @@
   "protein": 1.39,
   "carbohydrate": 2.73,
   "lipid": 0.07,
-  "fiber": 2.19
+  "fiber": 2.19,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 149,
@@ -1487,7 +1783,9 @@
   "protein": 0.88,
   "carbohydrate": 3.86,
   "lipid": 0.14,
-  "fiber": 1.89
+  "fiber": 1.89,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 150,
@@ -1497,7 +1795,9 @@
   "protein": 1.91,
   "carbohydrate": 7.2,
   "lipid": 0.06,
-  "fiber": 1.97
+  "fiber": 1.97,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 151,
@@ -1507,7 +1807,9 @@
   "protein": 1.8,
   "carbohydrate": 7.56,
   "lipid": 1.24,
-  "fiber": 1.75
+  "fiber": 1.75,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 152,
@@ -1517,7 +1819,9 @@
   "protein": 1.77,
   "carbohydrate": 2.22,
   "lipid": 0.11,
-  "fiber": 1.74
+  "fiber": 1.74,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 153,
@@ -1527,7 +1831,9 @@
   "protein": 3.26,
   "carbohydrate": 5.71,
   "lipid": 0.61,
-  "fiber": 1.85
+  "fiber": 1.85,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 154,
@@ -1537,7 +1843,9 @@
   "protein": 3.42,
   "carbohydrate": 12.67,
   "lipid": 0.35,
-  "fiber": 3.09
+  "fiber": 3.09,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 155,
@@ -1547,7 +1855,9 @@
   "protein": 2.67,
   "carbohydrate": 4.95,
   "lipid": 0.74,
-  "fiber": 3.52
+  "fiber": 3.52,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 156,
@@ -1557,7 +1867,9 @@
   "protein": 2.9,
   "carbohydrate": 5.43,
   "lipid": 0.93,
-  "fiber": 4.45
+  "fiber": 4.45,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 157,
@@ -1567,7 +1879,9 @@
   "protein": 1.1,
   "carbohydrate": 3.14,
   "lipid": 0.17,
-  "fiber": 1.17
+  "fiber": 1.17,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 158,
@@ -1577,7 +1891,9 @@
   "protein": 2.43,
   "carbohydrate": 14.96,
   "lipid": 0.19,
-  "fiber": 2.8
+  "fiber": 2.8,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 159,
@@ -1587,7 +1903,9 @@
   "protein": 1.38,
   "carbohydrate": 7.71,
   "lipid": 0.9,
-  "fiber": 3.12
+  "fiber": 3.12,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 160,
@@ -1597,7 +1915,9 @@
   "protein": 1.36,
   "carbohydrate": 6.89,
   "lipid": 0,
-  "fiber": 1.03
+  "fiber": 1.03,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 161,
@@ -1607,7 +1927,9 @@
   "protein": 0.81,
   "carbohydrate": 5.12,
   "lipid": 0,
-  "fiber": 2.27
+  "fiber": 2.27,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 162,
@@ -1617,7 +1939,9 @@
   "protein": 1.79,
   "carbohydrate": 5.35,
   "lipid": 0.17,
-  "fiber": 2.38
+  "fiber": 2.38,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 163,
@@ -1627,7 +1951,9 @@
   "protein": 1.24,
   "carbohydrate": 6.03,
   "lipid": 8.4,
-  "fiber": 6.31
+  "fiber": 6.31,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 164,
@@ -1637,7 +1963,9 @@
   "protein": 0.86,
   "carbohydrate": 12.33,
   "lipid": 0.12,
-  "fiber": 0.99
+  "fiber": 0.99,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 165,
@@ -1647,7 +1975,9 @@
   "protein": 0.47,
   "carbohydrate": 7.8,
   "lipid": 0.11,
-  "fiber": 0.33
+  "fiber": 0.33,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 166,
@@ -1657,7 +1987,9 @@
   "protein": 0.83,
   "carbohydrate": 14.93,
   "lipid": 0.7,
-  "fiber": 1.7
+  "fiber": 1.7,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 167,
@@ -1667,7 +1999,9 @@
   "protein": 0.72,
   "carbohydrate": 21.46,
   "lipid": 3.66,
-  "fiber": 1.72
+  "fiber": 1.72,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 168,
@@ -1677,7 +2011,9 @@
   "protein": 0.8,
   "carbohydrate": 6.21,
   "lipid": 3.94,
-  "fiber": 2.55
+  "fiber": 2.55,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 169,
@@ -1687,7 +2023,9 @@
   "protein": 0.91,
   "carbohydrate": 7.97,
   "lipid": 0.21,
-  "fiber": 1.51
+  "fiber": 1.51,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 170,
@@ -1697,7 +2035,9 @@
   "protein": 0.59,
   "carbohydrate": 5.54,
   "lipid": 0,
-  "fiber": 0.7
+  "fiber": 0.7,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 171,
@@ -1707,7 +2047,9 @@
   "protein": 0.41,
   "carbohydrate": 46.89,
   "lipid": 0,
-  "fiber": 0.52
+  "fiber": 0.52,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 172,
@@ -1717,7 +2059,9 @@
   "protein": 0.77,
   "carbohydrate": 13.85,
   "lipid": 0,
-  "fiber": 2.43
+  "fiber": 2.43,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 173,
@@ -1727,7 +2071,9 @@
   "protein": 1.02,
   "carbohydrate": 47.66,
   "lipid": 0.28,
-  "fiber": 4.55
+  "fiber": 4.55,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 174,
@@ -1737,7 +2083,9 @@
   "protein": 0.97,
   "carbohydrate": 25.33,
   "lipid": 0.3,
-  "fiber": 2.14
+  "fiber": 2.14,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 175,
@@ -1747,7 +2095,9 @@
   "protein": 1.43,
   "carbohydrate": 33.67,
   "lipid": 0.24,
-  "fiber": 1.53
+  "fiber": 1.53,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 176,
@@ -1757,7 +2107,9 @@
   "protein": 2.17,
   "carbohydrate": 75.67,
   "lipid": 0.05,
-  "fiber": 3.83
+  "fiber": 3.83,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 177,
@@ -1767,7 +2119,9 @@
   "protein": 1.13,
   "carbohydrate": 27.8,
   "lipid": 0.14,
-  "fiber": 2.8
+  "fiber": 2.8,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 178,
@@ -1777,7 +2131,9 @@
   "protein": 1.75,
   "carbohydrate": 22.34,
   "lipid": 0.06,
-  "fiber": 2.59
+  "fiber": 2.59,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 179,
@@ -1787,7 +2143,9 @@
   "protein": 1.4,
   "carbohydrate": 23.85,
   "lipid": 0.12,
-  "fiber": 1.95
+  "fiber": 1.95,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 180,
@@ -1797,7 +2155,9 @@
   "protein": 1.48,
   "carbohydrate": 29.34,
   "lipid": 0.21,
-  "fiber": 1.95
+  "fiber": 1.95,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 181,
@@ -1807,7 +2167,9 @@
   "protein": 1.23,
   "carbohydrate": 20.31,
   "lipid": 0.08,
-  "fiber": 2.03
+  "fiber": 2.03,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 182,
@@ -1817,7 +2179,9 @@
   "protein": 1.27,
   "carbohydrate": 25.96,
   "lipid": 0.07,
-  "fiber": 2.04
+  "fiber": 2.04,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 183,
@@ -1827,7 +2191,9 @@
   "protein": 0.95,
   "carbohydrate": 19.41,
   "lipid": 0.14,
-  "fiber": 2.19
+  "fiber": 2.19,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 184,
@@ -1837,7 +2203,9 @@
   "protein": 1.28,
   "carbohydrate": 11.43,
   "lipid": 0,
-  "fiber": 2.58
+  "fiber": 2.58,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 185,
@@ -1847,7 +2215,9 @@
   "protein": 0.59,
   "carbohydrate": 6.37,
   "lipid": 0.17,
-  "fiber": 1.36
+  "fiber": 1.36,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 186,
@@ -1857,7 +2227,9 @@
   "protein": 0.97,
   "carbohydrate": 10.29,
   "lipid": 0.33,
-  "fiber": 1.68
+  "fiber": 1.68,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 187,
@@ -1867,7 +2239,9 @@
   "protein": 0.48,
   "carbohydrate": 9.35,
   "lipid": 0.15,
-  "fiber": 0.81
+  "fiber": 0.81,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 188,
@@ -1877,7 +2251,9 @@
   "protein": 0.4,
   "carbohydrate": 10.73,
   "lipid": 0.2,
-  "fiber": 0.63
+  "fiber": 0.63,
+  "liquid": true,
+  "densityGPerMl": 1.05
  },
  {
   "id": 189,
@@ -1887,7 +2263,9 @@
   "protein": 0.36,
   "carbohydrate": 19.33,
   "lipid": 0.07,
-  "fiber": 6.52
+  "fiber": 6.52,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 190,
@@ -1897,7 +2275,9 @@
   "protein": 0.87,
   "carbohydrate": 11.48,
   "lipid": 0.18,
-  "fiber": 2.03
+  "fiber": 2.03,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 191,
@@ -1907,7 +2287,9 @@
   "protein": 1.4,
   "carbohydrate": 18.86,
   "lipid": 0.36,
-  "fiber": 3.9
+  "fiber": 3.9,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 192,
@@ -1917,7 +2299,9 @@
   "protein": 1.16,
   "carbohydrate": 10.43,
   "lipid": 0.95,
-  "fiber": 3.12
+  "fiber": 3.12,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 193,
@@ -1927,7 +2311,9 @@
   "protein": 0.84,
   "carbohydrate": 11.39,
   "lipid": 0.59,
-  "fiber": 1.59
+  "fiber": 1.59,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 194,
@@ -1937,7 +2323,9 @@
   "protein": 0.97,
   "carbohydrate": 10.25,
   "lipid": 0.16,
-  "fiber": 1.79
+  "fiber": 1.79,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 195,
@@ -1947,7 +2335,9 @@
   "protein": 0.56,
   "carbohydrate": 50.34,
   "lipid": 0.15,
-  "fiber": 1.98
+  "fiber": 1.98,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 196,
@@ -1957,7 +2347,9 @@
   "protein": 1.08,
   "carbohydrate": 17.17,
   "lipid": 0.19,
-  "fiber": 5.55
+  "fiber": 5.55,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 197,
@@ -1967,7 +2359,9 @@
   "protein": 0.9,
   "carbohydrate": 12.4,
   "lipid": 0.49,
-  "fiber": 6.33
+  "fiber": 6.33,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 198,
@@ -1977,7 +2371,9 @@
   "protein": 0.58,
   "carbohydrate": 74.12,
   "lipid": 0,
-  "fiber": 3.73
+  "fiber": 3.73,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 199,
@@ -1987,7 +2383,9 @@
   "protein": 0.41,
   "carbohydrate": 78.7,
   "lipid": 0.1,
-  "fiber": 4.37
+  "fiber": 4.37,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 200,
@@ -1997,7 +2395,9 @@
   "protein": 1.09,
   "carbohydrate": 13.01,
   "lipid": 0.44,
-  "fiber": 6.22
+  "fiber": 6.22,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 201,
@@ -2007,7 +2407,9 @@
   "protein": 0.85,
   "carbohydrate": 15.84,
   "lipid": 0.21,
-  "fiber": 1.91
+  "fiber": 1.91,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 202,
@@ -2017,7 +2419,9 @@
   "protein": 0.57,
   "carbohydrate": 9.78,
   "lipid": 0.14,
-  "fiber": 1.19
+  "fiber": 1.19,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 203,
@@ -2027,7 +2431,9 @@
   "protein": 0.61,
   "carbohydrate": 15.26,
   "lipid": 0.13,
-  "fiber": 2.3
+  "fiber": 2.3,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 204,
@@ -2037,7 +2443,9 @@
   "protein": 1.4,
   "carbohydrate": 22.5,
   "lipid": 0.27,
-  "fiber": 2.39
+  "fiber": 2.39,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 205,
@@ -2047,7 +2455,9 @@
   "protein": 0.89,
   "carbohydrate": 6.49,
   "lipid": 0.07,
-  "fiber": 5.07
+  "fiber": 5.07,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 206,
@@ -2057,7 +2467,9 @@
   "protein": 0.55,
   "carbohydrate": 10.63,
   "lipid": 0.11,
-  "fiber": 1.78
+  "fiber": 1.78,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 207,
@@ -2067,7 +2479,9 @@
   "protein": 1.34,
   "carbohydrate": 11.5,
   "lipid": 0.63,
-  "fiber": 2.65
+  "fiber": 2.65,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 208,
@@ -2077,7 +2491,9 @@
   "protein": 0.98,
   "carbohydrate": 11.47,
   "lipid": 0.1,
-  "fiber": 1.12
+  "fiber": 1.12,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 209,
@@ -2087,7 +2503,9 @@
   "protein": 0.65,
   "carbohydrate": 8.7,
   "lipid": 0,
-  "fiber": 0
+  "fiber": 0,
+  "liquid": true,
+  "densityGPerMl": 1.04
  },
  {
   "id": 210,
@@ -2097,7 +2515,9 @@
   "protein": 1.08,
   "carbohydrate": 12.86,
   "lipid": 0.19,
-  "fiber": 3.98
+  "fiber": 3.98,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 211,
@@ -2107,7 +2527,9 @@
   "protein": 0.67,
   "carbohydrate": 9.57,
   "lipid": 0.14,
-  "fiber": 1.03
+  "fiber": 1.03,
+  "liquid": true,
+  "densityGPerMl": 1.04
  },
  {
   "id": 212,
@@ -2117,7 +2539,9 @@
   "protein": 1.06,
   "carbohydrate": 11.53,
   "lipid": 0.08,
-  "fiber": 1.78
+  "fiber": 1.78,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 213,
@@ -2127,7 +2551,9 @@
   "protein": 0.71,
   "carbohydrate": 9.17,
   "lipid": 0.12,
-  "fiber": 0.42
+  "fiber": 0.42,
+  "liquid": true,
+  "densityGPerMl": 1.04
  },
  {
   "id": 214,
@@ -2137,7 +2563,9 @@
   "protein": 1.04,
   "carbohydrate": 8.95,
   "lipid": 0.13,
-  "fiber": 0.77
+  "fiber": 0.77,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 215,
@@ -2147,7 +2575,9 @@
   "protein": 0.74,
   "carbohydrate": 7.55,
   "lipid": 0.07,
-  "fiber": 0
+  "fiber": 0,
+  "liquid": true,
+  "densityGPerMl": 1.04
  },
  {
   "id": 216,
@@ -2157,7 +2587,9 @@
   "protein": 0.77,
   "carbohydrate": 11.72,
   "lipid": 0.16,
-  "fiber": 1.73
+  "fiber": 1.73,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 217,
@@ -2167,7 +2599,9 @@
   "protein": 0.48,
   "carbohydrate": 8.55,
   "lipid": 0.12,
-  "fiber": 0.42
+  "fiber": 0.42,
+  "liquid": true,
+  "densityGPerMl": 1.04
  },
  {
   "id": 218,
@@ -2177,7 +2611,9 @@
   "protein": 0.33,
   "carbohydrate": 5.25,
   "lipid": 0,
-  "fiber": 0
+  "fiber": 0,
+  "liquid": true,
+  "densityGPerMl": 1.03
  },
  {
   "id": 219,
@@ -2187,7 +2623,9 @@
   "protein": 0.57,
   "carbohydrate": 7.32,
   "lipid": 0.07,
-  "fiber": 0
+  "fiber": 0,
+  "liquid": true,
+  "densityGPerMl": 1.03
  },
  {
   "id": 220,
@@ -2197,7 +2635,9 @@
   "protein": 0.94,
   "carbohydrate": 11.08,
   "lipid": 0.14,
-  "fiber": 1.18
+  "fiber": 1.18,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 221,
@@ -2207,7 +2647,9 @@
   "protein": 0.23,
   "carbohydrate": 16.59,
   "lipid": 0.25,
-  "fiber": 2.03
+  "fiber": 2.03,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 222,
@@ -2217,7 +2659,9 @@
   "protein": 0.29,
   "carbohydrate": 15.15,
   "lipid": 0,
-  "fiber": 1.35
+  "fiber": 1.35,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 223,
@@ -2227,7 +2671,9 @@
   "protein": 2.08,
   "carbohydrate": 13.95,
   "lipid": 40.66,
-  "fiber": 13.44
+  "fiber": 13.44,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 224,
@@ -2237,7 +2683,9 @@
   "protein": 0.19,
   "carbohydrate": 54.0,
   "lipid": 0.07,
-  "fiber": 1.31
+  "fiber": 1.31,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 225,
@@ -2247,7 +2695,9 @@
   "protein": 0.82,
   "carbohydrate": 11.55,
   "lipid": 0.12,
-  "fiber": 1.81
+  "fiber": 1.81,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 226,
@@ -2257,7 +2707,9 @@
   "protein": 0.46,
   "carbohydrate": 10.44,
   "lipid": 0.12,
-  "fiber": 1.04
+  "fiber": 1.04,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 227,
@@ -2267,7 +2719,9 @@
   "protein": 0.32,
   "carbohydrate": 57.64,
   "lipid": 0.1,
-  "fiber": 1.23
+  "fiber": 1.23,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 228,
@@ -2277,7 +2731,9 @@
   "protein": 0.41,
   "carbohydrate": 16.66,
   "lipid": 0.26,
-  "fiber": 1.58
+  "fiber": 1.58,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 229,
@@ -2287,7 +2743,9 @@
   "protein": 0.41,
   "carbohydrate": 19.35,
   "lipid": 0.17,
-  "fiber": 1.63
+  "fiber": 1.63,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 230,
@@ -2297,7 +2755,9 @@
   "protein": 0.38,
   "carbohydrate": 12.52,
   "lipid": 0.23,
-  "fiber": 1.07
+  "fiber": 1.07,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 231,
@@ -2307,7 +2767,9 @@
   "protein": 0.86,
   "carbohydrate": 12.77,
   "lipid": 0.22,
-  "fiber": 2.07
+  "fiber": 2.07,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 232,
@@ -2317,7 +2779,9 @@
   "protein": 1.99,
   "carbohydrate": 12.26,
   "lipid": 2.1,
-  "fiber": 1.14
+  "fiber": 1.14,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 233,
@@ -2327,7 +2791,9 @@
   "protein": 0.81,
   "carbohydrate": 9.6,
   "lipid": 0.18,
-  "fiber": 0.51
+  "fiber": 0.51,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 234,
@@ -2337,7 +2803,9 @@
   "protein": 0.77,
   "carbohydrate": 9.64,
   "lipid": 0.19,
-  "fiber": 0.35
+  "fiber": 0.35,
+  "liquid": true,
+  "densityGPerMl": 1.05
  },
  {
   "id": 235,
@@ -2347,7 +2815,9 @@
   "protein": 0.88,
   "carbohydrate": 8.14,
   "lipid": 0,
-  "fiber": 0.12
+  "fiber": 0.12,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 236,
@@ -2357,7 +2827,9 @@
   "protein": 0.68,
   "carbohydrate": 7.53,
   "lipid": 0,
-  "fiber": 0.25
+  "fiber": 0.25,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 237,
@@ -2367,7 +2839,9 @@
   "protein": 0.88,
   "carbohydrate": 14.86,
   "lipid": 0.13,
-  "fiber": 3.07
+  "fiber": 3.07,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 238,
@@ -2377,7 +2851,9 @@
   "protein": 0.65,
   "carbohydrate": 9.34,
   "lipid": 0.13,
-  "fiber": 2.73
+  "fiber": 2.73,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 239,
@@ -2387,7 +2863,9 @@
   "protein": 0.89,
   "carbohydrate": 6.82,
   "lipid": 0.31,
-  "fiber": 1.72
+  "fiber": 1.72,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 240,
@@ -2397,7 +2875,9 @@
   "protein": 0.31,
   "carbohydrate": 11.53,
   "lipid": 0,
-  "fiber": 2.96
+  "fiber": 2.96,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 241,
@@ -2407,7 +2887,9 @@
   "protein": 2.34,
   "carbohydrate": 12.97,
   "lipid": 17.97,
-  "fiber": 19.04
+  "fiber": 19.04,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 242,
@@ -2417,7 +2899,9 @@
   "protein": 0.24,
   "carbohydrate": 16.07,
   "lipid": 0.23,
-  "fiber": 2.98
+  "fiber": 2.98,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 243,
@@ -2427,7 +2911,9 @@
   "protein": 0.57,
   "carbohydrate": 14.02,
   "lipid": 0.11,
-  "fiber": 3.01
+  "fiber": 3.01,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 244,
@@ -2437,7 +2923,9 @@
   "protein": 0.82,
   "carbohydrate": 9.32,
   "lipid": 0,
-  "fiber": 1.42
+  "fiber": 1.42,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 245,
@@ -2447,7 +2935,9 @@
   "protein": 0.71,
   "carbohydrate": 16.88,
   "lipid": 0,
-  "fiber": 1.02
+  "fiber": 1.02,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 246,
@@ -2457,7 +2947,9 @@
   "protein": 1.49,
   "carbohydrate": 22.45,
   "lipid": 0.32,
-  "fiber": 3.36
+  "fiber": 3.36,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 247,
@@ -2467,7 +2959,9 @@
   "protein": 0.93,
   "carbohydrate": 10.24,
   "lipid": 0.17,
-  "fiber": 3.24
+  "fiber": 3.24,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 248,
@@ -2477,7 +2971,9 @@
   "protein": 0.29,
   "carbohydrate": 4.76,
   "lipid": 0.12,
-  "fiber": 0.74
+  "fiber": 0.74,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 249,
@@ -2487,7 +2983,9 @@
   "protein": 0.4,
   "carbohydrate": 15.11,
   "lipid": 0,
-  "fiber": 0.44
+  "fiber": 0.44,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 250,
@@ -2497,7 +2995,9 @@
   "protein": 3.21,
   "carbohydrate": 72.53,
   "lipid": 0.46,
-  "fiber": 6.45
+  "fiber": 6.45,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 251,
@@ -2507,7 +3007,9 @@
   "protein": 0.85,
   "carbohydrate": 9.61,
   "lipid": 0.07,
-  "fiber": 0.94
+  "fiber": 0.94,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 252,
@@ -2517,7 +3019,9 @@
   "protein": 0.52,
   "carbohydrate": 8.8,
   "lipid": 0,
-  "fiber": 0
+  "fiber": 0,
+  "liquid": true,
+  "densityGPerMl": 1.04
  },
  {
   "id": 253,
@@ -2527,7 +3031,9 @@
   "protein": 2.09,
   "carbohydrate": 26.47,
   "lipid": 19.08,
-  "fiber": 12.65
+  "fiber": 12.65,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 254,
@@ -2537,7 +3043,9 @@
   "protein": 0.84,
   "carbohydrate": 9.4,
   "lipid": 0,
-  "fiber": 1.98
+  "fiber": 1.98,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 255,
@@ -2547,7 +3055,9 @@
   "protein": 0.51,
   "carbohydrate": 8.79,
   "lipid": 0.07,
-  "fiber": 1.34
+  "fiber": 1.34,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 256,
@@ -2557,7 +3067,9 @@
   "protein": 0.75,
   "carbohydrate": 13.57,
   "lipid": 0.2,
-  "fiber": 0.92
+  "fiber": 0.92,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 257,
@@ -2567,7 +3079,9 @@
   "protein": 0.61,
   "carbohydrate": 12.7,
   "lipid": 0.16,
-  "fiber": 0.93
+  "fiber": 0.93,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 258,
@@ -2577,7 +3091,9 @@
   "protein": 0,
   "carbohydrate": 14.71,
   "lipid": 0,
-  "fiber": 0.23
+  "fiber": 0.23,
+  "liquid": true,
+  "densityGPerMl": 1.06
  },
  {
   "id": 259,
@@ -2587,7 +3103,9 @@
   "protein": null,
   "carbohydrate": null,
   "lipid": 100.0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 0.91
  },
  {
   "id": 260,
@@ -2597,7 +3115,9 @@
   "protein": null,
   "carbohydrate": null,
   "lipid": 100.0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 0.91
  },
  {
   "id": 261,
@@ -2607,7 +3127,9 @@
   "protein": 0.41,
   "carbohydrate": 0.06,
   "lipid": 82.36,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 262,
@@ -2617,7 +3139,9 @@
   "protein": 0.4,
   "carbohydrate": 0,
   "lipid": 86.04,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 263,
@@ -2627,7 +3151,9 @@
   "protein": 0,
   "carbohydrate": 0,
   "lipid": 67.43,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 264,
@@ -2637,7 +3163,9 @@
   "protein": 0,
   "carbohydrate": 0,
   "lipid": 81.73,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 265,
@@ -2647,7 +3175,9 @@
   "protein": 0,
   "carbohydrate": 0,
   "lipid": 67.25,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 266,
@@ -2657,7 +3187,9 @@
   "protein": 0,
   "carbohydrate": 0,
   "lipid": 67.1,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 267,
@@ -2667,7 +3199,9 @@
   "protein": null,
   "carbohydrate": null,
   "lipid": 100.0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 0.92
  },
  {
   "id": 268,
@@ -2677,7 +3211,9 @@
   "protein": null,
   "carbohydrate": null,
   "lipid": 100.0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 0.92
  },
  {
   "id": 269,
@@ -2687,7 +3223,9 @@
   "protein": null,
   "carbohydrate": null,
   "lipid": 100.0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 0.92
  },
  {
   "id": 270,
@@ -2697,7 +3235,9 @@
   "protein": null,
   "carbohydrate": null,
   "lipid": 100.0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 0.92
  },
  {
   "id": 271,
@@ -2707,7 +3247,9 @@
   "protein": null,
   "carbohydrate": null,
   "lipid": 100.0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 0.92
  },
  {
   "id": 272,
@@ -2717,7 +3259,9 @@
   "protein": null,
   "carbohydrate": null,
   "lipid": 100.0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 0.92
  },
  {
   "id": 273,
@@ -2727,7 +3271,9 @@
   "protein": 23.52,
   "carbohydrate": 0,
   "lipid": 1.24,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 274,
@@ -2737,7 +3283,9 @@
   "protein": 19.35,
   "carbohydrate": 0,
   "lipid": 0.94,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 275,
@@ -2747,7 +3295,9 @@
   "protein": 13.08,
   "carbohydrate": 0,
   "lipid": 0.36,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 276,
@@ -2757,7 +3307,9 @@
   "protein": 27.61,
   "carbohydrate": 0,
   "lipid": 1.3,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 277,
@@ -2767,7 +3319,9 @@
   "protein": 26.19,
   "carbohydrate": 0,
   "lipid": 6.0,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 278,
@@ -2777,7 +3331,9 @@
   "protein": 25.68,
   "carbohydrate": 0,
   "lipid": 0.87,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 279,
@@ -2787,7 +3343,9 @@
   "protein": 29.04,
   "carbohydrate": 0,
   "lipid": 1.32,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 280,
@@ -2797,7 +3355,9 @@
   "protein": 23.98,
   "carbohydrate": 1.22,
   "lipid": 3.61,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 281,
@@ -2807,7 +3367,9 @@
   "protein": 24.95,
   "carbohydrate": 3.1,
   "lipid": 9.95,
-  "fiber": 0.54
+  "fiber": 0.54,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 282,
@@ -2817,7 +3379,9 @@
   "protein": 25.59,
   "carbohydrate": 0,
   "lipid": 0.75,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 283,
@@ -2827,7 +3391,9 @@
   "protein": 17.85,
   "carbohydrate": 0,
   "lipid": 0.79,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 284,
@@ -2837,7 +3403,9 @@
   "protein": 18.97,
   "carbohydrate": 0,
   "lipid": 1.0,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 285,
@@ -2847,7 +3415,9 @@
   "protein": 9.99,
   "carbohydrate": 0,
   "lipid": 0.5,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 286,
@@ -2857,7 +3427,9 @@
   "protein": 18.39,
   "carbohydrate": 2.88,
   "lipid": 15.62,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 287,
@@ -2867,7 +3439,9 @@
   "protein": 18.48,
   "carbohydrate": 0,
   "lipid": 0.42,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 288,
@@ -2877,7 +3451,9 @@
   "protein": 17.37,
   "carbohydrate": 0,
   "lipid": 5.99,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 289,
@@ -2887,7 +3463,9 @@
   "protein": 19.9,
   "carbohydrate": 0,
   "lipid": 19.57,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 290,
@@ -2897,7 +3475,9 @@
   "protein": 20.13,
   "carbohydrate": 0,
   "lipid": 16.93,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 291,
@@ -2907,7 +3487,9 @@
   "protein": 18.92,
   "carbohydrate": 0,
   "lipid": 2.24,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 292,
@@ -2917,7 +3499,9 @@
   "protein": 18.57,
   "carbohydrate": 0,
   "lipid": 1.58,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 293,
@@ -2927,7 +3511,9 @@
   "protein": 26.77,
   "carbohydrate": 0,
   "lipid": 3.57,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 294,
@@ -2937,7 +3523,9 @@
   "protein": 23.44,
   "carbohydrate": 0,
   "lipid": 2.56,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 295,
@@ -2947,7 +3535,9 @@
   "protein": 18.81,
   "carbohydrate": 0,
   "lipid": 5.64,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 296,
@@ -2957,7 +3547,9 @@
   "protein": 16.81,
   "carbohydrate": 0,
   "lipid": 6.55,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 297,
@@ -2967,7 +3559,9 @@
   "protein": 28.43,
   "carbohydrate": 0,
   "lipid": 22.78,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 298,
@@ -2977,7 +3571,9 @@
   "protein": 15.65,
   "carbohydrate": 0,
   "lipid": 9.4,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 299,
@@ -2987,7 +3583,9 @@
   "protein": 23.45,
   "carbohydrate": 10.24,
   "lipid": 22.59,
-  "fiber": 0.36
+  "fiber": 0.36,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 300,
@@ -2997,7 +3595,9 @@
   "protein": 30.14,
   "carbohydrate": 0,
   "lipid": 24.46,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 301,
@@ -3007,7 +3607,9 @@
   "protein": 26.6,
   "carbohydrate": 0,
   "lipid": 0.92,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 302,
@@ -3017,7 +3619,9 @@
   "protein": 16.61,
   "carbohydrate": 0,
   "lipid": 2.02,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 303,
@@ -3027,7 +3631,9 @@
   "protein": 26.93,
   "carbohydrate": 0,
   "lipid": 8.5,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 304,
@@ -3037,7 +3643,9 @@
   "protein": 16.26,
   "carbohydrate": 0,
   "lipid": 4.59,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 305,
@@ -3047,7 +3655,9 @@
   "protein": 27.36,
   "carbohydrate": 0,
   "lipid": 11.78,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 306,
@@ -3057,7 +3667,9 @@
   "protein": 21.44,
   "carbohydrate": 5.03,
   "lipid": 19.11,
-  "fiber": 0
+  "fiber": 0,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 307,
@@ -3067,7 +3679,9 @@
   "protein": 16.65,
   "carbohydrate": 0,
   "lipid": 4.0,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 308,
@@ -3077,7 +3691,9 @@
   "protein": 28.59,
   "carbohydrate": 0,
   "lipid": 3.57,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 309,
@@ -3087,7 +3703,9 @@
   "protein": 11.75,
   "carbohydrate": 5.02,
   "lipid": 8.02,
-  "fiber": 0.78
+  "fiber": 0.78,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 310,
@@ -3097,7 +3715,9 @@
   "protein": 15.48,
   "carbohydrate": 0,
   "lipid": 1.14,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 311,
@@ -3107,7 +3727,9 @@
   "protein": 36.45,
   "carbohydrate": 0,
   "lipid": 3.98,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 312,
@@ -3117,7 +3739,9 @@
   "protein": 18.56,
   "carbohydrate": 0,
   "lipid": 1.31,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 313,
@@ -3127,7 +3751,9 @@
   "protein": 30.8,
   "carbohydrate": 0,
   "lipid": 2.29,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 314,
@@ -3137,7 +3763,9 @@
   "protein": 20.49,
   "carbohydrate": 0,
   "lipid": 0.61,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 315,
@@ -3147,7 +3775,9 @@
   "protein": 23.92,
   "carbohydrate": 0,
   "lipid": 14.04,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 316,
@@ -3157,7 +3787,9 @@
   "protein": 19.25,
   "carbohydrate": 0,
   "lipid": 9.71,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 317,
@@ -3167,7 +3799,9 @@
   "protein": 26.14,
   "carbohydrate": 0,
   "lipid": 14.53,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 318,
@@ -3177,7 +3811,9 @@
   "protein": 32.18,
   "carbohydrate": 0,
   "lipid": 2.99,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 319,
@@ -3187,7 +3823,9 @@
   "protein": 15.94,
   "carbohydrate": 0,
   "lipid": 24.05,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 320,
@@ -3197,7 +3835,9 @@
   "protein": 33.38,
   "carbohydrate": 0,
   "lipid": 12.69,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 321,
@@ -3207,7 +3847,9 @@
   "protein": 21.08,
   "carbohydrate": 0,
   "lipid": 2.65,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 322,
@@ -3217,7 +3859,9 @@
   "protein": 17.96,
   "carbohydrate": 0,
   "lipid": 1.22,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 323,
@@ -3227,7 +3871,9 @@
   "protein": 13.45,
   "carbohydrate": 2.86,
   "lipid": 6.69,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 324,
@@ -3237,7 +3883,9 @@
   "protein": 7.82,
   "carbohydrate": 15.05,
   "lipid": 16.57,
-  "fiber": 0.58
+  "fiber": 0.58,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 325,
@@ -3247,7 +3895,9 @@
   "protein": 6.28,
   "carbohydrate": 10.65,
   "lipid": 20.42,
-  "fiber": 11.81
+  "fiber": 11.81,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 326,
@@ -3257,7 +3907,9 @@
   "protein": 26.69,
   "carbohydrate": 0,
   "lipid": 10.92,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 327,
@@ -3267,7 +3919,9 @@
   "protein": 19.42,
   "carbohydrate": 0,
   "lipid": 5.95,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 328,
@@ -3277,7 +3931,9 @@
   "protein": 27.27,
   "carbohydrate": 0,
   "lipid": 10.88,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 329,
@@ -3287,7 +3943,9 @@
   "protein": 20.82,
   "carbohydrate": 0,
   "lipid": 6.11,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 330,
@@ -3297,7 +3955,9 @@
   "protein": 12.31,
   "carbohydrate": 9.79,
   "lipid": 11.2,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 331,
@@ -3307,7 +3967,9 @@
   "protein": 18.16,
   "carbohydrate": 14.29,
   "lipid": 15.78,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 332,
@@ -3317,7 +3979,9 @@
   "protein": 21.64,
   "carbohydrate": 0,
   "lipid": 4.5,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 333,
@@ -3327,7 +3991,9 @@
   "protein": 20.53,
   "carbohydrate": 0,
   "lipid": 5.5,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 334,
@@ -3337,7 +4003,9 @@
   "protein": 19.2,
   "carbohydrate": 0,
   "lipid": 14.96,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 335,
@@ -3347,7 +4015,9 @@
   "protein": 30.69,
   "carbohydrate": 0,
   "lipid": 20.03,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 336,
@@ -3357,7 +4027,9 @@
   "protein": 21.54,
   "carbohydrate": 0,
   "lipid": 4.33,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 337,
@@ -3367,7 +4039,9 @@
   "protein": 35.06,
   "carbohydrate": 0,
   "lipid": 9.95,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 338,
@@ -3377,7 +4051,9 @@
   "protein": 36.36,
   "carbohydrate": 0,
   "lipid": 11.92,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 339,
@@ -3387,7 +4063,9 @@
   "protein": 22.71,
   "carbohydrate": 0,
   "lipid": 16.84,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 340,
@@ -3397,7 +4075,9 @@
   "protein": 20.61,
   "carbohydrate": 12.17,
   "lipid": 24.0,
-  "fiber": 0.37
+  "fiber": 0.37,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 341,
@@ -3407,7 +4087,9 @@
   "protein": 19.8,
   "carbohydrate": 0,
   "lipid": 13.07,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 342,
@@ -3417,7 +4099,9 @@
   "protein": 29.88,
   "carbohydrate": 0,
   "lipid": 16.33,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 343,
@@ -3427,7 +4111,9 @@
   "protein": 21.15,
   "carbohydrate": 0,
   "lipid": 12.81,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 344,
@@ -3437,7 +4123,9 @@
   "protein": 32.4,
   "carbohydrate": 0,
   "lipid": 15.49,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 345,
@@ -3447,7 +4135,9 @@
   "protein": 24.0,
   "carbohydrate": 0,
   "lipid": 6.0,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 346,
@@ -3457,7 +4147,9 @@
   "protein": 35.88,
   "carbohydrate": 0,
   "lipid": 4.49,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 347,
@@ -3467,7 +4159,9 @@
   "protein": 28.81,
   "carbohydrate": 0,
   "lipid": 27.72,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 348,
@@ -3477,7 +4171,9 @@
   "protein": 16.71,
   "carbohydrate": 0,
   "lipid": 31.75,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 349,
@@ -3487,7 +4183,9 @@
   "protein": 31.88,
   "carbohydrate": 0,
   "lipid": 8.92,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 350,
@@ -3497,7 +4195,9 @@
   "protein": 21.51,
   "carbohydrate": 0,
   "lipid": 6.22,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 351,
@@ -3507,7 +4207,9 @@
   "protein": 32.38,
   "carbohydrate": 0,
   "lipid": 8.91,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 352,
@@ -3517,7 +4219,9 @@
   "protein": 21.23,
   "carbohydrate": 0,
   "lipid": 8.69,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 353,
@@ -3527,7 +4231,9 @@
   "protein": 28.63,
   "carbohydrate": 0,
   "lipid": 23.04,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 354,
@@ -3537,7 +4243,9 @@
   "protein": 19.54,
   "carbohydrate": 0,
   "lipid": 15.3,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 355,
@@ -3547,7 +4255,9 @@
   "protein": 20.71,
   "carbohydrate": 1.11,
   "lipid": 5.36,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 356,
@@ -3557,7 +4267,9 @@
   "protein": 29.86,
   "carbohydrate": 4.2,
   "lipid": 9.01,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 357,
@@ -3567,7 +4279,9 @@
   "protein": 21.6,
   "carbohydrate": 0,
   "lipid": 5.61,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 358,
@@ -3577,7 +4291,9 @@
   "protein": 32.8,
   "carbohydrate": 0,
   "lipid": 8.83,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 359,
@@ -3587,7 +4303,9 @@
   "protein": 29.38,
   "carbohydrate": 0,
   "lipid": 7.77,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 360,
@@ -3597,7 +4315,9 @@
   "protein": 20.0,
   "carbohydrate": 0,
   "lipid": 6.22,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 361,
@@ -3607,7 +4327,9 @@
   "protein": 24.24,
   "carbohydrate": 0,
   "lipid": 26.05,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 362,
@@ -3617,7 +4339,9 @@
   "protein": 17.58,
   "carbohydrate": 0,
   "lipid": 16.15,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 363,
@@ -3627,7 +4351,9 @@
   "protein": 32.86,
   "carbohydrate": 0,
   "lipid": 9.11,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 364,
@@ -3637,7 +4363,9 @@
   "protein": 20.54,
   "carbohydrate": 0,
   "lipid": 5.23,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 365,
@@ -3647,7 +4375,9 @@
   "protein": 21.37,
   "carbohydrate": 0,
   "lipid": 24.8,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 366,
@@ -3657,7 +4387,9 @@
   "protein": 17.09,
   "carbohydrate": 0,
   "lipid": 15.77,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 367,
@@ -3667,7 +4399,9 @@
   "protein": 20.93,
   "carbohydrate": 0,
   "lipid": 7.03,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 368,
@@ -3677,7 +4411,9 @@
   "protein": 30.74,
   "carbohydrate": 0,
   "lipid": 2.42,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 369,
@@ -3687,7 +4423,9 @@
   "protein": 21.61,
   "carbohydrate": 0,
   "lipid": 7.83,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 370,
@@ -3697,7 +4435,9 @@
   "protein": 31.93,
   "carbohydrate": 0,
   "lipid": 11.64,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 371,
@@ -3707,7 +4447,9 @@
   "protein": 31.23,
   "carbohydrate": 0,
   "lipid": 6.7,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 372,
@@ -3717,7 +4459,9 @@
   "protein": 21.56,
   "carbohydrate": 0,
   "lipid": 5.49,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 373,
@@ -3727,7 +4471,9 @@
   "protein": 21.41,
   "carbohydrate": 0,
   "lipid": 7.46,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 374,
@@ -3737,7 +4483,9 @@
   "protein": 29.72,
   "carbohydrate": 0,
   "lipid": 7.4,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 375,
@@ -3747,7 +4495,9 @@
   "protein": 21.03,
   "carbohydrate": 0,
   "lipid": 5.67,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 376,
@@ -3757,7 +4507,9 @@
   "protein": 21.72,
   "carbohydrate": 0,
   "lipid": 4.51,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 377,
@@ -3767,7 +4519,9 @@
   "protein": 35.9,
   "carbohydrate": 0,
   "lipid": 7.31,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 378,
@@ -3777,7 +4531,9 @@
   "protein": 22.25,
   "carbohydrate": 0,
   "lipid": 26.99,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 379,
@@ -3787,7 +4543,9 @@
   "protein": 17.56,
   "carbohydrate": 0,
   "lipid": 20.43,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 380,
@@ -3797,7 +4555,9 @@
   "protein": 18.82,
   "carbohydrate": 0,
   "lipid": 14.69,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 381,
@@ -3807,7 +4567,9 @@
   "protein": 26.42,
   "carbohydrate": 0,
   "lipid": 19.51,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 382,
@@ -3817,7 +4579,9 @@
   "protein": 21.25,
   "carbohydrate": 0,
   "lipid": 4.74,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 383,
@@ -3827,7 +4591,9 @@
   "protein": 31.91,
   "carbohydrate": 0,
   "lipid": 11.33,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 384,
@@ -3837,7 +4603,9 @@
   "protein": 26.93,
   "carbohydrate": 0,
   "lipid": 21.93,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 385,
@@ -3847,7 +4615,9 @@
   "protein": 19.66,
   "carbohydrate": 0,
   "lipid": 25.37,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 386,
@@ -3857,7 +4627,9 @@
   "protein": 9.61,
   "carbohydrate": 34.52,
   "lipid": 11.84,
-  "fiber": 4.97
+  "fiber": 4.97,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 387,
@@ -3867,7 +4639,9 @@
   "protein": 12.04,
   "carbohydrate": 13.95,
   "lipid": 15.56,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 388,
@@ -3877,7 +4651,9 @@
   "protein": 16.86,
   "carbohydrate": 18.15,
   "lipid": 22.67,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 389,
@@ -3887,7 +4663,9 @@
   "protein": 6.94,
   "carbohydrate": 47.49,
   "lipid": 15.61,
-  "fiber": 2.16
+  "fiber": 2.16,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 390,
@@ -3897,7 +4675,9 @@
   "protein": 7.34,
   "carbohydrate": 35.53,
   "lipid": 22.89,
-  "fiber": 2.22
+  "fiber": 2.22,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 391,
@@ -3907,7 +4687,9 @@
   "protein": 18.1,
   "carbohydrate": 0,
   "lipid": 15.07,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 392,
@@ -3917,7 +4699,9 @@
   "protein": 23.88,
   "carbohydrate": 0,
   "lipid": 15.62,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 393,
@@ -3927,7 +4711,9 @@
   "protein": 29.57,
   "carbohydrate": 0,
   "lipid": 7.7,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 394,
@@ -3937,7 +4723,9 @@
   "protein": 12.58,
   "carbohydrate": 0,
   "lipid": 18.6,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 395,
@@ -3947,7 +4735,9 @@
   "protein": 22.44,
   "carbohydrate": 0.61,
   "lipid": 12.1,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 396,
@@ -3957,7 +4747,9 @@
   "protein": 28.49,
   "carbohydrate": 0.06,
   "lipid": 10.36,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 397,
@@ -3967,7 +4759,9 @@
   "protein": 17.09,
   "carbohydrate": 0,
   "lipid": 9.81,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 398,
@@ -3977,7 +4771,9 @@
   "protein": 26.86,
   "carbohydrate": 0,
   "lipid": 5.85,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 399,
@@ -3987,7 +4783,9 @@
   "protein": 17.81,
   "carbohydrate": 0.02,
   "lipid": 4.86,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 400,
@@ -3997,7 +4795,9 @@
   "protein": 17.59,
   "carbohydrate": 0,
   "lipid": 3.49,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 401,
@@ -4007,7 +4807,9 @@
   "protein": 28.46,
   "carbohydrate": 7.51,
   "lipid": 7.79,
-  "fiber": 1.13
+  "fiber": 1.13,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 402,
@@ -4017,7 +4819,9 @@
   "protein": 16.44,
   "carbohydrate": 0,
   "lipid": 17.31,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 403,
@@ -4027,7 +4831,9 @@
   "protein": 28.02,
   "carbohydrate": 0,
   "lipid": 7.5,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 404,
@@ -4037,7 +4843,9 @@
   "protein": 24.99,
   "carbohydrate": 0,
   "lipid": 7.06,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 405,
@@ -4047,7 +4855,9 @@
   "protein": 20.59,
   "carbohydrate": 0,
   "lipid": 4.57,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 406,
@@ -4057,7 +4867,9 @@
   "protein": 33.42,
   "carbohydrate": 0,
   "lipid": 7.65,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 407,
@@ -4067,7 +4879,9 @@
   "protein": 20.78,
   "carbohydrate": 0,
   "lipid": 6.73,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 408,
@@ -4077,7 +4891,9 @@
   "protein": 31.47,
   "carbohydrate": 0,
   "lipid": 3.16,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 409,
@@ -4087,7 +4903,9 @@
   "protein": 21.53,
   "carbohydrate": 0,
   "lipid": 3.02,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 410,
@@ -4097,7 +4915,9 @@
   "protein": 32.03,
   "carbohydrate": 0,
   "lipid": 2.48,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 411,
@@ -4107,7 +4927,9 @@
   "protein": 28.7,
   "carbohydrate": 0,
   "lipid": 15.19,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 412,
@@ -4117,7 +4939,9 @@
   "protein": 15.46,
   "carbohydrate": 0,
   "lipid": 20.9,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 413,
@@ -4127,7 +4951,9 @@
   "protein": 29.18,
   "carbohydrate": 0,
   "lipid": 12.01,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 414,
@@ -4137,7 +4963,9 @@
   "protein": 17.57,
   "carbohydrate": 0,
   "lipid": 9.62,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 415,
@@ -4147,7 +4975,9 @@
   "protein": 13.16,
   "carbohydrate": 4.15,
   "lipid": 16.18,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 416,
@@ -4157,7 +4987,9 @@
   "protein": 19.97,
   "carbohydrate": 6.32,
   "lipid": 17.01,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 417,
@@ -4167,7 +4999,9 @@
   "protein": 13.16,
   "carbohydrate": 11.33,
   "lipid": 12.43,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 418,
@@ -4177,7 +5011,9 @@
   "protein": 14.24,
   "carbohydrate": 0,
   "lipid": 17.44,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 419,
@@ -4187,7 +5023,9 @@
   "protein": 18.32,
   "carbohydrate": 0,
   "lipid": 18.54,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 420,
@@ -4197,7 +5035,9 @@
   "protein": 18.19,
   "carbohydrate": 0,
   "lipid": 18.4,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 421,
@@ -4207,7 +5047,9 @@
   "protein": 16.06,
   "carbohydrate": 0,
   "lipid": 17.58,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 422,
@@ -4217,7 +5059,9 @@
   "protein": 20.45,
   "carbohydrate": 0,
   "lipid": 21.31,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 423,
@@ -4227,7 +5071,9 @@
   "protein": 23.17,
   "carbohydrate": 0,
   "lipid": 21.9,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 424,
@@ -4237,7 +5083,9 @@
   "protein": 11.95,
   "carbohydrate": 5.82,
   "lipid": 21.65,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 425,
@@ -4247,7 +5095,9 @@
   "protein": 26.2,
   "carbohydrate": 0,
   "lipid": 5.67,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 426,
@@ -4257,7 +5107,9 @@
   "protein": 18.08,
   "carbohydrate": 0,
   "lipid": 1.83,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 427,
@@ -4267,7 +5119,9 @@
   "protein": 21.5,
   "carbohydrate": 0,
   "lipid": 8.02,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 428,
@@ -4277,7 +5131,9 @@
   "protein": 33.75,
   "carbohydrate": 0,
   "lipid": 18.52,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 429,
@@ -4287,7 +5143,9 @@
   "protein": 28.89,
   "carbohydrate": 0,
   "lipid": 17.38,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 430,
@@ -4297,7 +5155,9 @@
   "protein": 30.22,
   "carbohydrate": 0,
   "lipid": 30.28,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 431,
@@ -4307,7 +5167,9 @@
   "protein": 18.0,
   "carbohydrate": 0,
   "lipid": 19.82,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 432,
@@ -4317,7 +5179,9 @@
   "protein": 35.73,
   "carbohydrate": 0,
   "lipid": 6.4,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 433,
@@ -4327,7 +5191,9 @@
   "protein": 22.6,
   "carbohydrate": 0,
   "lipid": 8.77,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 434,
@@ -4337,7 +5203,9 @@
   "protein": 18.52,
   "carbohydrate": 0,
   "lipid": 19.89,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 435,
@@ -4347,7 +5215,9 @@
   "protein": 32.13,
   "carbohydrate": 0,
   "lipid": 13.86,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 436,
@@ -4357,7 +5227,9 @@
   "protein": 20.12,
   "carbohydrate": 0,
   "lipid": 11.1,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 437,
@@ -4367,7 +5239,9 @@
   "protein": 15.58,
   "carbohydrate": 0,
   "lipid": 34.47,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 438,
@@ -4377,7 +5251,9 @@
   "protein": 14.37,
   "carbohydrate": 1.4,
   "lipid": 6.77,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 439,
@@ -4387,7 +5263,9 @@
   "protein": 14.29,
   "carbohydrate": 2.15,
   "lipid": 2.71,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 440,
@@ -4397,7 +5275,9 @@
   "protein": 14.59,
   "carbohydrate": 12.86,
   "lipid": 2.68,
-  "fiber": 1.9
+  "fiber": 1.9,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 441,
@@ -4407,7 +5287,9 @@
   "protein": 12.35,
   "carbohydrate": 10.77,
   "lipid": 1.67,
-  "fiber": 1.65
+  "fiber": 1.65,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 442,
@@ -4417,7 +5299,9 @@
   "protein": 14.89,
   "carbohydrate": 12.34,
   "lipid": 15.8,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 443,
@@ -4427,7 +5311,9 @@
   "protein": 25.81,
   "carbohydrate": 2.91,
   "lipid": 30.64,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 444,
@@ -4437,7 +5323,9 @@
   "protein": 11.48,
   "carbohydrate": 0,
   "lipid": 60.26,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 445,
@@ -4447,7 +5335,9 @@
   "protein": 27.28,
   "carbohydrate": 0,
   "lipid": 64.31,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 446,
@@ -4457,7 +5347,9 @@
   "protein": 2.13,
   "carbohydrate": 7.57,
   "lipid": 1.91,
-  "fiber": 0.29
+  "fiber": 0.29,
+  "liquid": true,
+  "densityGPerMl": 1.05
  },
  {
   "id": 447,
@@ -4467,7 +5359,9 @@
   "protein": 1.51,
   "carbohydrate": 4.51,
   "lipid": 22.48,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 448,
@@ -4477,7 +5371,9 @@
   "protein": 4.06,
   "carbohydrate": 1.92,
   "lipid": 3.04,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 449,
@@ -4487,7 +5383,9 @@
   "protein": 3.83,
   "carbohydrate": 5.77,
   "lipid": 0.32,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 450,
@@ -4497,7 +5395,9 @@
   "protein": null,
   "carbohydrate": null,
   "lipid": null,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 451,
@@ -4507,7 +5407,9 @@
   "protein": 2.71,
   "carbohydrate": 9.69,
   "lipid": 2.33,
-  "fiber": 0.22
+  "fiber": 0.22,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 452,
@@ -4517,7 +5419,9 @@
   "protein": 2.53,
   "carbohydrate": 9.43,
   "lipid": 2.34,
-  "fiber": 0.72
+  "fiber": 0.72,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 453,
@@ -4527,7 +5431,9 @@
   "protein": 7.67,
   "carbohydrate": 57.0,
   "lipid": 6.74,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 454,
@@ -4537,7 +5443,9 @@
   "protein": 3.07,
   "carbohydrate": 5.25,
   "lipid": 3.75,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.03
  },
  {
   "id": 455,
@@ -4547,7 +5455,9 @@
   "protein": 2.1,
   "carbohydrate": 14.16,
   "lipid": 2.17,
-  "fiber": 0.65
+  "fiber": 0.65,
+  "liquid": true,
+  "densityGPerMl": 1.06
  },
  {
   "id": 456,
@@ -4557,27 +5467,33 @@
   "protein": 34.69,
   "carbohydrate": 53.04,
   "lipid": 0.93,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 457,
   "description": "Leite, de vaca, desnatado, UHT",
   "category": "Leite e derivados",
-  "energyKcal": null,
-  "protein": null,
-  "carbohydrate": null,
-  "lipid": null,
-  "fiber": null
+  "energyKcal": 35.0,
+  "protein": 3.4,
+  "carbohydrate": 4.85,
+  "lipid": 0.18,
+  "fiber": 0.0,
+  "liquid": true,
+  "densityGPerMl": 1.03
  },
  {
   "id": 458,
   "description": "Leite, de vaca, integral",
   "category": "Leite e derivados",
-  "energyKcal": null,
-  "protein": null,
-  "carbohydrate": null,
-  "lipid": null,
-  "fiber": null
+  "energyKcal": 61.0,
+  "protein": 3.15,
+  "carbohydrate": 4.8,
+  "lipid": 3.25,
+  "fiber": 0.0,
+  "liquid": true,
+  "densityGPerMl": 1.03
  },
  {
   "id": 459,
@@ -4587,7 +5503,9 @@
   "protein": 25.42,
   "carbohydrate": 39.18,
   "lipid": 26.9,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 460,
@@ -4597,7 +5515,9 @@
   "protein": 1.89,
   "carbohydrate": 15.67,
   "lipid": 0.1,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.05
  },
  {
   "id": 461,
@@ -4607,7 +5527,9 @@
   "protein": 17.41,
   "carbohydrate": 3.24,
   "lipid": 20.18,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 462,
@@ -4617,7 +5539,9 @@
   "protein": 21.21,
   "carbohydrate": 3.57,
   "lipid": 24.61,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 463,
@@ -4627,7 +5551,9 @@
   "protein": 22.65,
   "carbohydrate": 3.05,
   "lipid": 25.18,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 464,
@@ -4637,7 +5563,9 @@
   "protein": 35.55,
   "carbohydrate": 1.66,
   "lipid": 33.53,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 465,
@@ -4647,7 +5575,9 @@
   "protein": 9.36,
   "carbohydrate": 5.68,
   "lipid": 27.44,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 466,
@@ -4657,7 +5587,9 @@
   "protein": 5.79,
   "carbohydrate": 18.46,
   "lipid": 2.84,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 467,
@@ -4667,7 +5599,9 @@
   "protein": 22.66,
   "carbohydrate": 1.88,
   "lipid": 29.11,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 468,
@@ -4677,7 +5611,9 @@
   "protein": 9.63,
   "carbohydrate": 2.43,
   "lipid": 23.44,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 469,
@@ -4687,7 +5623,9 @@
   "protein": 12.6,
   "carbohydrate": 3.79,
   "lipid": 8.11,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 470,
@@ -4697,7 +5635,9 @@
   "protein": 0,
   "carbohydrate": 6.4,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.02
  },
  {
   "id": 471,
@@ -4707,7 +5647,9 @@
   "protein": 0.71,
   "carbohydrate": 1.48,
   "lipid": 0.07,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.0
  },
  {
   "id": 472,
@@ -4717,7 +5659,9 @@
   "protein": null,
   "carbohydrate": null,
   "lipid": null,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 0.95
  },
  {
   "id": 473,
@@ -4727,7 +5671,9 @@
   "protein": 0,
   "carbohydrate": 18.15,
   "lipid": 0,
-  "fiber": 0.14
+  "fiber": 0.14,
+  "liquid": true,
+  "densityGPerMl": 1.07
  },
  {
   "id": 474,
@@ -4737,7 +5683,9 @@
   "protein": 0.56,
   "carbohydrate": 3.32,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.01
  },
  {
   "id": 475,
@@ -4747,7 +5695,9 @@
   "protein": 0,
   "carbohydrate": 0.39,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.0
  },
  {
   "id": 476,
@@ -4757,7 +5707,9 @@
   "protein": 0,
   "carbohydrate": 0.64,
   "lipid": 0.05,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.0
  },
  {
   "id": 477,
@@ -4767,7 +5719,9 @@
   "protein": 0,
   "carbohydrate": 0.63,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.0
  },
  {
   "id": 478,
@@ -4777,7 +5731,9 @@
   "protein": 0,
   "carbohydrate": 5.28,
   "lipid": 0,
-  "fiber": 0.13
+  "fiber": 0.13,
+  "liquid": true,
+  "densityGPerMl": 1.02
  },
  {
   "id": 479,
@@ -4787,7 +5743,9 @@
   "protein": 0,
   "carbohydrate": 7.95,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.03
  },
  {
   "id": 480,
@@ -4797,7 +5755,9 @@
   "protein": 0,
   "carbohydrate": 8.66,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.04
  },
  {
   "id": 481,
@@ -4807,7 +5767,9 @@
   "protein": 0,
   "carbohydrate": 10.0,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.04
  },
  {
   "id": 482,
@@ -4817,7 +5779,9 @@
   "protein": 0,
   "carbohydrate": 11.79,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.04
  },
  {
   "id": 483,
@@ -4827,7 +5791,9 @@
   "protein": 0,
   "carbohydrate": 10.26,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.04
  },
  {
   "id": 484,
@@ -4837,7 +5803,9 @@
   "protein": 15.57,
   "carbohydrate": 0.44,
   "lipid": 22.01,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 485,
@@ -4847,7 +5815,9 @@
   "protein": 13.69,
   "carbohydrate": 0.77,
   "lipid": 12.68,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 486,
@@ -4857,7 +5827,9 @@
   "protein": 13.45,
   "carbohydrate": 0,
   "lipid": 0.09,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 487,
@@ -4867,7 +5839,9 @@
   "protein": 15.9,
   "carbohydrate": 1.56,
   "lipid": 30.78,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 488,
@@ -4877,7 +5851,9 @@
   "protein": 13.29,
   "carbohydrate": 0.61,
   "lipid": 9.48,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 489,
@@ -4887,7 +5863,9 @@
   "protein": 13.03,
   "carbohydrate": 1.64,
   "lipid": 8.9,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 490,
@@ -4897,7 +5875,9 @@
   "protein": 15.62,
   "carbohydrate": 1.19,
   "lipid": 18.59,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 491,
@@ -4907,7 +5887,9 @@
   "protein": 4.2,
   "carbohydrate": 91.18,
   "lipid": 2.17,
-  "fiber": 3.89
+  "fiber": 3.89,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 492,
@@ -4917,7 +5899,9 @@
   "protein": 0.32,
   "carbohydrate": 99.61,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 493,
@@ -4927,7 +5911,9 @@
   "protein": 0.76,
   "carbohydrate": 94.45,
   "lipid": 0.09,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 494,
@@ -4937,7 +5923,9 @@
   "protein": 0.32,
   "carbohydrate": 99.54,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 495,
@@ -4947,7 +5935,9 @@
   "protein": 7.22,
   "carbohydrate": 59.58,
   "lipid": 30.27,
-  "fiber": 2.17
+  "fiber": 2.17,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 496,
@@ -4957,7 +5947,9 @@
   "protein": 7.41,
   "carbohydrate": 55.38,
   "lipid": 34.19,
-  "fiber": 2.46
+  "fiber": 2.46,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 497,
@@ -4967,7 +5959,9 @@
   "protein": 6.9,
   "carbohydrate": 56.32,
   "lipid": 33.77,
-  "fiber": 2.85
+  "fiber": 2.85,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 498,
@@ -4977,7 +5971,9 @@
   "protein": 4.86,
   "carbohydrate": 62.42,
   "lipid": 29.86,
-  "fiber": 4.94
+  "fiber": 4.94,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 499,
@@ -4987,7 +5983,9 @@
   "protein": 1.12,
   "carbohydrate": 81.38,
   "lipid": 13.59,
-  "fiber": 3.57
+  "fiber": 3.57,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 500,
@@ -4997,7 +5995,9 @@
   "protein": 0.92,
   "carbohydrate": 54.61,
   "lipid": 0.21,
-  "fiber": 2.28
+  "fiber": 2.28,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 501,
@@ -5007,7 +6007,9 @@
   "protein": 5.48,
   "carbohydrate": 59.49,
   "lipid": 5.99,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 502,
@@ -5017,7 +6019,9 @@
   "protein": 2.12,
   "carbohydrate": 24.23,
   "lipid": 0.07,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 503,
@@ -5027,7 +6031,9 @@
   "protein": 0,
   "carbohydrate": 79.38,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 504,
@@ -5037,7 +6043,9 @@
   "protein": 3.81,
   "carbohydrate": 73.55,
   "lipid": 0.19,
-  "fiber": 0.67
+  "fiber": 0.67,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 505,
@@ -5047,7 +6055,9 @@
   "protein": 3.93,
   "carbohydrate": 75.06,
   "lipid": 0.09,
-  "fiber": 0.64
+  "fiber": 0.64,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 506,
@@ -5057,7 +6067,9 @@
   "protein": 0.4,
   "carbohydrate": 70.76,
   "lipid": 0.14,
-  "fiber": 4.07
+  "fiber": 4.07,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 507,
@@ -5067,7 +6079,9 @@
   "protein": 0,
   "carbohydrate": 84.03,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.42
  },
  {
   "id": 508,
@@ -5077,7 +6091,9 @@
   "protein": 0,
   "carbohydrate": 76.62,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": true,
+  "densityGPerMl": 1.35
  },
  {
   "id": 509,
@@ -5087,7 +6103,9 @@
   "protein": 4.74,
   "carbohydrate": 46.3,
   "lipid": 24.43,
-  "fiber": 3.22
+  "fiber": 3.22,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 510,
@@ -5097,7 +6115,9 @@
   "protein": 0.99,
   "carbohydrate": 90.79,
   "lipid": 0.07,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 511,
@@ -5107,7 +6127,9 @@
   "protein": 14.7,
   "carbohydrate": 65.75,
   "lipid": 11.95,
-  "fiber": 51.23
+  "fiber": 51.23,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 512,
@@ -5117,7 +6139,9 @@
   "protein": 11.31,
   "carbohydrate": 73.61,
   "lipid": 8.63,
-  "fiber": 2.44
+  "fiber": 2.44,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 513,
@@ -5127,7 +6151,9 @@
   "protein": 0.48,
   "carbohydrate": 43.91,
   "lipid": 0.07,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 514,
@@ -5137,7 +6163,9 @@
   "protein": 16.96,
   "carbohydrate": 7.7,
   "lipid": 1.52,
-  "fiber": 4.17
+  "fiber": 4.17,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 515,
@@ -5147,27 +6175,33 @@
   "protein": 8.89,
   "carbohydrate": 89.22,
   "lipid": 0,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 516,
   "description": "Sal, dietético",
   "category": "Miscelâneas",
-  "energyKcal": null,
-  "protein": null,
-  "carbohydrate": null,
-  "lipid": null,
-  "fiber": null
+  "energyKcal": 0.0,
+  "protein": 0.0,
+  "carbohydrate": 0.0,
+  "lipid": 0.0,
+  "fiber": 0.0,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 517,
   "description": "Sal, grosso",
   "category": "Miscelâneas",
-  "energyKcal": null,
-  "protein": null,
-  "carbohydrate": null,
-  "lipid": null,
-  "fiber": null
+  "energyKcal": 0.0,
+  "protein": 0.0,
+  "carbohydrate": 0.0,
+  "lipid": 0.0,
+  "fiber": 0.0,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 518,
@@ -5177,7 +6211,9 @@
   "protein": 3.31,
   "carbohydrate": 11.65,
   "lipid": 0.33,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 519,
@@ -5187,7 +6223,9 @@
   "protein": 2.67,
   "carbohydrate": 2.07,
   "lipid": 0.26,
-  "fiber": 0.56
+  "fiber": 0.56,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 520,
@@ -5197,7 +6235,9 @@
   "protein": 1.16,
   "carbohydrate": 5.54,
   "lipid": 20.34,
-  "fiber": 4.55
+  "fiber": 4.55,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 521,
@@ -5207,7 +6247,9 @@
   "protein": 0.95,
   "carbohydrate": 4.1,
   "lipid": 14.22,
-  "fiber": 3.85
+  "fiber": 3.85,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 522,
@@ -5217,7 +6259,9 @@
   "protein": 0.53,
   "carbohydrate": 16.86,
   "lipid": 27.27,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 523,
@@ -5227,7 +6271,9 @@
   "protein": 1.01,
   "carbohydrate": 2.19,
   "lipid": 18.36,
-  "fiber": 0.68
+  "fiber": 0.68,
+  "liquid": true,
+  "densityGPerMl": 1.0
  },
  {
   "id": 524,
@@ -5237,7 +6283,9 @@
   "protein": 0.58,
   "carbohydrate": 7.9,
   "lipid": 30.5,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 525,
@@ -5247,7 +6295,9 @@
   "protein": 8.35,
   "carbohydrate": 19.11,
   "lipid": 19.93,
-  "fiber": 9.36
+  "fiber": 9.36,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 526,
@@ -5257,7 +6307,9 @@
   "protein": 10.83,
   "carbohydrate": 11.58,
   "lipid": 7.12,
-  "fiber": 1.5
+  "fiber": 1.5,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 527,
@@ -5267,7 +6319,9 @@
   "protein": 6.24,
   "carbohydrate": 20.42,
   "lipid": 3.23,
-  "fiber": 5.07
+  "fiber": 5.07,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 528,
@@ -5277,7 +6331,9 @@
   "protein": 18.27,
   "carbohydrate": 0.24,
   "lipid": 9.53,
-  "fiber": 0.15
+  "fiber": 0.15,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 529,
@@ -5287,7 +6343,9 @@
   "protein": 23.66,
   "carbohydrate": 0,
   "lipid": 21.15,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 530,
@@ -5297,7 +6355,9 @@
   "protein": 8.04,
   "carbohydrate": 41.68,
   "lipid": 8.29,
-  "fiber": 2.74
+  "fiber": 2.74,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 531,
@@ -5307,7 +6367,9 @@
   "protein": 7.94,
   "carbohydrate": 3.17,
   "lipid": 5.97,
-  "fiber": 0.39
+  "fiber": 0.39,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 532,
@@ -5317,7 +6379,9 @@
   "protein": 6.78,
   "carbohydrate": 10.13,
   "lipid": 1.12,
-  "fiber": 1.46
+  "fiber": 1.46,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 533,
@@ -5327,7 +6391,9 @@
   "protein": 2.16,
   "carbohydrate": 25.28,
   "lipid": 0.68,
-  "fiber": 2.05
+  "fiber": 2.05,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 534,
@@ -5337,7 +6403,9 @@
   "protein": 2.56,
   "carbohydrate": 22.51,
   "lipid": 4.65,
-  "fiber": 2.43
+  "fiber": 2.43,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 535,
@@ -5347,7 +6415,9 @@
   "protein": 5.64,
   "carbohydrate": 5.74,
   "lipid": 3.59,
-  "fiber": 3.02
+  "fiber": 3.02,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 536,
@@ -5357,7 +6427,9 @@
   "protein": 19.77,
   "carbohydrate": 0,
   "lipid": 4.44,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 537,
@@ -5367,7 +6439,9 @@
   "protein": 15.03,
   "carbohydrate": 2.98,
   "lipid": 10.8,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 538,
@@ -5377,7 +6451,9 @@
   "protein": 17.55,
   "carbohydrate": 2.59,
   "lipid": 7.96,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 539,
@@ -5387,7 +6463,9 @@
   "protein": 10.17,
   "carbohydrate": 19.58,
   "lipid": 6.79,
-  "fiber": 3.57
+  "fiber": 3.57,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 540,
@@ -5397,7 +6475,9 @@
   "protein": 8.67,
   "carbohydrate": 11.64,
   "lipid": 6.48,
-  "fiber": 5.09
+  "fiber": 5.09,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 541,
@@ -5407,7 +6487,9 @@
   "protein": 9.7,
   "carbohydrate": 4.06,
   "lipid": 6.17,
-  "fiber": 0.22
+  "fiber": 0.22,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 542,
@@ -5417,7 +6499,9 @@
   "protein": 4.93,
   "carbohydrate": 22.52,
   "lipid": 0.89,
-  "fiber": 0.78
+  "fiber": 0.78,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 543,
@@ -5427,7 +6511,9 @@
   "protein": 9.96,
   "carbohydrate": 3.42,
   "lipid": 8.7,
-  "fiber": 2.16
+  "fiber": 2.16,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 544,
@@ -5437,7 +6523,9 @@
   "protein": 8.56,
   "carbohydrate": 6.64,
   "lipid": 2.67,
-  "fiber": 1.67
+  "fiber": 1.67,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 545,
@@ -5447,7 +6535,9 @@
   "protein": 1.05,
   "carbohydrate": 8.92,
   "lipid": 7.04,
-  "fiber": 2.22
+  "fiber": 2.22,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 546,
@@ -5457,7 +6547,9 @@
   "protein": 2.01,
   "carbohydrate": 7.09,
   "lipid": 0.31,
-  "fiber": 2.51
+  "fiber": 2.51,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 547,
@@ -5467,7 +6559,9 @@
   "protein": 13.93,
   "carbohydrate": 4.57,
   "lipid": 7.84,
-  "fiber": 0.41
+  "fiber": 0.41,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 548,
@@ -5477,7 +6571,9 @@
   "protein": 18.47,
   "carbohydrate": 1.09,
   "lipid": 4.42,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 549,
@@ -5487,7 +6583,9 @@
   "protein": 2.05,
   "carbohydrate": 10.58,
   "lipid": 1.21,
-  "fiber": 2.08
+  "fiber": 2.08,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 550,
@@ -5497,7 +6595,9 @@
   "protein": 6.96,
   "carbohydrate": 3.39,
   "lipid": 0.36,
-  "fiber": 0.21
+  "fiber": 0.21,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 551,
@@ -5507,7 +6607,9 @@
   "protein": 0.09,
   "carbohydrate": 63.59,
   "lipid": 10.91,
-  "fiber": 0
+  "fiber": 0,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 552,
@@ -5517,7 +6619,9 @@
   "protein": 2.06,
   "carbohydrate": 4.74,
   "lipid": 0.28,
-  "fiber": 0.23
+  "fiber": 0.23,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 553,
@@ -5527,7 +6631,9 @@
   "protein": 5.12,
   "carbohydrate": 10.06,
   "lipid": 9.32,
-  "fiber": 2.34
+  "fiber": 2.34,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 554,
@@ -5537,7 +6643,9 @@
   "protein": 6.0,
   "carbohydrate": 9.75,
   "lipid": 23.23,
-  "fiber": 1.7
+  "fiber": 1.7,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 555,
@@ -5547,7 +6655,9 @@
   "protein": 10.18,
   "carbohydrate": 14.11,
   "lipid": 25.59,
-  "fiber": 2.16
+  "fiber": 2.16,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 556,
@@ -5557,7 +6667,9 @@
   "protein": 7.52,
   "carbohydrate": 18.25,
   "lipid": 2.61,
-  "fiber": 1.06
+  "fiber": 1.06,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 557,
@@ -5567,7 +6679,9 @@
   "protein": 27.19,
   "carbohydrate": 20.31,
   "lipid": 43.85,
-  "fiber": 8.04
+  "fiber": 8.04,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 558,
@@ -5577,7 +6691,9 @@
   "protein": 22.48,
   "carbohydrate": 18.7,
   "lipid": 53.96,
-  "fiber": 7.76
+  "fiber": 7.76,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 559,
@@ -5587,7 +6703,9 @@
   "protein": 7.45,
   "carbohydrate": 14.23,
   "lipid": 0.47,
-  "fiber": 9.72
+  "fiber": 9.72,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 560,
@@ -5597,7 +6715,9 @@
   "protein": 4.6,
   "carbohydrate": 13.44,
   "lipid": 0.38,
-  "fiber": 5.08
+  "fiber": 5.08,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 561,
@@ -5607,7 +6727,9 @@
   "protein": 4.78,
   "carbohydrate": 13.59,
   "lipid": 0.54,
-  "fiber": 8.51
+  "fiber": 8.51,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 562,
@@ -5617,7 +6739,9 @@
   "protein": 19.98,
   "carbohydrate": 61.22,
   "lipid": 1.26,
-  "fiber": 18.42
+  "fiber": 18.42,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 563,
@@ -5627,7 +6751,9 @@
   "protein": 5.09,
   "carbohydrate": 13.5,
   "lipid": 0.64,
-  "fiber": 7.47
+  "fiber": 7.47,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 564,
@@ -5637,7 +6763,9 @@
   "protein": 20.21,
   "carbohydrate": 61.24,
   "lipid": 2.37,
-  "fiber": 23.59
+  "fiber": 23.59,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 565,
@@ -5647,7 +6775,9 @@
   "protein": 6.14,
   "carbohydrate": 16.5,
   "lipid": 0.51,
-  "fiber": 13.87
+  "fiber": 13.87,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 566,
@@ -5657,7 +6787,9 @@
   "protein": 20.1,
   "carbohydrate": 61.48,
   "lipid": 0.95,
-  "fiber": 30.32
+  "fiber": 30.32,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 567,
@@ -5667,7 +6799,9 @@
   "protein": 4.48,
   "carbohydrate": 14.01,
   "lipid": 0.54,
-  "fiber": 8.4
+  "fiber": 8.4,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 568,
@@ -5677,7 +6811,9 @@
   "protein": 21.34,
   "carbohydrate": 58.75,
   "lipid": 1.24,
-  "fiber": 21.83
+  "fiber": 21.83,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 569,
@@ -5687,7 +6823,9 @@
   "protein": 5.54,
   "carbohydrate": 15.27,
   "lipid": 0.4,
-  "fiber": 9.32
+  "fiber": 9.32,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 570,
@@ -5697,7 +6835,9 @@
   "protein": 17.27,
   "carbohydrate": 62.93,
   "lipid": 1.17,
-  "fiber": 24.01
+  "fiber": 24.01,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 571,
@@ -5707,7 +6847,9 @@
   "protein": 4.54,
   "carbohydrate": 11.82,
   "lipid": 0.48,
-  "fiber": 4.76
+  "fiber": 4.76,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 572,
@@ -5717,7 +6859,9 @@
   "protein": 20.92,
   "carbohydrate": 62.22,
   "lipid": 1.33,
-  "fiber": 20.63
+  "fiber": 20.63,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 573,
@@ -5727,7 +6871,9 @@
   "protein": 5.72,
   "carbohydrate": 12.91,
   "lipid": 0.54,
-  "fiber": 11.51
+  "fiber": 11.51,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 574,
@@ -5737,7 +6883,9 @@
   "protein": 22.17,
   "carbohydrate": 59.99,
   "lipid": 1.24,
-  "fiber": 33.84
+  "fiber": 33.84,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 575,
@@ -5747,7 +6895,9 @@
   "protein": 21.23,
   "carbohydrate": 57.88,
   "lipid": 5.43,
-  "fiber": 12.36
+  "fiber": 12.36,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 576,
@@ -5757,7 +6907,9 @@
   "protein": 18.96,
   "carbohydrate": 64.0,
   "lipid": 2.13,
-  "fiber": 21.31
+  "fiber": 21.31,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 577,
@@ -5767,7 +6919,9 @@
   "protein": 6.31,
   "carbohydrate": 16.3,
   "lipid": 0.52,
-  "fiber": 7.86
+  "fiber": 7.86,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 578,
@@ -5777,7 +6931,9 @@
   "protein": 23.15,
   "carbohydrate": 62.0,
   "lipid": 0.77,
-  "fiber": 16.94
+  "fiber": 16.94,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 579,
@@ -5787,7 +6943,9 @@
   "protein": 16.0,
   "carbohydrate": 52.38,
   "lipid": 26.08,
-  "fiber": 7.32
+  "fiber": 7.32,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 580,
@@ -5797,7 +6955,9 @@
   "protein": 13.16,
   "carbohydrate": 54.73,
   "lipid": 28.05,
-  "fiber": 3.39
+  "fiber": 3.39,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 581,
@@ -5807,7 +6967,9 @@
   "protein": 36.03,
   "carbohydrate": 38.44,
   "lipid": 14.63,
-  "fiber": 20.18
+  "fiber": 20.18,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 582,
@@ -5817,7 +6979,9 @@
   "protein": 2.38,
   "carbohydrate": 4.28,
   "lipid": 1.61,
-  "fiber": 0.37
+  "fiber": 0.37,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 583,
@@ -5827,7 +6991,9 @@
   "protein": 35.69,
   "carbohydrate": 28.48,
   "lipid": 26.18,
-  "fiber": 7.31
+  "fiber": 7.31,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 584,
@@ -5837,7 +7003,9 @@
   "protein": 6.55,
   "carbohydrate": 2.13,
   "lipid": 3.95,
-  "fiber": 0.75
+  "fiber": 0.75,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 585,
@@ -5847,7 +7015,9 @@
   "protein": 33.58,
   "carbohydrate": 43.79,
   "lipid": 10.34,
-  "fiber": 32.31
+  "fiber": 32.31,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 586,
@@ -5857,7 +7027,9 @@
   "protein": 11.11,
   "carbohydrate": 12.39,
   "lipid": 3.78,
-  "fiber": 14.44
+  "fiber": 14.44,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 587,
@@ -5867,7 +7039,9 @@
   "protein": 18.55,
   "carbohydrate": 29.55,
   "lipid": 47.32,
-  "fiber": 11.64
+  "fiber": 11.64,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 588,
@@ -5877,7 +7051,9 @@
   "protein": 18.51,
   "carbohydrate": 29.13,
   "lipid": 46.28,
-  "fiber": 3.66
+  "fiber": 3.66,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 589,
@@ -5887,7 +7063,9 @@
   "protein": 14.54,
   "carbohydrate": 15.08,
   "lipid": 63.46,
-  "fiber": 7.93
+  "fiber": 7.93,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 590,
@@ -5897,7 +7075,9 @@
   "protein": 3.69,
   "carbohydrate": 10.4,
   "lipid": 41.98,
-  "fiber": 5.38
+  "fiber": 5.38,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 591,
@@ -5907,7 +7087,9 @@
   "protein": null,
   "carbohydrate": null,
   "lipid": null,
-  "fiber": null
+  "fiber": null,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 592,
@@ -5917,7 +7099,9 @@
   "protein": 1.41,
   "carbohydrate": 79.17,
   "lipid": 0.2,
-  "fiber": 17.86
+  "fiber": 17.86,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 593,
@@ -5927,7 +7111,9 @@
   "protein": 21.16,
   "carbohydrate": 21.62,
   "lipid": 50.43,
-  "fiber": 11.87
+  "fiber": 11.87,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 594,
@@ -5937,7 +7123,9 @@
   "protein": 14.08,
   "carbohydrate": 43.31,
   "lipid": 32.25,
-  "fiber": 33.5
+  "fiber": 33.5,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 595,
@@ -5947,7 +7135,9 @@
   "protein": 2.98,
   "carbohydrate": 43.92,
   "lipid": 0.75,
-  "fiber": 15.6
+  "fiber": 15.6,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 596,
@@ -5957,7 +7147,9 @@
   "protein": 2.52,
   "carbohydrate": 29.57,
   "lipid": 12.76,
-  "fiber": 4.25
+  "fiber": 4.25,
+  "liquid": false,
+  "densityGPerMl": null
  },
  {
   "id": 597,
@@ -5967,6 +7159,8 @@
   "protein": 13.97,
   "carbohydrate": 18.36,
   "lipid": 59.36,
-  "fiber": 7.25
+  "fiber": 7.25,
+  "liquid": false,
+  "densityGPerMl": null
  }
 ]

@@ -23,10 +23,10 @@ class StrengthStandardsTest {
     @Test
     void everyStandardPointsToAnExistingExercise() throws IOException {
         Set<String> catalogIds;
-        try (InputStream input = new ClassPathResource("seed/exercises.json").getInputStream()) {
+        try (InputStream input = new ClassPathResource("seed/exercises-pt.json").getInputStream()) {
             List<Map<String, Object>> exercises = jsonMapper.readValue(input, new TypeReference<List<Map<String, Object>>>() {
             });
-            catalogIds = exercises.stream().map(exercise -> (String) exercise.get("id")).collect(Collectors.toSet());
+            catalogIds = exercises.stream().map(exercise -> (String) exercise.get("externalId")).collect(Collectors.toSet());
         }
 
         List<StrengthStandard> standards = StrengthStandards.load(jsonMapper);
