@@ -24,7 +24,7 @@ O catálogo de alimentos e de exercícios já vem pronto — a API importa a **T
 - **Usuários** com senha criptografada (BCrypt), e-mail único, peso corporal e sexo.
 - **Progresso**: XP total, nível (a cada 100 XP sobe um nível) e categoria. Treinos e tarefas concluídas somam XP automaticamente.
 - **Metas diárias** de calorias, proteína, carboidrato e gordura, com o consumo do dia comparado à meta.
-- **Rank de força no estilo [Liftoff](https://liftoffrank.com/)**: cada série estima o 1RM e gera uma nota de 1 a 1000 relativa ao peso corporal e sexo, com 9 ranks (Wood → Olympian) por exercício, por grupo muscular e geral.
+- **Rank de força no estilo [Liftoff](https://liftoffrank.com/)**: cada série estima o 1RM e gera uma nota de 1 a 1000 relativa ao peso corporal e sexo, com 9 ranks (Bronze → Olympian) por exercício, por grupo muscular e geral.
 - **Recordes pessoais (PRs)** detectados ao registrar a série, e histórico do 1RM estimado por exercício.
 - **Streak de treinos**: dias de descanso contam, mas 3 dias seguidos sem treinar quebram a sequência.
 - **Rankings** entre usuários: geral (nota de força) e semanal (volume levantado).
@@ -152,7 +152,7 @@ Inspirado no [Liftoff](https://liftoffrank.com/). A fórmula exata do Liftoff n�
 ### Ranks
 Cada rank cobre 100 pontos, e o **LP** (lift points) é quanto o usuário já avançou dentro do rank:
 
-| Rank | Wood | Bronze | Silver | Gold | Platinum | Diamond | Champion | Titan | Olympian |
+| Rank | Bronze | Silver | Gold | Platinum | Diamond | Master | Grandmaster | Challenger | Olympian |
 |---|---|---|---|---|---|---|---|---|---|
 | Nota | 0–99 | 100–199 | 200–299 | 300–399 | 400–499 | 500–599 | 600–699 | 700–799 | 800–1000 |
 
