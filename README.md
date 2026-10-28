@@ -13,6 +13,8 @@ O catálogo de alimentos e de exercícios já vem pronto — a API importa a **T
 - [Autenticação](#autenticação)
 - [Catálogos de alimentos e exercícios](#catálogos-de-alimentos-e-exercícios)
 - [Tarefas recorrentes e XP](#tarefas-recorrentes-e-xp)
+- [Calorias das atividades](#calorias-das-atividades)
+- [Foto da refeição (Gemini)](#foto-da-refeição-gemini)
 - [Rank de força, PRs e streak](#rank-de-força-prs-e-streak)
 - [Rotinas e gerador de treino](#rotinas-e-gerador-de-treino)
 - [Endpoints](#endpoints)
@@ -33,10 +35,13 @@ O catálogo de alimentos e de exercícios já vem pronto — a API importa a **T
 - **Metabolismo e metas**: altura, data de nascimento e nível de atividade no perfil; cálculo de TMB (Mifflin-St Jeor), gasto diário, IMC e sugestão de meta de calorias e proteína para perder, manter ou ganhar peso.
 - **Tarefas avulsas e recorrentes** (ex: "beber água" de segunda a sexta), com conclusão por dia e 10 XP por conclusão.
 - **Atividades físicas** com XP pela duração, e importação em lote de apps como Apple Saúde e Google Fit, sem duplicar.
+  - **calorias calculadas** pelo MET da atividade × peso × horas quando o app não informa o gasto;
+  - **registro por texto livre** ("joguei vôlei por 2 horas"), com o Gemini completando atividades fora do catálogo.
 - **Alimentação**:
   - refeições com nome;
   - calorias e macros calculados por item, em gramas ou **ml** para líquidos (convertidos pela densidade do alimento);
-  - metas diárias de calorias, macros e água, com o consumo do dia comparado à meta.
+  - metas diárias de calorias, macros e água, com o consumo do dia comparado à meta;
+  - **foto da refeição**: o Gemini identifica os alimentos e estima a porção, as calorias e os macros, sugerindo o alimento do catálogo para registrar.
 - **Água** registrada por copo/garrafa e **peso corporal** com histórico. O peso mais recente atualiza o perfil e o rank.
 - **Treinos** com séries individuais, 1RM estimado e recordes pessoais (PRs).
 - **Rotinas de treino** reutilizáveis, um **gerador automático** (objetivo, dias por semana, nível e equipamentos) e "iniciar treino a partir da rotina".
@@ -100,6 +105,8 @@ O `docker-compose.yml` sobe um Postgres 17 e a API na porta 8080. Para publicar,
 | `DB_POOL_SIZE` | Conexões com o banco por instância da API (padrão: `5`; o pooler gratuito do Supabase aceita 15 no total) |
 | `KEEP_ALIVE_URL` | URL pública da API para o keep-alive (no Render não precisa: usa `RENDER_EXTERNAL_URL`, que o Render já define) |
 | `OFF_CONTACT` | E-mail ou site enviado no `User-Agent` do Open Food Facts (a API deles pede uma forma de contato) |
+| `GEMINI_API_KEY` | Chave da API do Gemini ([Google AI Studio](https://aistudio.google.com/apikey)). Sem ela, a análise de foto da refeição fica desligada e as atividades em texto só usam o catálogo local. |
+| `GEMINI_MODEL` | Modelo do Gemini (padrão: `gemini-3.5-flash`) |
 
 Para gerar um `JWT_SECRET`:
 ```bash
@@ -123,6 +130,8 @@ Se você roda a API pelo VS Code (`launch.json` com `envFile`), **pare e inicie 
 | `app.pagination.default-size` / `max-size` | `20` / `100` | Paginação de alimentos e exercícios |
 | `app.seed.enabled` | `true` | Importa TACO e free-exercise-db na inicialização (se ainda não estiverem no banco) |
 | `app.openfoodfacts.base-url` | `https://world.openfoodfacts.org` | Endereço da API do Open Food Facts |
+| `app.gemini.model` | `${GEMINI_MODEL:gemini-3.5-flash}` | Modelo do Gemini usado na foto da refeição e nas atividades em texto |
+| `spring.servlet.multipart.max-file-size` | `10MB` | Tamanho máximo de upload (a foto de perfil continua limitada a 2 MB) |
 
 ## Banco de dados e migrações
 O schema é versionado com **Flyway** em [`src/main/resources/db/migration`](src/main/resources/db/migration):
@@ -133,6 +142,8 @@ O schema é versionado com **Flyway** em [`src/main/resources/db/migration`](src
 | `V2__recurring_tasks_auth_routines_tracking.sql` | Conclusões de tarefas, XP e importação de atividades, dono dos itens do catálogo, meta de água, refresh tokens, códigos de recuperação, rotinas, água, peso e foto |
 | `V3__body_metrics_liquids_exercises_pt.sql` | Altura, nascimento e nível de atividade; líquidos (ml e densidade) com os da TACO marcados; nome em inglês e idioma das instruções dos exercícios; fonte `WGER` |
 | `V4__fill_missing_taco_values.sql` | Valores que a TACO não traz para leite integral, leite desnatado e sal |
+| `V5__shift_utc_timestamps_to_sao_paulo.sql` | Traz os horários gravados em UTC para o fuso de São Paulo |
+| `V6__activity_calories_estimate.sql` | MET da atividade e indicação de calorias estimadas pela API |
 
 - **Banco novo:** o Flyway roda V1 e V2.
 - **Banco que já existia antes do Flyway:** com `baseline-on-migrate`, a V1 é marcada como aplicada e só as seguintes rodam.
@@ -199,6 +210,23 @@ Um alimento ou exercício em uso (em refeições, treinos ou rotinas) não pode 
 - **Excluir:** excluir uma tarefa avulsa concluída desconta o XP. Numa recorrente, o XP dos dias já feitos fica.
 
 **XP de outras fontes:** treinos dão o `xpEarned` informado, e atividades dão 1 XP a cada 2 minutos (máximo 60 por atividade). Editar a duração ou excluir a atividade ajusta o XP.
+
+## Calorias das atividades
+- **Fórmula do MET:** `kcal = MET × peso (kg) × horas`, com o MET do [Compendium of Physical Activities](https://pacompendium.com/). Ex: vôlei recreativo (MET 4,0), 70 kg, 2 h → 560 kcal. Sem peso no perfil, usa 70 kg.
+- **Quando calcula:** se a atividade chega sem `caloriesBurned` (criação ou importação). Calorias informadas pelo app (ex: Apple Saúde) são mantidas.
+- **Reconhecimento:** `activityType` é comparado com ~40 atividades e seus sinônimos em português (`GET /api/activities/catalog`), sem diferenciar acento ou maiúscula. Atividade fora do catálogo fica sem estimativa.
+- **Resposta:** `met` e `caloriesEstimated: true` indicam que o valor foi calculado. Ao mudar o tipo ou a duração, calorias estimadas são recalculadas.
+- **Texto livre** (`POST /api/users/{userId}/activities/text` com `{"text": "joguei vôlei por 2 horas"}`):
+  - a atividade e a duração são lidas localmente ("2 horas", "1h30", "uma hora e meia", "45 min", "meia hora"...);
+  - se faltar algo (atividade fora do catálogo ou duração), o **Gemini** completa e estima o MET;
+  - sem duração no texto nem na resposta da IA, a API pede para informar.
+
+## Foto da refeição (Gemini)
+`POST /api/meals/analyze-photo` (multipart: `file` com JPG, PNG, WebP ou HEIC até 10 MB, e `description` opcional, ex: "arroz integral e frango"):
+- O Gemini identifica cada alimento e estima a porção em gramas, as calorias e os macros (com base na TACO), com `confidence` ALTA, MEDIA ou BAIXA.
+- `totals` é a soma dos itens. Nada é salvo.
+- Cada item traz `foodId`/`foodName` do alimento mais parecido no catálogo, quando houver. Para registrar, use `POST /api/meals/{mealId}/items` com `{"foodId": foodId, "quantity": portionGrams, "unit": "g"}`.
+- É uma **estimativa**: porções vistas por foto podem errar bastante (óleo, molhos e recheios não aparecem). Mostre os valores para o usuário conferir antes de salvar.
 
 ## Rank de força, PRs e streak
 Inspirado no [Liftoff](https://liftoffrank.com/). A fórmula exata do Liftoff não é pública; esta é uma implementação própria com a mesma ideia.
@@ -277,6 +305,8 @@ Todas as rotas começam com `/api` e exigem `Authorization: Bearer <token>`, exc
 | `PATCH` | `/api/tasks/{id}/complete?date=` | Conclui no dia (padrão: hoje) e dá 10 XP |
 | `PATCH` | `/api/tasks/{id}/uncomplete?date=` | Desmarca e remove o XP |
 | `GET` / `POST` | `/api/users/{userId}/activities` | Lista ou cria atividade (+XP pela duração) |
+| `POST` | `/api/users/{userId}/activities/text` | Cria a partir de texto livre (`{"text": "joguei vôlei por 2 horas"}`), com calorias pelo MET |
+| `GET` | `/api/activities/catalog` | Atividades reconhecidas e o MET de cada uma |
 | `POST` | `/api/users/{userId}/activities/import` | Importa um lote (`source` + `activities[]` com `externalId`) |
 | `GET` / `PATCH` / `DELETE` | `/api/activities/{id}` | Busca, atualiza ou exclui (ajustando o XP) |
 
@@ -292,6 +322,7 @@ Todas as rotas começam com `/api` e exigem `Authorization: Bearer <token>`, exc
 | `GET` / `PATCH` / `DELETE` | `/api/meals/{id}` | Busca, atualiza ou exclui (com os itens) |
 | `GET` / `POST` | `/api/meals/{id}/items` | Itens da refeição / adiciona (`{"foodId": 3, "quantity": 150, "unit": "g"}` ou `"unit": "ml"`) |
 | `GET` | `/api/meals/{id}/nutrition` | Total da refeição |
+| `POST` | `/api/meals/analyze-photo` | Estima alimentos, porções e calorias pela foto (multipart `file` + `description` opcional) |
 | `PATCH` / `DELETE` | `/api/meal-items/{id}` | Atualiza ou remove um item |
 | `GET` / `PATCH` | `/api/users/{userId}/goals` | Metas (`dailyCalories`, `proteinG`, `carbsG`, `fatG`, `dailyWaterMl`) |
 | `GET` | `/api/users/{userId}/nutrition/daily?date=` | Consumo do dia vs. meta |
@@ -352,6 +383,7 @@ Os erros seguem o formato **ProblemDetail** (RFC 9457):
 | `401` | Token ausente, inválido ou expirado; e-mail/senha errados; refresh token inválido |
 | `403` | Dados de outro usuário, ou alteração de item do catálogo que não é seu |
 | `404` | Registro não encontrado |
+| `413` | Arquivo maior que o limite de upload |
 
 ## Testes
 
@@ -359,10 +391,12 @@ Os erros seguem o formato **ProblemDetail** (RFC 9457):
 ```bash
 ./mvnw test -Dtest='!FantesdayApplicationTests'
 ```
-São 63 testes que não precisam de banco. Cobrem:
+São 103 testes que não precisam de banco. Cobrem:
 - **Cálculos:** rank de força (1RM, nota, LP), padrões de força, streak, tarefas recorrentes (dias da semana e agenda), gerador de rotinas, XP de atividades e cálculo nutricional.
 - **Services com Mockito:** tarefas (XP por conclusão, sem duplicar, datas futuras), refresh token (rotação, reuso, expiração) e recuperação de senha (tentativas, expiração).
 - **Segurança e erros:** JWT (assinatura, expiração, tamanho da chave) e camada web com MockMvc (401 sem token, 403 para outro usuário, 200 para o dono).
+- **Atividades:** calorias pelo MET, reconhecimento da atividade e da duração no texto e recálculo ao editar.
+- **IA:** client do Gemini (resposta em JSON, nova tentativa quando o modelo está sobrecarregado) e análise de foto com o Gemini simulado.
 - **Outros:** client do Open Food Facts e validação do tipo de imagem pelo conteúdo.
 
 O `FantesdayApplicationTests` sobe o contexto completo e precisa de um banco configurado no `.env`.
@@ -373,7 +407,8 @@ A pasta [`insomnia/`](insomnia/) tem uma coleção com todas as requisições. V
 ## Estrutura do projeto
 ```
 src/main/java/com/vhfantes/fantesday
-├── client/        # Client HTTP do Open Food Facts e DTOs da resposta
+├── activity/      # Calorias pelo MET, atividades conhecidas e leitura da duração em texto
+├── client/        # Clients HTTP do Open Food Facts e do Gemini, e DTOs das respostas
 ├── config/        # Segurança (JWT, CORS), BCrypt, RestClient, paginação e log de conexão
 ├── controller/    # Endpoints REST
 ├── dto/           # Records de request/response
@@ -387,7 +422,8 @@ src/main/java/com/vhfantes/fantesday
 ├── strength/      # Rank de força (1RM, nota, ranks) e padrões de força
 ├── task/          # Agenda das tarefas recorrentes (dias da semana)
 ├── body/          # TMB, gasto diário e IMC
-└── food/          # Unidades (g/ml) e conversão por densidade
+├── food/          # Unidades (g/ml) e conversão por densidade
+└── text/          # Normalização de texto (sem acento, minúsculo)
 src/main/resources
 ├── application.properties
 ├── db/migration/  # Migrações do Flyway
@@ -407,6 +443,8 @@ src/main/resources
 - **Recuperação de senha sem e-mail**: o código aparece no log da API. Antes de publicar, integre um serviço de e-mail.
 - **Importação de saúde**: a API recebe as atividades, mas a leitura do Apple Saúde/Google Fit é feita pelo app no celular.
 - **Busca no Open Food Facts**: a busca por nome deles tem limite de requisições (~10/min) e às vezes responde 503. Nesses casos `/api/foods/external` devolve lista vazia.
+- **Estimativas de IA**: a foto da refeição e as atividades fora do catálogo dependem do Gemini (alguns segundos por chamada, sujeito à cota da chave). As porções são aproximadas.
+- **Calorias brutas**: o MET estima o gasto total no período, incluindo o que o corpo gastaria em repouso. Apps como o Apple Saúde informam só a energia ativa, que é um pouco menor.
 - **Unidades**: só gramas e ml; medidas caseiras (colher, xícara, unidade) ainda não são aceitas.
 - **Padrões de força aproximados**: estimativas baseadas em tabelas públicas de força, não os do Liftoff. Ajuste à vontade; o `StrengthStandardsTest` valida o arquivo.
 - **Rank calculado na hora** com o peso atual; não há temporadas (o Liftoff reinicia a cada 4 meses).
