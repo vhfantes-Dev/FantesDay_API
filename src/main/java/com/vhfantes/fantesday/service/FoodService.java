@@ -2,16 +2,11 @@ package com.vhfantes.fantesday.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +28,6 @@ import com.vhfantes.fantesday.food.FoodUnits;
 import com.vhfantes.fantesday.repository.FoodRepository;
 import com.vhfantes.fantesday.repository.MealItemRepository;
 import com.vhfantes.fantesday.security.CurrentUser;
-import com.vhfantes.fantesday.text.TextNormalizer;
 
 import lombok.RequiredArgsConstructor;
 
@@ -45,9 +39,6 @@ public class FoodService {
 
     // Limite das colunas numeric(7,2); valores acima disso no Open Food Facts sao dados errados
     private static final BigDecimal MAX_NUTRIENT_VALUE = BigDecimal.valueOf(100_000);
-
-    // Quantos alimentos com a primeira palavra do nome sao comparados no findBestMatch
-    private static final int MATCH_CANDIDATES = 100;
 
     private final FoodRepository foodRepository;
     private final MealItemRepository mealItemRepository;
@@ -181,38 +172,6 @@ public class FoodService {
             logger.warn("Falha ao buscar '{}' no Open Food Facts: {}", term, e.getMessage());
             return List.of();
         }
-    }
-
-    // Alimento do catalogo mais parecido com o nome (no padrao da TACO, ex: "Arroz, tipo 1, cozido").
-    // Busca pela primeira palavra e fica com o que tiver mais palavras em comum (empate: o nome mais curto).
-    @Transactional(readOnly = true)
-    public Optional<Food> findBestMatch(String name) {
-        if (name == null || name.isBlank()) {
-            return Optional.empty();
-        }
-        List<String> words = Arrays.stream(TextNormalizer.normalize(name).split(" "))
-                .filter(word -> !word.isEmpty())
-                .toList();
-        if (words.isEmpty()) {
-            return Optional.empty();
-        }
-        String firstWord = name.trim().split("[\\s,]+")[0];
-        int requiredScore = Math.min(2, words.size());
-
-        Food best = null;
-        int bestScore = 0;
-        for (Food food : foodRepository.findByNameContainingIgnoreCase(firstWord, PageRequest.of(0, MATCH_CANDIDATES))) {
-            Set<String> foodWords = new HashSet<>(Arrays.asList(TextNormalizer.normalize(food.getName()).split(" ")));
-            int score = (int) words.stream().filter(foodWords::contains).count();
-            if (score < requiredScore) {
-                continue;
-            }
-            if (score > bestScore || (score == bestScore && food.getName().length() < best.getName().length())) {
-                best = food;
-                bestScore = score;
-            }
-        }
-        return Optional.ofNullable(best);
     }
 
     // Usado pelo MealService para montar os itens de uma refeicao

@@ -6,5 +6,7 @@ public enum CatalogSource {
     OPEN_FOOD_FACTS,
     FREE_EXERCISE_DB,
     WGER,
-    CUSTOM
+    CUSTOM,
+    // Base complementar do app: pizzas, fast food, lanches, doces, suplementos e bebidas (resources/seed/extra-foods.json)
+    FANTESDAY
 }
