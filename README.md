@@ -96,6 +96,7 @@ O `docker-compose.yml` sobe um Postgres 17 e a API na porta 8080. Para publicar,
 | `SUPABASE_DB_PASSWORD` | Senha do banco |
 | `JWT_SECRET` | Chave para assinar os tokens, com **no mínimo 32 caracteres**. Sem ela, a API gera uma chave aleatória a cada inicialização e todos são deslogados quando ela reinicia. **Obrigatória em produção.** |
 | `CORS_ALLOWED_ORIGINS` | Origens do frontend liberadas no CORS, separadas por vírgula (padrão: `*`) |
+| `APP_TIMEZONE` | Fuso usado para "hoje" e para as horas gravadas (padrão: `America/Sao_Paulo`) |
 | `DB_POOL_SIZE` | Conexões com o banco por instância da API (padrão: `5`; o pooler gratuito do Supabase aceita 15 no total) |
 | `KEEP_ALIVE_URL` | URL pública da API para o keep-alive (no Render não precisa: usa `RENDER_EXTERNAL_URL`, que o Render já define) |
 | `OFF_CONTACT` | E-mail ou site enviado no `User-Agent` do Open Food Facts (a API deles pede uma forma de contato) |
