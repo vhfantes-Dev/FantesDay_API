@@ -1,5 +1,7 @@
 package com.vhfantes.fantesday.repository;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -19,6 +21,10 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
     Optional<Food> findBySourceAndExternalId(CatalogSource source, String externalId);
 
     long countBySource(CatalogSource source);
+
+    List<Food> findBySource(CatalogSource source);
+
+    List<Food> findBySourceIn(Collection<CatalogSource> sources);
 
     // Ao excluir uma conta, os alimentos que ela cadastrou continuam no catalogo, sem dono
     @Modifying

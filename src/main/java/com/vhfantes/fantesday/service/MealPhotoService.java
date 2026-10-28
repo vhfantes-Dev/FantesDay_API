@@ -18,8 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.vhfantes.fantesday.client.GeminiClient;
 import com.vhfantes.fantesday.dto.MealNutritionDTO;
 import com.vhfantes.fantesday.dto.MealPhotoAnalysisDTO;
-import com.vhfantes.fantesday.entity.Food;
 import com.vhfantes.fantesday.exception.BusinessException;
+import com.vhfantes.fantesday.food.FoodMatcher;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,7 +41,7 @@ public class MealPhotoService {
     private static final Set<String> HEIF_BRANDS = Set.of("mif1", "msf1", "heif");
 
     private final GeminiClient geminiClient;
-    private final FoodService foodService;
+    private final FoodMatcher foodMatcher;
 
     public MealPhotoAnalysisDTO analyze(MultipartFile file, String description) {
         if (!geminiClient.isConfigured()) {
@@ -91,7 +91,7 @@ public class MealPhotoService {
     }
 
     private MealPhotoAnalysisDTO.Item toItem(AiItem item) {
-        Optional<Food> food = foodService.findBestMatch(item.catalogName());
+        Optional<FoodMatcher.Match> food = foodMatcher.find(item.catalogName());
         String confidence = item.confidence() != null && CONFIDENCE_LEVELS.contains(item.confidence().toUpperCase())
                 ? item.confidence().toUpperCase()
                 : "BAIXA";
@@ -104,8 +104,8 @@ public class MealPhotoService {
                 round(item.carbs(), 1),
                 round(item.fat(), 1),
                 confidence,
-                food.map(Food::getId).orElse(null),
-                food.map(Food::getName).orElse(null));
+                food.map(FoodMatcher.Match::id).orElse(null),
+                food.map(FoodMatcher.Match::name).orElse(null));
     }
 
     // Os totais sao somados aqui, e nao pela IA, para baterem com os itens
@@ -166,8 +166,11 @@ public class MealPhotoService {
                 - isFood: false se a foto nao mostra comida ou bebida;
                 - description: uma frase descrevendo o prato;
                 - name: nome curto do alimento em portugues (ex: "Arroz branco");
-                - catalogName: nome no padrao da tabela TACO, com acentos (ex: "Arroz, tipo 1, cozido",
-                  "Feijão, carioca, cozido", "Frango, peito, sem pele, grelhado");
+                - catalogName: nome no padrao da tabela TACO, com acentos, comecando pela palavra mais geral
+                  (ex: "Arroz, tipo 1, cozido", "Feijão, carioca, cozido", "Frango, peito, sem pele, grelhado",
+                  "Pizza, calabresa", "Sorvete, chocolate", "Whey protein, concentrado"). Se for um produto de marca
+                  ou de rede de fast food reconhecivel, use o nome do produto e a marca (ex: "Big Mac, McDonald's",
+                  "Whopper, Burger King", "Batata frita média, McDonald's", "Sonho de Valsa, Lacta");
                 - confidence: ALTA, MEDIA ou BAIXA, conforme a certeza sobre o alimento e a porcao;
                 - notes: observacao util para o usuario (ex: oleo ou molho escondido que muda as calorias), ou null.
                 %s""".formatted(userInfo);

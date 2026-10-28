@@ -48,7 +48,7 @@ O catálogo de alimentos e de exercícios já vem pronto — a API importa a **T
 - **Rank de força no estilo [Liftoff](https://liftoffrank.com/)**: nota de 1 a 1000 relativa ao peso corporal e sexo, com 9 ranks (Bronze → Olympian) por exercício, por grupo muscular e geral.
 - **Streak de treinos** e **rankings** entre usuários: geral pela força e semanal pelo volume.
 - **Catálogo**:
-  - ~600 alimentos da TACO, produtos do Open Food Facts e alimentos cadastrados pelos usuários;
+  - ~600 alimentos da TACO, ~230 de uma base complementar (pizzas, McDonald's, Burger King, lanches, salgados, doces, suplementos, bebidas e delivery), produtos do Open Food Facts e alimentos cadastrados pelos usuários;
   - ~1.200 exercícios **em português** (free-exercise-db traduzido + wger), com busca pelo nome em português ou em inglês;
   - listas paginadas.
 
@@ -144,6 +144,7 @@ O schema é versionado com **Flyway** em [`src/main/resources/db/migration`](src
 | `V4__fill_missing_taco_values.sql` | Valores que a TACO não traz para leite integral, leite desnatado e sal |
 | `V5__shift_utc_timestamps_to_sao_paulo.sql` | Traz os horários gravados em UTC para o fuso de São Paulo |
 | `V6__activity_calories_estimate.sql` | MET da atividade e indicação de calorias estimadas pela API |
+| `V7__extra_foods_and_servings.sql` | Porção típica dos alimentos e fonte `FANTESDAY` (base complementar) |
 
 - **Banco novo:** o Flyway roda V1 e V2.
 - **Banco que já existia antes do Flyway:** com `baseline-on-migrate`, a V1 é marcada como aplicada e só as seguintes rodam.
@@ -187,6 +188,7 @@ A API usa uma abordagem **híbrida**: os dados ficam no banco local, e fontes ex
 |---|---|---|
 | **TACO** (NEPA/Unicamp, 4ª ed.) | 597 alimentos brasileiros com calorias e macros por 100g | Importada na inicialização a partir de `seed/taco.json` |
 | **free-exercise-db** (traduzido) + **wger** | 1.213 exercícios em português: 876 do free-exercise-db (nome traduzido; descrição em português quando existe no wger) e 337 do wger | Sincronizado na inicialização a partir de `seed/exercises-pt.json` |
+| **Base complementar** (`FANTESDAY`) | 227 itens que a TACO não tem: pizzas, McDonald's, Burger King, lanches, salgados, doces, chocolates, suplementos, snacks, bebidas e delivery, com porção típica | Sincronizada na inicialização a partir de `seed/extra-foods.json` |
 | **Open Food Facts** | Produtos industrializados (código de barras) | Salvo no banco na primeira consulta por código de barras (cache) |
 | Cadastro manual | Alimentos e exercícios criados pelo usuário | `POST /api/foods` e `POST /api/exercises` (com `createdById`) |
 
@@ -199,6 +201,13 @@ Um alimento ou exercício em uso (em refeições, treinos ou rotinas) não pode 
 **Líquidos em ml:** alimentos com `liquid: true` (sucos, leites, óleos, bebidas, mel...) têm `defaultUnit: "ml"` e `densityGPerMl`. Ao adicionar um item com `"unit": "ml"`, a quantidade vira gramas pela densidade antes do cálculo (ex.: 15 ml de azeite × 0,91 = 13,65 g). As unidades aceitas são `g` e `ml`; qualquer alimento aceita `ml` (densidade 1 quando não informada). Produtos do Open Food Facts vendidos em ml/L são marcados como líquidos automaticamente.
 
 **Exercícios:** `name` vem em português e `nameEn` traz o nome original; a busca (`?name=`) procura nos dois. `instructionsLanguage` indica se as instruções estão em português (`pt`, 416 exercícios) ou ainda em inglês (`en`). Equipamentos e categorias estão em português (`Barra`, `Halteres`, `Polia`, `Máquina`, `Peso corporal`...; `Força`, `Alongamento`, `Cardio`...). Bancos que já tinham o catálogo antigo são atualizados na inicialização sem perder treinos e histórico.
+
+**Base complementar** ([`seed/extra-foods.json`](src/main/resources/seed/extra-foods.json)):
+- Cada alimento traz `servingGrams` e `servingDescription` (ex: 211 g, "1 sanduíche"), para o app sugerir a quantidade.
+- **McDonald's (38 itens):** calorias e macros **por porção** da tabela oficial do site do McDonald's Brasil (out/2026). O site não informa o peso, então o peso da porção é estimado: registrar 1 porção (`quantity = servingGrams`) dá exatamente o valor oficial.
+- **Burger King:** a BK não publica tabela no site. Whopper, Whopper Duplo e Whopper Jr usam a tabela de marcas da TACO Online/FatSecret; os demais são **estimativas**.
+- **Demais categorias:** estimativas a partir de receitas e rótulos típicos (pizzas, lanches, doces, delivery) e de rótulos comerciais (chocolates, snacks, suplementos, bebidas). O campo `note` de cada item diz de onde vem o valor.
+- Para corrigir ou incluir alimentos, edite o arquivo: na próxima inicialização a API insere os novos e atualiza os que mudaram (o `ExtraFoodsSeedTest` confere ids, porções e se as calorias batem com os macros).
 
 > A **TBCA** (USP, versão 7.3 de 2025) é mais nova que a TACO, mas os termos de uso proíbem reproduzir a base e exigem autorização dos coordenadores para uso comercial; por isso ela não foi incluída.
 
@@ -225,7 +234,7 @@ Um alimento ou exercício em uso (em refeições, treinos ou rotinas) não pode 
 `POST /api/meals/analyze-photo` (multipart: `file` com JPG, PNG, WebP ou HEIC até 10 MB, e `description` opcional, ex: "arroz integral e frango"):
 - O Gemini identifica cada alimento e estima a porção em gramas, as calorias e os macros (com base na TACO), com `confidence` ALTA, MEDIA ou BAIXA.
 - `totals` é a soma dos itens. Nada é salvo.
-- Cada item traz `foodId`/`foodName` do alimento mais parecido no catálogo, quando houver. Para registrar, use `POST /api/meals/{mealId}/items` com `{"foodId": foodId, "quantity": portionGrams, "unit": "g"}`.
+- Cada item traz `foodId`/`foodName` do alimento mais parecido no catálogo (TACO + base complementar), quando houver. A comparação é por palavras, sem acento e aceitando grafias diferentes ("muçarela" = "mussarela"), e reconhece itens de marca ("Big Mac, McDonald's"). Para registrar, use `POST /api/meals/{mealId}/items` com `{"foodId": foodId, "quantity": portionGrams, "unit": "g"}`.
 - É uma **estimativa**: porções vistas por foto podem errar bastante (óleo, molhos e recheios não aparecem). Mostre os valores para o usuário conferir antes de salvar.
 
 ## Rank de força, PRs e streak
@@ -391,12 +400,13 @@ Os erros seguem o formato **ProblemDetail** (RFC 9457):
 ```bash
 ./mvnw test -Dtest='!FantesdayApplicationTests'
 ```
-São 103 testes que não precisam de banco. Cobrem:
+São 111 testes que não precisam de banco. Cobrem:
 - **Cálculos:** rank de força (1RM, nota, LP), padrões de força, streak, tarefas recorrentes (dias da semana e agenda), gerador de rotinas, XP de atividades e cálculo nutricional.
 - **Services com Mockito:** tarefas (XP por conclusão, sem duplicar, datas futuras), refresh token (rotação, reuso, expiração) e recuperação de senha (tentativas, expiração).
 - **Segurança e erros:** JWT (assinatura, expiração, tamanho da chave) e camada web com MockMvc (401 sem token, 403 para outro usuário, 200 para o dono).
 - **Atividades:** calorias pelo MET, reconhecimento da atividade e da duração no texto e recálculo ao editar.
 - **IA:** client do Gemini (resposta em JSON, nova tentativa quando o modelo está sobrecarregado) e análise de foto com o Gemini simulado.
+- **Catálogo:** consistência da base complementar (ids, porções, calorias × macros) e busca do alimento mais parecido.
 - **Outros:** client do Open Food Facts e validação do tipo de imagem pelo conteúdo.
 
 O `FantesdayApplicationTests` sobe o contexto completo e precisa de um banco configurado no `.env`.
@@ -422,7 +432,7 @@ src/main/java/com/vhfantes/fantesday
 ├── strength/      # Rank de força (1RM, nota, ranks) e padrões de força
 ├── task/          # Agenda das tarefas recorrentes (dias da semana)
 ├── body/          # TMB, gasto diário e IMC
-├── food/          # Unidades (g/ml) e conversão por densidade
+├── food/          # Unidades (g/ml), conversão por densidade e busca do alimento mais parecido (foto)
 └── text/          # Normalização de texto (sem acento, minúsculo)
 src/main/resources
 ├── application.properties

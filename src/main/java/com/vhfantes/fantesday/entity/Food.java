@@ -59,6 +59,13 @@ public class Food {
     @Column(name = "density_g_per_ml", precision = 5, scale = 3)
     private BigDecimal densityGPerMl;
 
+    // Porcao tipica (ex: 211 g e "1 sanduiche" para o Big Mac); null quando nao ha uma porcao padrao
+    @Column(name = "serving_grams", precision = 7, scale = 1)
+    private BigDecimal servingGrams;
+
+    @Column(name = "serving_description", length = 100)
+    private String servingDescription;
+
     @Enumerated(EnumType.STRING)
     private CatalogSource source;
 

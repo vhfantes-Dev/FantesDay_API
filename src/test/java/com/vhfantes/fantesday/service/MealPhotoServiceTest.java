@@ -23,8 +23,8 @@ import org.springframework.web.client.RestClientException;
 
 import com.vhfantes.fantesday.client.GeminiClient;
 import com.vhfantes.fantesday.dto.MealPhotoAnalysisDTO;
-import com.vhfantes.fantesday.entity.Food;
 import com.vhfantes.fantesday.exception.BusinessException;
+import com.vhfantes.fantesday.food.FoodMatcher;
 
 @ExtendWith(MockitoExtension.class)
 class MealPhotoServiceTest {
@@ -34,7 +34,7 @@ class MealPhotoServiceTest {
     @Mock
     private GeminiClient geminiClient;
     @Mock
-    private FoodService foodService;
+    private FoodMatcher foodMatcher;
 
     @InjectMocks
     private MealPhotoService mealPhotoService;
@@ -50,11 +50,9 @@ class MealPhotoServiceTest {
                                 new BigDecimal("278"), new BigDecimal("32.4"), null, new BigDecimal("15.5"), "duvidosa")),
                         null));
 
-        Food rice = new Food();
-        rice.setId(5L);
-        rice.setName("Arroz, tipo 1, cozido");
-        when(foodService.findBestMatch("Arroz, tipo 1, cozido")).thenReturn(Optional.of(rice));
-        when(foodService.findBestMatch("Carne, bovina, contra-filé, grelhado")).thenReturn(Optional.empty());
+        when(foodMatcher.find("Arroz, tipo 1, cozido"))
+                .thenReturn(Optional.of(new FoodMatcher.Match(5L, "Arroz, tipo 1, cozido")));
+        when(foodMatcher.find("Carne, bovina, contra-filé, grelhado")).thenReturn(Optional.empty());
 
         MealPhotoAnalysisDTO result = mealPhotoService.analyze(photo(JPEG), "almoco");
 
