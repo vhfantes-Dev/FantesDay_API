@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -15,13 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.vhfantes.fantesday.dto.MealItemRequestDTO;
 import com.vhfantes.fantesday.dto.MealItemResponseDTO;
 import com.vhfantes.fantesday.dto.MealNutritionDTO;
+import com.vhfantes.fantesday.dto.MealPhotoAnalysisDTO;
 import com.vhfantes.fantesday.dto.MealRequestDTO;
 import com.vhfantes.fantesday.dto.MealResponseDTO;
 import com.vhfantes.fantesday.security.CurrentUser;
+import com.vhfantes.fantesday.service.MealPhotoService;
 import com.vhfantes.fantesday.service.MealService;
 
 import lombok.RequiredArgsConstructor;
@@ -32,6 +36,7 @@ import lombok.RequiredArgsConstructor;
 public class MealController {
 
     private final MealService mealService;
+    private final MealPhotoService mealPhotoService;
     private final CurrentUser currentUser;
 
     // ---------- Refeicoes ----------
@@ -74,6 +79,15 @@ public class MealController {
     @GetMapping("/meals/{id}/nutrition")
     public MealNutritionDTO getNutritionTotals(@PathVariable Long id) {
         return mealService.getNutritionTotals(id);
+    }
+
+    // Foto de uma refeicao (multipart: "file" + "description" opcional, ex: "arroz integral e frango").
+    // A IA estima os alimentos, as porcoes e as calorias; nada e salvo.
+    @PostMapping(path = "/meals/analyze-photo", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public MealPhotoAnalysisDTO analyzePhoto(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam(required = false) String description) {
+        return mealPhotoService.analyze(file, description);
     }
 
     // ---------- Itens da refeicao ----------

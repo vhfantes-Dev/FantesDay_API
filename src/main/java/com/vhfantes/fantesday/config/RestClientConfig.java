@@ -29,4 +29,23 @@ public class RestClientConfig {
                 .requestFactory(requestFactory)
                 .build();
     }
+
+    // A chave vai no header (e nao na URL) para nao aparecer em logs de requisicao
+    @Bean
+    public RestClient geminiRestClient(
+            RestClient.Builder builder,
+            @Value("${app.gemini.base-url}") String baseUrl,
+            @Value("${app.gemini.api-key}") String apiKey) {
+
+        // Analisar uma foto pode levar alguns segundos
+        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+        requestFactory.setConnectTimeout(Duration.ofSeconds(5));
+        requestFactory.setReadTimeout(Duration.ofSeconds(60));
+
+        return builder
+                .baseUrl(baseUrl)
+                .defaultHeader("x-goog-api-key", apiKey)
+                .requestFactory(requestFactory)
+                .build();
+    }
 }

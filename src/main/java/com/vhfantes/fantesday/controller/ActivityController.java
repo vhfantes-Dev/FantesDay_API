@@ -17,8 +17,11 @@ import com.vhfantes.fantesday.dto.ActivityImportRequestDTO;
 import com.vhfantes.fantesday.dto.ActivityImportResultDTO;
 import com.vhfantes.fantesday.dto.ActivityRequestDTO;
 import com.vhfantes.fantesday.dto.ActivityResponseDTO;
+import com.vhfantes.fantesday.dto.ActivityTextRequestDTO;
+import com.vhfantes.fantesday.dto.KnownActivityDTO;
 import com.vhfantes.fantesday.security.CurrentUser;
 import com.vhfantes.fantesday.service.ActivityService;
+import com.vhfantes.fantesday.service.ActivityTextInterpreter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class ActivityController {
 
     private final ActivityService activityService;
+    private final ActivityTextInterpreter activityTextInterpreter;
     private final CurrentUser currentUser;
 
     @GetMapping("/users/{userId}/activities")
@@ -41,6 +45,21 @@ public class ActivityController {
     public ActivityResponseDTO create(@PathVariable Long userId, @RequestBody ActivityRequestDTO dto) {
         currentUser.checkAccess(userId);
         return activityService.create(userId, dto);
+    }
+
+    // Cria a atividade a partir de um texto livre, ex: { "text": "joguei volei por 2 horas" }
+    @PostMapping("/users/{userId}/activities/text")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ActivityResponseDTO createFromText(@PathVariable Long userId, @RequestBody ActivityTextRequestDTO dto) {
+        currentUser.checkAccess(userId);
+        // A interpretacao (que pode chamar o Gemini) acontece antes da transacao que grava a atividade
+        return activityService.createFromText(userId, activityTextInterpreter.interpret(dto.text()), dto.date());
+    }
+
+    // Atividades reconhecidas e o MET usado no calculo das calorias
+    @GetMapping("/activities/catalog")
+    public List<KnownActivityDTO> catalog() {
+        return activityService.catalog();
     }
 
     // Importa um lote de atividades de outro app (Apple Saude, Google Fit...); repetidas sao ignoradas

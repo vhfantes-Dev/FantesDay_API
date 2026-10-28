@@ -1,5 +1,6 @@
 package com.vhfantes.fantesday.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
@@ -41,6 +42,14 @@ public class Activity {
     private String importSource;
     private Integer caloriesBurned;
     private LocalDate date;
+
+    // MET da atividade (Compendium of Physical Activities), usado para estimar as calorias
+    @Column(precision = 4, scale = 1)
+    private BigDecimal met;
+
+    // true quando as calorias foram estimadas pela API (pelo MET), e nao informadas pelo app
+    @Column(nullable = false)
+    private Boolean caloriesEstimated = false;
 
     // XP dado pela atividade (calculado pela duracao)
     private Integer xpEarned = 0;

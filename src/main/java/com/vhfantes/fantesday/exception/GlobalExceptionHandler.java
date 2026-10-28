@@ -7,6 +7,8 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 // Converte as excecoes dos services em respostas HTTP no formato ProblemDetail (RFC 9457):
 // { "type", "title", "status", "detail", "instance" }
@@ -48,6 +50,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ProblemDetail handleMissingParameter(MissingServletRequestParameterException e) {
         return problem(HttpStatus.BAD_REQUEST, "Parametro obrigatorio ausente: " + e.getParameterName());
+    }
+
+    // Upload maior que spring.servlet.multipart.max-file-size
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ProblemDetail handleUploadTooLarge(MaxUploadSizeExceededException e) {
+        return problem(HttpStatus.CONTENT_TOO_LARGE, "Arquivo muito grande");
+    }
+
+    // Requisicao multipart sem o arquivo (ex: sem o campo "file")
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    public ProblemDetail handleMissingPart(MissingServletRequestPartException e) {
+        return problem(HttpStatus.BAD_REQUEST, "Campo obrigatorio ausente: " + e.getRequestPartName());
     }
 
     private ProblemDetail problem(HttpStatus status, String detail) {

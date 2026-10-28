@@ -1,7 +1,9 @@
 package com.vhfantes.fantesday.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,10 +12,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.vhfantes.fantesday.activity.ActivityCalories;
+import com.vhfantes.fantesday.activity.KnownActivity;
 import com.vhfantes.fantesday.dto.ActivityImportRequestDTO;
 import com.vhfantes.fantesday.dto.ActivityImportResultDTO;
 import com.vhfantes.fantesday.dto.ActivityRequestDTO;
 import com.vhfantes.fantesday.dto.ActivityResponseDTO;
+import com.vhfantes.fantesday.dto.KnownActivityDTO;
 import com.vhfantes.fantesday.entity.Activity;
 import com.vhfantes.fantesday.entity.User;
 import com.vhfantes.fantesday.exception.BusinessException;
@@ -28,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 public class ActivityService {
 
     public static final String IMPORT_ORIGIN = "import";
+    public static final String TEXT_ORIGIN = "text";
     private static final int MAX_IMPORT_BATCH = 500;
 
     private final ActivityRepository activityRepository;
@@ -54,7 +60,14 @@ public class ActivityService {
         return ActivityResponseDTO.from(getActivityOrThrow(id));
     }
 
-    // Cria a atividade e soma o XP pela duracao
+    // Atividades reconhecidas e o MET de cada uma
+    public List<KnownActivityDTO> catalog() {
+        return Arrays.stream(KnownActivity.values())
+                .map(KnownActivityDTO::from)
+                .toList();
+    }
+
+    // Cria a atividade e soma o XP pela duracao. Sem caloriesBurned, as calorias sao estimadas pelo MET.
     @Transactional
     public ActivityResponseDTO create(Long userId, ActivityRequestDTO dto) {
         if (dto.activityType() == null || dto.activityType().isBlank()) {
@@ -68,8 +81,9 @@ public class ActivityService {
         activity.setDurationMinutes(dto.durationMinutes());
         activity.setOrigin(dto.origin());
         activity.setImportSource(dto.importSource());
-        activity.setCaloriesBurned(dto.caloriesBurned());
         activity.setDate(dto.date() != null ? dto.date() : LocalDate.now());
+        activity.setMet(metFor(activity.getActivityType()));
+        applyCalories(activity, dto.caloriesBurned());
         activity.setXpEarned(xpFor(dto.durationMinutes()));
 
         activity = activityRepository.save(activity);
@@ -77,16 +91,42 @@ public class ActivityService {
         return ActivityResponseDTO.from(activity);
     }
 
-    // Atualiza apenas os campos enviados; se a duracao mudar, ajusta a diferenca de XP
+    // Atividade ja interpretada de um texto livre (ActivityTextInterpreter); as calorias saem do MET
+    @Transactional
+    public ActivityResponseDTO createFromText(Long userId, ActivityTextInterpreter.Result interpreted, LocalDate date) {
+        validateDuration(interpreted.durationMinutes());
+
+        Activity activity = new Activity();
+        activity.setUser(userService.getUserOrThrow(userId));
+        activity.setActivityType(interpreted.activityType());
+        activity.setDurationMinutes(interpreted.durationMinutes());
+        activity.setOrigin(TEXT_ORIGIN);
+        activity.setDate(date != null ? date : LocalDate.now());
+        activity.setMet(interpreted.met());
+        applyCalories(activity, null);
+        activity.setXpEarned(xpFor(interpreted.durationMinutes()));
+
+        activity = activityRepository.save(activity);
+        progressService.addXp(userId, activity.getXpEarned());
+        return ActivityResponseDTO.from(activity);
+    }
+
+    // Atualiza apenas os campos enviados; se a duracao mudar, ajusta a diferenca de XP.
+    // Calorias estimadas sao recalculadas quando o tipo ou a duracao mudam.
     @Transactional
     public ActivityResponseDTO update(Long id, ActivityRequestDTO dto) {
         Activity activity = getActivityOrThrow(id);
+        boolean changed = false;
 
-        if (dto.activityType() != null && !dto.activityType().isBlank()) {
+        if (dto.activityType() != null && !dto.activityType().isBlank()
+                && !dto.activityType().trim().equals(activity.getActivityType())) {
             activity.setActivityType(dto.activityType().trim());
+            activity.setMet(metFor(activity.getActivityType()));
+            changed = true;
         }
         if (dto.durationMinutes() != null) {
             validateDuration(dto.durationMinutes());
+            changed |= !dto.durationMinutes().equals(activity.getDurationMinutes());
             activity.setDurationMinutes(dto.durationMinutes());
 
             int newXp = xpFor(dto.durationMinutes());
@@ -103,7 +143,9 @@ public class ActivityService {
             activity.setImportSource(dto.importSource());
         }
         if (dto.caloriesBurned() != null) {
-            activity.setCaloriesBurned(dto.caloriesBurned());
+            applyCalories(activity, dto.caloriesBurned());
+        } else if (changed && (activity.getCaloriesBurned() == null || Boolean.TRUE.equals(activity.getCaloriesEstimated()))) {
+            applyCalories(activity, null);
         }
         if (dto.date() != null) {
             activity.setDate(dto.date());
@@ -163,11 +205,12 @@ public class ActivityService {
             activity.setUser(user);
             activity.setActivityType(item.activityType().trim());
             activity.setDurationMinutes(item.durationMinutes());
-            activity.setCaloriesBurned(item.caloriesBurned());
             activity.setDate(item.date() != null ? item.date() : LocalDate.now());
             activity.setOrigin(IMPORT_ORIGIN);
             activity.setImportSource(source);
             activity.setExternalId(externalId);
+            activity.setMet(metFor(activity.getActivityType()));
+            applyCalories(activity, item.caloriesBurned());
             activity.setXpEarned(xpFor(item.durationMinutes()));
 
             activity = activityRepository.save(activity);
@@ -186,6 +229,26 @@ public class ActivityService {
             return 0;
         }
         return Math.min(maxXpPerActivity, durationMinutes / minutesPerXp);
+    }
+
+    // Calorias informadas pelo app valem; sem elas, estima pelo MET e pelo peso do usuario
+    static void applyCalories(Activity activity, Integer informedCalories) {
+        if (informedCalories != null) {
+            if (informedCalories < 0) {
+                throw new BusinessException("Calorias nao podem ser negativas");
+            }
+            activity.setCaloriesBurned(informedCalories);
+            activity.setCaloriesEstimated(false);
+            return;
+        }
+        Integer estimated = ActivityCalories.estimate(
+                activity.getMet(), activity.getUser().getBodyweightKg(), activity.getDurationMinutes());
+        activity.setCaloriesBurned(estimated);
+        activity.setCaloriesEstimated(estimated != null);
+    }
+
+    private static BigDecimal metFor(String activityType) {
+        return KnownActivity.find(activityType).map(KnownActivity::met).orElse(null);
     }
 
     private int xpOf(Activity activity) {
