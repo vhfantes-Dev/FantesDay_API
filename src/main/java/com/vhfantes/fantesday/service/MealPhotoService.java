@@ -16,6 +16,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.vhfantes.fantesday.client.GeminiClient;
+import com.vhfantes.fantesday.dto.FoodResponseDTO;
 import com.vhfantes.fantesday.dto.MealNutritionDTO;
 import com.vhfantes.fantesday.dto.MealPhotoAnalysisDTO;
 import com.vhfantes.fantesday.exception.BusinessException;
@@ -25,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 
 // Estima os alimentos, as porcoes e as calorias de uma refeicao pela foto, usando o Gemini.
 // Nao tem transacao: a chamada a IA leva alguns segundos e nao deve prender uma conexao do banco.
+// Itens que o catalogo nao tem viram alimentos do usuario (FoodService.findOrCreateEstimated), cada um na sua transacao.
 @Service
 @RequiredArgsConstructor
 public class MealPhotoService {
@@ -34,6 +36,8 @@ public class MealPhotoService {
     public static final long MAX_SIZE_BYTES = 10 * 1024 * 1024;
     public static final int MAX_DESCRIPTION_LENGTH = 300;
     private static final int MAX_ITEMS = 30;
+    // Abaixo disso a conversao para 100 g distorce demais (ex: 1 g de molho)
+    private static final BigDecimal MIN_GRAMS_TO_CREATE_FOOD = BigDecimal.valueOf(5);
     private static final Set<String> CONFIDENCE_LEVELS = Set.of("ALTA", "MEDIA", "BAIXA");
 
     // Marcas do "ftyp" das fotos HEIC/HEIF (padrao do iPhone)
@@ -42,6 +46,7 @@ public class MealPhotoService {
 
     private final GeminiClient geminiClient;
     private final FoodMatcher foodMatcher;
+    private final FoodService foodService;
 
     public MealPhotoAnalysisDTO analyze(MultipartFile file, String description) {
         if (!geminiClient.isConfigured()) {
@@ -90,22 +95,42 @@ public class MealPhotoService {
         return new MealPhotoAnalysisDTO(ai.description(), items, totals(items), ai.notes());
     }
 
+    // Sem alimento parecido no catalogo, cadastra o item com os valores da IA para o usuario conseguir salvar a refeicao
     private MealPhotoAnalysisDTO.Item toItem(AiItem item) {
-        Optional<FoodMatcher.Match> food = foodMatcher.find(item.catalogName());
         String confidence = item.confidence() != null && CONFIDENCE_LEVELS.contains(item.confidence().toUpperCase())
                 ? item.confidence().toUpperCase()
                 : "BAIXA";
+        BigDecimal portion = round(item.portionGrams(), 0);
+        BigDecimal calories = round(item.calories(), 0);
+        BigDecimal protein = round(item.protein(), 1);
+        BigDecimal carbs = round(item.carbs(), 1);
+        BigDecimal fat = round(item.fat(), 1);
+
+        Long foodId = null;
+        String foodName = null;
+        boolean estimatedFood = false;
+        Optional<FoodMatcher.Match> match = foodMatcher.find(item.catalogName());
+        if (match.isPresent()) {
+            foodId = match.get().id();
+            foodName = match.get().name();
+        } else if (portion.compareTo(MIN_GRAMS_TO_CREATE_FOOD) >= 0) {
+            FoodResponseDTO created = foodService.findOrCreateEstimated(item.name(), portion, calories, protein, carbs, fat);
+            foodId = created.id();
+            foodName = created.name();
+            estimatedFood = true;
+        }
 
         return new MealPhotoAnalysisDTO.Item(
                 item.name().trim(),
-                round(item.portionGrams(), 0).intValue(),
-                round(item.calories(), 0).intValue(),
-                round(item.protein(), 1),
-                round(item.carbs(), 1),
-                round(item.fat(), 1),
+                portion.intValue(),
+                calories.intValue(),
+                protein,
+                carbs,
+                fat,
                 confidence,
-                food.map(FoodMatcher.Match::id).orElse(null),
-                food.map(FoodMatcher.Match::name).orElse(null));
+                foodId,
+                foodName,
+                estimatedFood);
     }
 
     // Os totais sao somados aqui, e nao pela IA, para baterem com os itens
