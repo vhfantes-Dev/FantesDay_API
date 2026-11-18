@@ -3,6 +3,7 @@ package com.vhfantes.fantesday.service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,10 @@ public class FoodService {
 
     // Limite das colunas numeric(7,2); valores acima disso no Open Food Facts sao dados errados
     private static final BigDecimal MAX_NUTRIENT_VALUE = BigDecimal.valueOf(100_000);
+
+    // Alimentos cadastrados a partir da foto (findOrCreateEstimated)
+    private static final int MAX_ESTIMATED_NAME_LENGTH = 100;
+    public static final String ESTIMATED_SERVING_DESCRIPTION = "porção da foto (estimativa da IA)";
 
     private final FoodRepository foodRepository;
     private final MealItemRepository mealItemRepository;
@@ -172,6 +177,45 @@ public class FoodService {
             logger.warn("Falha ao buscar '{}' no Open Food Facts: {}", term, e.getMessage());
             return List.of();
         }
+    }
+
+    // Item da foto que nao esta no catalogo: vira um alimento do usuario (CUSTOM), com os valores por 100 g
+    // calculados a partir da porcao estimada pela IA. Se o usuario ja tem um alimento com esse nome, reaproveita.
+    @Transactional
+    public FoodResponseDTO findOrCreateEstimated(String name, BigDecimal portionGrams, BigDecimal calories,
+            BigDecimal protein, BigDecimal carbs, BigDecimal fat) {
+        String trimmed = name.trim();
+        if (trimmed.length() > MAX_ESTIMATED_NAME_LENGTH) {
+            trimmed = trimmed.substring(0, MAX_ESTIMATED_NAME_LENGTH).trim();
+        }
+        Long userId = currentUser.id();
+        Optional<Food> existing = foodRepository.findFirstByCreatedByIdAndSourceAndNameIgnoreCase(
+                userId, CatalogSource.CUSTOM, trimmed);
+        if (existing.isPresent()) {
+            return FoodResponseDTO.from(existing.get());
+        }
+
+        Food food = new Food();
+        food.setName(trimmed);
+        food.setCaloriesPer100g(per100g(calories, portionGrams));
+        food.setProteinPer100g(per100g(protein, portionGrams));
+        food.setCarbsPer100g(per100g(carbs, portionGrams));
+        food.setFatPer100g(per100g(fat, portionGrams));
+        food.setLiquid(false);
+        food.setDefaultUnit(FoodUnits.GRAMS);
+        food.setServingGrams(portionGrams.setScale(1, RoundingMode.HALF_UP));
+        food.setServingDescription(ESTIMATED_SERVING_DESCRIPTION);
+        food.setSource(CatalogSource.CUSTOM);
+        food.setCreatedBy(userService.getUserOrThrow(userId));
+        return FoodResponseDTO.from(foodRepository.save(food));
+    }
+
+    // valor por 100 g = valor da porcao / gramas da porcao x 100
+    private BigDecimal per100g(BigDecimal value, BigDecimal portionGrams) {
+        if (value == null) {
+            return BigDecimal.ZERO.setScale(2);
+        }
+        return sanitize(value.multiply(BigDecimal.valueOf(100)).divide(portionGrams, 2, RoundingMode.HALF_UP));
     }
 
     // Usado pelo MealService para montar os itens de uma refeicao

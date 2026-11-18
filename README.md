@@ -233,8 +233,10 @@ Um alimento ou exercício em uso (em refeições, treinos ou rotinas) não pode 
 ## Foto da refeição (Gemini)
 `POST /api/meals/analyze-photo` (multipart: `file` com JPG, PNG, WebP ou HEIC até 10 MB, e `description` opcional, ex: "arroz integral e frango"):
 - O Gemini identifica cada alimento e estima a porção em gramas, as calorias e os macros (com base na TACO), com `confidence` ALTA, MEDIA ou BAIXA.
-- `totals` é a soma dos itens. Nada é salvo.
-- Cada item traz `foodId`/`foodName` do alimento mais parecido no catálogo (TACO + base complementar), quando houver. A comparação é por palavras, sem acento e aceitando grafias diferentes ("muçarela" = "mussarela"), e reconhece itens de marca ("Big Mac, McDonald's"). Para registrar, use `POST /api/meals/{mealId}/items` com `{"foodId": foodId, "quantity": portionGrams, "unit": "g"}`.
+- `totals` é a soma dos itens. A refeição não é salva nessa chamada.
+- Cada item traz `foodId`/`foodName` do alimento mais parecido no catálogo (TACO + base complementar), quando houver. A comparação é por palavras, sem acento e aceitando grafias diferentes ("muçarela" = "mussarela"), e reconhece itens de marca ("Big Mac, McDonald's").
+- **Item fora do catálogo:** a API cadastra um alimento do usuário (`CUSTOM`) com os valores da IA convertidos para 100 g e a porção da foto como `servingGrams`, e devolve `estimatedFood: true`. Se o usuário já tem um alimento com o mesmo nome, ele é reaproveitado. O usuário pode corrigir os valores em `PATCH /api/foods/{id}`. Porções abaixo de 5 g (molhos, temperos) não viram alimento e ficam com `foodId: null`.
+- Para registrar, use `POST /api/meals/{mealId}/items` com `{"foodId": foodId, "quantity": portionGrams, "unit": "g"}`.
 - É uma **estimativa**: porções vistas por foto podem errar bastante (óleo, molhos e recheios não aparecem). Mostre os valores para o usuário conferir antes de salvar.
 
 ## Rank de força, PRs e streak
@@ -400,7 +402,7 @@ Os erros seguem o formato **ProblemDetail** (RFC 9457):
 ```bash
 ./mvnw test -Dtest='!FantesdayApplicationTests'
 ```
-São 111 testes que não precisam de banco. Cobrem:
+São 114 testes que não precisam de banco. Cobrem:
 - **Cálculos:** rank de força (1RM, nota, LP), padrões de força, streak, tarefas recorrentes (dias da semana e agenda), gerador de rotinas, XP de atividades e cálculo nutricional.
 - **Services com Mockito:** tarefas (XP por conclusão, sem duplicar, datas futuras), refresh token (rotação, reuso, expiração) e recuperação de senha (tentativas, expiração).
 - **Segurança e erros:** JWT (assinatura, expiração, tamanho da chave) e camada web com MockMvc (401 sem token, 403 para outro usuário, 200 para o dono).

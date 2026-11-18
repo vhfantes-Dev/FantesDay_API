@@ -22,7 +22,9 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.client.RestClientException;
 
 import com.vhfantes.fantesday.client.GeminiClient;
+import com.vhfantes.fantesday.dto.FoodResponseDTO;
 import com.vhfantes.fantesday.dto.MealPhotoAnalysisDTO;
+import com.vhfantes.fantesday.entity.CatalogSource;
 import com.vhfantes.fantesday.exception.BusinessException;
 import com.vhfantes.fantesday.food.FoodMatcher;
 
@@ -35,6 +37,8 @@ class MealPhotoServiceTest {
     private GeminiClient geminiClient;
     @Mock
     private FoodMatcher foodMatcher;
+    @Mock
+    private FoodService foodService;
 
     @InjectMocks
     private MealPhotoService mealPhotoService;
@@ -53,6 +57,8 @@ class MealPhotoServiceTest {
         when(foodMatcher.find("Arroz, tipo 1, cozido"))
                 .thenReturn(Optional.of(new FoodMatcher.Match(5L, "Arroz, tipo 1, cozido")));
         when(foodMatcher.find("Carne, bovina, contra-filé, grelhado")).thenReturn(Optional.empty());
+        when(foodService.findOrCreateEstimated(eq("Bife"), any(), any(), any(), any(), any()))
+                .thenReturn(food(42L, "Bife"));
 
         MealPhotoAnalysisDTO result = mealPhotoService.analyze(photo(JPEG), "almoco");
 
@@ -60,16 +66,38 @@ class MealPhotoServiceTest {
         MealPhotoAnalysisDTO.Item first = result.items().get(0);
         assertThat(first.portionGrams()).isEqualTo(150);
         assertThat(first.foodId()).isEqualTo(5L);
+        assertThat(first.estimatedFood()).isFalse();
         assertThat(first.confidence()).isEqualTo("ALTA");
 
+        // Fora do catalogo: vira um alimento do usuario com os valores da IA
         MealPhotoAnalysisDTO.Item second = result.items().get(1);
-        assertThat(second.foodId()).isNull();
+        assertThat(second.foodId()).isEqualTo(42L);
+        assertThat(second.estimatedFood()).isTrue();
         assertThat(second.carbs()).isEqualByComparingTo("0");
         assertThat(second.confidence()).isEqualTo("BAIXA");
+        verify(foodService).findOrCreateEstimated("Bife", new BigDecimal("100"), new BigDecimal("278"),
+                new BigDecimal("32.4"), new BigDecimal("0.0"), new BigDecimal("15.5"));
 
         assertThat(result.totals().calories()).isEqualTo(470);
         assertThat(result.totals().protein()).isEqualByComparingTo("36.2");
         assertThat(result.totals().fat()).isEqualByComparingTo("15.8");
+    }
+
+    @Test
+    void doesNotCreateFoodForTinyPortions() {
+        when(geminiClient.isConfigured()).thenReturn(true);
+        when(geminiClient.generateJson(anyString(), any(GeminiClient.Image.class), any(), eq(MealPhotoService.AiMeal.class)))
+                .thenReturn(new MealPhotoService.AiMeal(true, "Salada", List.of(
+                        new MealPhotoService.AiItem("Molho", "Molho, especial", new BigDecimal("3"),
+                                new BigDecimal("15"), BigDecimal.ZERO, BigDecimal.ONE, new BigDecimal("1.2"), "media")),
+                        null));
+        when(foodMatcher.find("Molho, especial")).thenReturn(Optional.empty());
+
+        MealPhotoAnalysisDTO.Item item = mealPhotoService.analyze(photo(JPEG), null).items().get(0);
+
+        assertThat(item.foodId()).isNull();
+        assertThat(item.estimatedFood()).isFalse();
+        verify(foodService, never()).findOrCreateEstimated(any(), any(), any(), any(), any(), any());
     }
 
     @Test
@@ -121,6 +149,11 @@ class MealPhotoServiceTest {
         assertThat(MealPhotoService.detectImageType(heic)).isEqualTo("image/heic");
         assertThat(MealPhotoService.detectImageType(heif)).isEqualTo("image/heif");
         assertThat(MealPhotoService.detectImageType(JPEG)).isEqualTo("image/jpeg");
+    }
+
+    private static FoodResponseDTO food(Long id, String name) {
+        return new FoodResponseDTO(id, name, null, null, null, null, null, "g", false, null, null,
+                FoodService.ESTIMATED_SERVING_DESCRIPTION, CatalogSource.CUSTOM, null, 7L);
     }
 
     private static MockMultipartFile photo(byte[] data) {

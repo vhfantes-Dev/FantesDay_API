@@ -26,6 +26,9 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
 
     List<Food> findBySourceIn(Collection<CatalogSource> sources);
 
+    // Alimento que o usuario ja tem com esse nome (ex: um item da foto cadastrado antes)
+    Optional<Food> findFirstByCreatedByIdAndSourceAndNameIgnoreCase(Long userId, CatalogSource source, String name);
+
     // Ao excluir uma conta, os alimentos que ela cadastrou continuam no catalogo, sem dono
     @Modifying
     @Query("update Food f set f.createdBy = null where f.createdBy.id = :userId")
