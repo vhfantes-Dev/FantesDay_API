@@ -39,7 +39,7 @@ class GeminiClientTest {
     void setUp() {
         RestClient.Builder builder = RestClient.builder().baseUrl(BASE_URL);
         server = MockRestServiceServer.bindTo(builder).build();
-        client = new GeminiClient(builder.build(), JsonMapper.builder().build(), "gemini-test", "chave");
+        client = new GeminiClient(builder.build(), JsonMapper.builder().build(), "gemini-test", "", "chave");
         client.retryDelay = Duration.ZERO;
     }
 
@@ -101,13 +101,47 @@ class GeminiClientTest {
     }
 
     @Test
-    void givesUpAfterSecondOverload() {
-        server.expect(times(2), requestTo(BASE_URL + "/v1beta/models/gemini-test:generateContent"))
+    void givesUpAfterMaxAttemptsWithoutFallback() {
+        server.expect(times(3), requestTo(BASE_URL + "/v1beta/models/gemini-test:generateContent"))
                 .andRespond(withStatus(HttpStatus.SERVICE_UNAVAILABLE));
 
         assertThatThrownBy(() -> client.generateJson("prompt", null, SCHEMA, Answer.class))
                 .isInstanceOf(RestClientException.class);
         server.verify();
+    }
+
+    @Test
+    void retriesOnTooManyRequestsAndGatewayTimeout() {
+        server.expect(requestTo(BASE_URL + "/v1beta/models/gemini-test:generateContent"))
+                .andRespond(withStatus(HttpStatus.TOO_MANY_REQUESTS));
+        server.expect(requestTo(BASE_URL + "/v1beta/models/gemini-test:generateContent"))
+                .andRespond(withStatus(HttpStatus.GATEWAY_TIMEOUT));
+        server.expect(requestTo(BASE_URL + "/v1beta/models/gemini-test:generateContent"))
+                .andRespond(withSuccess("""
+                        {"candidates":[{"content":{"parts":[{"text":"{\\"activityName\\":\\"Remo\\"}"}]}}]}
+                        """, MediaType.APPLICATION_JSON));
+
+        assertThat(client.generateJson("prompt", null, SCHEMA, Answer.class).activityName()).isEqualTo("Remo");
+        server.verify();
+    }
+
+    @Test
+    void fallsBackToReserveModelWhenMainStaysOverloaded() {
+        RestClient.Builder builder = RestClient.builder().baseUrl(BASE_URL);
+        MockRestServiceServer fallbackServer = MockRestServiceServer.bindTo(builder).build();
+        GeminiClient withFallback = new GeminiClient(builder.build(), JsonMapper.builder().build(),
+                "gemini-test", "gemini-lite", "chave");
+        withFallback.retryDelay = Duration.ZERO;
+
+        fallbackServer.expect(times(3), requestTo(BASE_URL + "/v1beta/models/gemini-test:generateContent"))
+                .andRespond(withStatus(HttpStatus.SERVICE_UNAVAILABLE));
+        fallbackServer.expect(requestTo(BASE_URL + "/v1beta/models/gemini-lite:generateContent"))
+                .andRespond(withSuccess("""
+                        {"candidates":[{"content":{"parts":[{"text":"{\\"activityName\\":\\"Remo\\"}"}]}}]}
+                        """, MediaType.APPLICATION_JSON));
+
+        assertThat(withFallback.generateJson("prompt", null, SCHEMA, Answer.class).activityName()).isEqualTo("Remo");
+        fallbackServer.verify();
     }
 
     @Test
@@ -121,7 +155,7 @@ class GeminiClientTest {
 
     @Test
     void isNotConfiguredWithoutApiKey() {
-        GeminiClient withoutKey = new GeminiClient(RestClient.create(), JsonMapper.builder().build(), "gemini-test", " ");
+        GeminiClient withoutKey = new GeminiClient(RestClient.create(), JsonMapper.builder().build(), "gemini-test", "", " ");
         assertThat(withoutKey.isConfigured()).isFalse();
         assertThat(client.isConfigured()).isTrue();
     }
