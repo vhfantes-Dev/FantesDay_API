@@ -6,7 +6,10 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -28,20 +31,26 @@ public class GeminiClient {
 
     private final RestClient restClient;
     private final JsonMapper jsonMapper;
-    private final String model;
+    private static final Logger log = LoggerFactory.getLogger(GeminiClient.class);
+
+    private final List<String> models;
     private final boolean configured;
 
-    // Espera antes de tentar de novo quando o Gemini esta sobrecarregado (os testes usam zero)
+    // Espera da primeira repeticao quando o Gemini esta sobrecarregado; dobra a cada tentativa (os testes usam zero)
     Duration retryDelay = Duration.ofSeconds(1);
+    int maxAttemptsPerModel = 3;
 
     public GeminiClient(
             @Qualifier("geminiRestClient") RestClient restClient,
             JsonMapper jsonMapper,
             @Value("${app.gemini.model}") String model,
+            @Value("${app.gemini.fallback-model:}") String fallbackModel,
             @Value("${app.gemini.api-key}") String apiKey) {
         this.restClient = restClient;
         this.jsonMapper = jsonMapper;
-        this.model = model;
+        this.models = fallbackModel == null || fallbackModel.isBlank() || fallbackModel.equals(model)
+                ? List.of(model)
+                : List.of(model, fallbackModel);
         this.configured = apiKey != null && !apiKey.isBlank();
     }
 
@@ -74,24 +83,48 @@ public class GeminiClient {
         }
     }
 
-    // Modelo sobrecarregado (503) ou limite de requisicoes (429) costumam passar rapido: tenta mais uma vez
+    // Modelo sobrecarregado (503), limite de requisicoes (429) ou demora (504) costumam ser passageiros:
+    // tenta de novo com espera crescente (1s, 2s, ... com jitter). Se o modelo principal continuar fora,
+    // tenta o modelo reserva (GEMINI_FALLBACK_MODEL), que tem capacidade e cota separadas.
     private GeminiResponse send(Map<String, Object> body) {
-        try {
-            return post(body);
-        } catch (HttpServerErrorException.ServiceUnavailable | HttpClientErrorException.TooManyRequests e) {
-            try {
-                Thread.sleep(retryDelay.toMillis());
-            } catch (InterruptedException interrupted) {
-                Thread.currentThread().interrupt();
-                throw e;
+        RestClientException lastError = null;
+        for (String currentModel : models) {
+            for (int attempt = 1; attempt <= maxAttemptsPerModel; attempt++) {
+                try {
+                    return post(currentModel, body);
+                } catch (HttpServerErrorException.ServiceUnavailable
+                        | HttpServerErrorException.GatewayTimeout
+                        | HttpClientErrorException.TooManyRequests e) {
+                    lastError = e;
+                    log.warn("Gemini indisponivel (modelo {}, tentativa {}/{}): {}",
+                            currentModel, attempt, maxAttemptsPerModel, e.getStatusCode());
+                    if (attempt < maxAttemptsPerModel) {
+                        sleep(backoff(attempt), e);
+                    }
+                }
             }
-            return post(body);
+        }
+        throw lastError;
+    }
+
+    private Duration backoff(int attempt) {
+        long base = retryDelay.toMillis() << (attempt - 1);
+        long jitter = base == 0 ? 0 : ThreadLocalRandom.current().nextLong(base / 2 + 1);
+        return Duration.ofMillis(base + jitter);
+    }
+
+    private static void sleep(Duration delay, RestClientException cause) {
+        try {
+            Thread.sleep(delay.toMillis());
+        } catch (InterruptedException interrupted) {
+            Thread.currentThread().interrupt();
+            throw cause;
         }
     }
 
-    private GeminiResponse post(Map<String, Object> body) {
+    private GeminiResponse post(String currentModel, Map<String, Object> body) {
         return restClient.post()
-                .uri("/v1beta/models/{model}:generateContent", model)
+                .uri("/v1beta/models/{model}:generateContent", currentModel)
                 .body(body)
                 .retrieve()
                 .body(GeminiResponse.class);
