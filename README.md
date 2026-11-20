@@ -107,7 +107,7 @@ O `docker-compose.yml` sobe um Postgres 17 e a API na porta 8080. Para publicar,
 | `OFF_CONTACT` | E-mail ou site enviado no `User-Agent` do Open Food Facts (a API deles pede uma forma de contato) |
 | `GEMINI_API_KEY` | Chave da API do Gemini ([Google AI Studio](https://aistudio.google.com/apikey)). Sem ela, a análise de foto da refeição fica desligada e as atividades em texto só usam o catálogo local. |
 | `GEMINI_MODEL` | Modelo do Gemini (padrão: `gemini-3.5-flash`) |
-| `GEMINI_FALLBACK_MODEL` | Opcional. Modelo reserva usado quando o principal continua sobrecarregado (503/429/504) depois de 3 tentativas com espera crescente |
+| `GEMINI_FALLBACK_MODEL` | Modelo reserva usado quando o principal continua sobrecarregado (503/429/504) depois de 3 tentativas com espera crescente (padrão: `gemini-3.5-flash-lite`) |
 
 Para gerar um `JWT_SECRET`:
 ```bash
@@ -132,7 +132,7 @@ Se você roda a API pelo VS Code (`launch.json` com `envFile`), **pare e inicie 
 | `app.seed.enabled` | `true` | Importa TACO e free-exercise-db na inicialização (se ainda não estiverem no banco) |
 | `app.openfoodfacts.base-url` | `https://world.openfoodfacts.org` | Endereço da API do Open Food Facts |
 | `app.gemini.model` | `${GEMINI_MODEL:gemini-3.5-flash}` | Modelo do Gemini usado na foto da refeição e nas atividades em texto |
-| `app.gemini.fallback-model` | `${GEMINI_FALLBACK_MODEL:}` | Modelo reserva quando o principal está sobrecarregado (vazio = sem reserva) |
+| `app.gemini.fallback-model` | `${GEMINI_FALLBACK_MODEL:gemini-3.5-flash-lite}` | Modelo reserva quando o principal está sobrecarregado |
 | `spring.servlet.multipart.max-file-size` | `10MB` | Tamanho máximo de upload (a foto de perfil continua limitada a 2 MB) |
 
 ## Banco de dados e migrações
